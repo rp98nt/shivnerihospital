@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <div className="flex min-h-full flex-col bg-slate-50 text-slate-900">
+    <div className="flex flex-1 flex-col">
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
           <p className="text-lg font-semibold tracking-tight">
