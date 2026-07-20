@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const PHONE = "+910000000000";
@@ -6,8 +7,25 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white shadow-sm">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-        <Link href="/" className="text-lg font-bold tracking-tight text-teal-900">
-          Shivneri Hospital
+        <Link
+          href="/"
+          className="flex items-center gap-3 text-teal-900 transition-opacity hover:opacity-90"
+        >
+          <Image
+            src="/shivneri-logo.png"
+            alt=""
+            width={44}
+            height={44}
+            className="h-10 w-auto object-contain sm:h-11"
+            priority
+          />
+          <span
+            className="h-8 w-px shrink-0 bg-slate-300 sm:h-9"
+            aria-hidden
+          />
+          <span className="text-lg font-bold tracking-tight">
+            Shivneri Hospital
+          </span>
         </Link>
         <nav className="hidden items-center gap-6 text-sm font-medium text-slate-700 md:flex">
           <Link href="#" className="hover:text-teal-800">
