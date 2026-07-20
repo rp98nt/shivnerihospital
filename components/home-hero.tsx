@@ -121,11 +121,11 @@ function FeatureCard({
   label: string;
 }) {
   return (
-    <div className="flex w-full min-w-0 flex-col items-center rounded-xl bg-white px-2 py-3 text-center shadow-md sm:px-3 sm:py-4">
-      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-teal-50 text-teal-700 sm:h-10 sm:w-10">
+    <div className="flex aspect-square w-full min-w-0 flex-col items-center justify-center rounded-xl bg-white px-2 text-center shadow-md sm:px-3">
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-teal-50 text-teal-700 sm:h-10 sm:w-10">
         {icon}
       </div>
-      <p className="mt-1.5 text-[10px] font-medium leading-snug text-slate-700 sm:text-[11px]">
+      <p className="mt-2 max-w-[8.5rem] text-[10px] font-medium leading-snug text-slate-700 sm:text-[11px]">
         {label}
       </p>
     </div>
