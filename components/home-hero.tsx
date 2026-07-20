@@ -38,7 +38,7 @@ export function HomeHero() {
                 Same-Day Doctor Appointments | 24/7 Patient Support
               </div>
 
-              <div className="mt-6 flex w-full max-w-xl justify-between gap-3 sm:mt-8 sm:gap-4">
+              <div className="mt-6 flex w-full max-w-xl justify-center gap-4 sm:mt-8 sm:gap-5">
                 <FeatureCard
                   icon={<DoctorIcon />}
                   label="Expert Team of Doctors"
