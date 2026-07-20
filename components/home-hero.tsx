@@ -33,21 +33,23 @@ export function HomeHero() {
                 support you till recovery.
               </p>
 
-              <div className="mt-6 inline-grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-x-4 sm:gap-y-8">
-                <div className="col-span-2 flex w-full items-center justify-center gap-2 rounded-full border border-lime-400/40 bg-lime-400/15 px-3 py-2 text-center text-[10px] font-medium leading-snug text-lime-100 sm:px-4 sm:text-xs">
+              <div className="mt-6 w-full max-w-xl">
+                <div className="flex w-full items-center justify-center gap-2 rounded-full border border-lime-400/40 bg-lime-400/15 px-3 py-2 text-center text-[10px] font-medium leading-snug text-lime-100 sm:px-4 sm:text-xs">
                   <ShieldIcon className="h-4 w-4 shrink-0 text-lime-300" />
                   <span>
                     Same-Day Doctor Appointments | 24/7 Patient Support
                   </span>
                 </div>
-                <FeatureCard
-                  icon={<DoctorIcon />}
-                  label="Expert Team of Doctors"
-                />
-                <FeatureCard
-                  icon={<FacilityIcon />}
-                  label="Latest Medical Facilities"
-                />
+                <div className="mt-6 grid grid-cols-2 gap-3 sm:mt-8 sm:gap-4">
+                  <FeatureCard
+                    icon={<DoctorIcon />}
+                    label="Expert Team of Doctors"
+                  />
+                  <FeatureCard
+                    icon={<FacilityIcon />}
+                    label="Latest Medical Facilities"
+                  />
+                </div>
               </div>
             </div>
 
@@ -122,7 +124,7 @@ function FeatureCard({
   label: string;
 }) {
   return (
-    <div className="flex w-[7.25rem] flex-col items-center rounded-xl bg-white px-2 py-3 text-center shadow-md sm:w-32 sm:px-2.5 sm:py-4">
+    <div className="flex w-full min-w-0 flex-col items-center rounded-xl bg-white px-2 py-3 text-center shadow-md sm:px-3 sm:py-4">
       <div className="flex h-9 w-9 items-center justify-center rounded-full bg-teal-50 text-teal-700 sm:h-10 sm:w-10">
         {icon}
       </div>
