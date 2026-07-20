@@ -38,7 +38,7 @@ export function HomeHero() {
                 Same-Day Doctor Appointments | 24/7 Patient Support
               </div>
 
-              <div className="mt-10 grid grid-cols-3 gap-3 sm:max-w-lg sm:gap-4">
+              <div className="mt-10 grid max-w-md grid-cols-2 gap-4 sm:max-w-xl sm:gap-6">
                 <FeatureCard
                   icon={<DoctorIcon />}
                   label="Expert Team of Doctors"
@@ -47,7 +47,6 @@ export function HomeHero() {
                   icon={<FacilityIcon />}
                   label="Latest Medical Facilities"
                 />
-                <FeatureCard icon={<RupeeIcon />} label="Free Cost Estimate" />
               </div>
             </div>
 
@@ -122,11 +121,11 @@ function FeatureCard({
   label: string;
 }) {
   return (
-    <div className="flex flex-col items-center rounded-xl bg-white px-2 py-4 text-center shadow-md sm:px-3 sm:py-5">
+    <div className="flex w-full flex-col items-center rounded-xl bg-white px-3 py-4 text-center shadow-md sm:px-4 sm:py-5">
       <div className="flex h-11 w-11 items-center justify-center rounded-full bg-teal-50 text-teal-700 sm:h-12 sm:w-12">
         {icon}
       </div>
-      <p className="mt-2 text-[10px] font-medium leading-snug text-slate-700 sm:text-xs">
+      <p className="mt-2 text-xs font-medium leading-snug text-slate-700">
         {label}
       </p>
     </div>
@@ -156,14 +155,6 @@ function FacilityIcon() {
       <path d="M8 4h8v16H8z" />
       <path d="M12 8v4M10 10h4" />
       <path d="M4 10h4v10H4zM16 10h4v10h-4z" />
-    </svg>
-  );
-}
-
-function RupeeIcon() {
-  return (
-    <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
-      <path d="M6 3h12M6 8h12M8 13h6a4 4 0 0 1 0 8H6" />
     </svg>
   );
 }
