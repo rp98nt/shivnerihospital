@@ -38,7 +38,7 @@ export function HomeHero() {
                 Same-Day Doctor Appointments | 24/7 Patient Support
               </div>
 
-              <div className="mt-10 grid max-w-md grid-cols-2 gap-4 sm:max-w-xl sm:gap-6">
+              <div className="mt-10 inline-grid grid-cols-2 gap-3 sm:gap-4">
                 <FeatureCard
                   icon={<DoctorIcon />}
                   label="Expert Team of Doctors"
@@ -121,11 +121,11 @@ function FeatureCard({
   label: string;
 }) {
   return (
-    <div className="flex w-full flex-col items-center rounded-xl bg-white px-3 py-4 text-center shadow-md sm:px-4 sm:py-5">
-      <div className="flex h-11 w-11 items-center justify-center rounded-full bg-teal-50 text-teal-700 sm:h-12 sm:w-12">
+    <div className="flex w-[7.25rem] flex-col items-center rounded-xl bg-white px-2 py-3 text-center shadow-md sm:w-32 sm:px-2.5 sm:py-4">
+      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-teal-50 text-teal-700 sm:h-10 sm:w-10">
         {icon}
       </div>
-      <p className="mt-2 text-xs font-medium leading-snug text-slate-700">
+      <p className="mt-1.5 text-[10px] font-medium leading-snug text-slate-700 sm:text-[11px]">
         {label}
       </p>
     </div>
@@ -142,7 +142,7 @@ function ShieldIcon({ className }: { className?: string }) {
 
 function DoctorIcon() {
   return (
-    <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
+    <svg className="h-5 w-5 sm:h-5 sm:w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
       <circle cx="12" cy="8" r="3" />
       <path d="M6 20v-1a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v1" />
     </svg>
@@ -151,7 +151,7 @@ function DoctorIcon() {
 
 function FacilityIcon() {
   return (
-    <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
+    <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
       <path d="M8 4h8v16H8z" />
       <path d="M12 8v4M10 10h4" />
       <path d="M4 10h4v10H4zM16 10h4v10h-4z" />
