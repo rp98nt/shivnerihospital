@@ -123,7 +123,7 @@ function FeatureCard({
 }) {
   return (
     <div className="flex h-28 w-full min-w-0 flex-col items-center justify-center rounded-xl bg-white px-2 text-center shadow-md sm:h-32">
-      <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-teal-50 text-teal-700 sm:h-7 sm:w-7">
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-teal-50 text-teal-700 sm:h-10 sm:w-10">
         {icon}
       </div>
       <p className="mt-1.5 px-1 text-xs font-medium leading-snug text-slate-700 sm:text-sm">
@@ -143,7 +143,7 @@ function ShieldIcon({ className }: { className?: string }) {
 
 function DoctorIcon() {
   return (
-    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
+    <svg className="h-5 w-5 sm:h-6 sm:w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
       <circle cx="12" cy="8" r="3" />
       <path d="M6 20v-1a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v1" />
     </svg>
@@ -152,7 +152,7 @@ function DoctorIcon() {
 
 function FacilityIcon() {
   return (
-    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
+    <svg className="h-5 w-5 sm:h-6 sm:w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
       <path d="M8 4h8v16H8z" />
       <path d="M12 8v4M10 10h4" />
       <path d="M4 10h4v10H4zM16 10h4v10h-4z" />
