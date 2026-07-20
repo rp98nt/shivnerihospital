@@ -38,7 +38,7 @@ export function HomeHero() {
                   <ShieldIcon className="h-4 w-4 shrink-0 text-lime-300" />
                   Same-Day Doctor Appointments | 24/7 Patient Support
                 </div>
-                <div className="flex justify-center gap-4 sm:gap-5">
+                <div className="grid w-full grid-cols-2 gap-3 sm:gap-4">
                   <FeatureCard
                     icon={<DoctorIcon />}
                     label="Expert Team of Doctors"
@@ -122,7 +122,7 @@ function FeatureCard({
   label: string;
 }) {
   return (
-    <div className="flex size-28 shrink-0 flex-col items-center justify-center rounded-xl bg-white px-2 text-center shadow-md sm:size-32">
+    <div className="flex h-28 w-full min-w-0 flex-col items-center justify-center rounded-xl bg-white px-2 text-center shadow-md sm:h-32">
       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-teal-50 text-teal-700 sm:h-9 sm:w-9">
         {icon}
       </div>
