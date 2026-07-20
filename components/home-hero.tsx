@@ -38,7 +38,7 @@ export function HomeHero() {
                 Same-Day Doctor Appointments | 24/7 Patient Support
               </div>
 
-              <div className="mt-6 grid w-full max-w-xl grid-cols-2 gap-3 sm:mt-8 sm:gap-4">
+              <div className="mt-6 flex w-full max-w-xl justify-between gap-3 sm:mt-8 sm:gap-4">
                 <FeatureCard
                   icon={<DoctorIcon />}
                   label="Expert Team of Doctors"
@@ -121,11 +121,11 @@ function FeatureCard({
   label: string;
 }) {
   return (
-    <div className="flex aspect-square w-full min-w-0 flex-col items-center justify-center rounded-xl bg-white px-2 text-center shadow-md sm:px-3">
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-teal-50 text-teal-700 sm:h-10 sm:w-10">
+    <div className="flex size-28 shrink-0 flex-col items-center justify-center rounded-xl bg-white px-2 text-center shadow-md sm:size-32">
+      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-teal-50 text-teal-700 sm:h-9 sm:w-9">
         {icon}
       </div>
-      <p className="mt-2 max-w-[8.5rem] text-[10px] font-medium leading-snug text-slate-700 sm:text-[11px]">
+      <p className="mt-1.5 px-1 text-[10px] font-medium leading-snug text-slate-700 sm:text-[11px]">
         {label}
       </p>
     </div>
