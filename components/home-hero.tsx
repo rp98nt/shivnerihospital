@@ -33,23 +33,20 @@ export function HomeHero() {
                 support you till recovery.
               </p>
 
-              <div className="mt-6 w-full max-w-xl">
-                <div className="flex w-full items-center justify-center gap-2 rounded-full border border-lime-400/40 bg-lime-400/15 px-3 py-2 text-center text-[10px] font-medium leading-snug text-lime-100 sm:px-4 sm:text-xs">
-                  <ShieldIcon className="h-4 w-4 shrink-0 text-lime-300" />
-                  <span>
-                    Same-Day Doctor Appointments | 24/7 Patient Support
-                  </span>
-                </div>
-                <div className="mt-6 grid grid-cols-2 gap-3 sm:mt-8 sm:gap-4">
-                  <FeatureCard
-                    icon={<DoctorIcon />}
-                    label="Expert Team of Doctors"
-                  />
-                  <FeatureCard
-                    icon={<FacilityIcon />}
-                    label="Latest Medical Facilities"
-                  />
-                </div>
+              <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-lime-400/40 bg-lime-400/15 px-4 py-2 text-xs font-medium text-lime-100 sm:text-sm">
+                <ShieldIcon className="h-4 w-4 shrink-0 text-lime-300" />
+                Same-Day Doctor Appointments | 24/7 Patient Support
+              </div>
+
+              <div className="mt-6 grid w-full max-w-xl grid-cols-2 gap-3 sm:mt-8 sm:gap-4">
+                <FeatureCard
+                  icon={<DoctorIcon />}
+                  label="Expert Team of Doctors"
+                />
+                <FeatureCard
+                  icon={<FacilityIcon />}
+                  label="Latest Medical Facilities"
+                />
               </div>
             </div>
 
