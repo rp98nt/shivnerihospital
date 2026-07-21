@@ -1,54 +1,15 @@
-import { ImageResponse } from "next/og";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
+import { createCircularIcon } from "@/lib/circular-icon";
 
 export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 
 export default async function Icon() {
-  const logoSrc = await loadLogoDataUri();
+  const body = await createCircularIcon(32);
 
-  return new ImageResponse(
-    (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "#ffffff",
-        }}
-      >
-        <div
-          style={{
-            width: 32,
-            height: 32,
-            borderRadius: "50%",
-            overflow: "hidden",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={logoSrc}
-            alt=""
-            width={32}
-            height={32}
-            style={{ objectFit: "cover" }}
-          />
-        </div>
-      </div>
-    ),
-    { ...size },
-  );
-}
-
-async function loadLogoDataUri() {
-  const buffer = await readFile(
-    path.join(process.cwd(), "media", "Shivneri Logo.png"),
-  );
-  return `data:image/png;base64,${buffer.toString("base64")}`;
+  return new Response(new Uint8Array(body), {
+    headers: {
+      "Content-Type": "image/png",
+      "Cache-Control": "public, max-age=31536000, immutable",
+    },
+  });
 }
