@@ -85,29 +85,27 @@ export function InsurancePartners() {
 
 function InsurancePartnerCard({ partner }: { partner: InsurancePartner }) {
   return (
-    <article className="group flex h-40 w-44 shrink-0 flex-col items-center justify-center rounded-xl border border-slate-100 bg-white px-4 py-5 shadow-md transition duration-300 hover:-translate-y-1.5 hover:shadow-xl sm:h-44 sm:w-48">
-      <div
-        className={`flex h-14 w-14 items-center justify-center overflow-hidden rounded-full ${
-          partner.logo ? "bg-white ring-2 ring-slate-100" : `ring-2 ${partner.iconBg}`
-        }`}
-      >
+    <article className="group flex h-44 w-48 shrink-0 flex-col items-center justify-center rounded-xl border border-slate-100 bg-white px-3 py-4 shadow-md transition duration-300 hover:-translate-y-1.5 hover:shadow-xl sm:h-48 sm:w-52 sm:px-4 sm:py-5">
+      <div className="flex h-24 w-full items-center justify-center sm:h-28">
         {partner.logo ? (
           <Image
             src={partner.logo}
             alt=""
-            width={56}
-            height={56}
-            className="h-11 w-11 object-contain p-1"
+            width={192}
+            height={112}
+            className="h-20 w-full max-w-[11rem] object-contain sm:h-24 sm:max-w-[12rem]"
           />
         ) : partner.icon === "accreditation" ? (
-          <AccreditationIcon className={`h-7 w-7 ${partner.accent}`} />
+          <AccreditationIcon className={`h-12 w-12 sm:h-14 sm:w-14 ${partner.accent}`} />
         ) : (
-          <InsuranceShieldIcon className={`h-7 w-7 ${partner.accent}`} />
+          <InsuranceShieldIcon className={`h-12 w-12 sm:h-14 sm:w-14 ${partner.accent}`} />
         )}
       </div>
-      <p className="mt-1 text-[10px] font-bold uppercase tracking-wide text-slate-400">
-        {partner.abbr}
-      </p>
+      {!partner.logo ? (
+        <p className="mt-1 text-[10px] font-bold uppercase tracking-wide text-slate-400">
+          {partner.abbr}
+        </p>
+      ) : null}
       <p className="mt-1 px-1 text-center text-sm font-semibold leading-snug text-slate-800">
         {partner.name}
       </p>
