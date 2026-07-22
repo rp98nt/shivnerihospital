@@ -30,8 +30,7 @@ export function HomeHero() {
               </h1>
               <p className="mt-4 max-w-lg text-base leading-relaxed text-teal-50/90 sm:text-lg">
                 Share your details. We&apos;ll help you find the right doctor and
-                support <span className="font-semibold text-white">FOR</span> you
-                till recovery.
+                support for you till recovery.
               </p>
 
               <div className="mt-6 inline-grid gap-y-6 sm:gap-y-8">
