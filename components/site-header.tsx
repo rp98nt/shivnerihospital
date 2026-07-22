@@ -1,135 +1,69 @@
 import Image from "next/image";
 import Link from "next/link";
+import { MobileNav } from "@/components/mobile-nav";
+import {
+  isNavGroup,
+  LOWER_NAV_ITEMS,
+  NAV_MENUS,
+  type NavEntry,
+  type NavLink,
+  type NavGroup,
+} from "@/lib/nav-menus";
 
 const EMERGENCY_PHONE = "+91XXXXXXXXXX";
 const APPOINTMENT_PHONE = "+91XXXXXXXXXX";
-
-const LOWER_NAV_ITEMS = [
-  "About us",
-  "Diagnostics",
-  "Specialities",
-  "Super Specialities",
-  "Services",
-  "Patient Guide",
-] as const;
-
-type NavLink = {
-  label: string;
-  href?: string;
-};
-
-type NavGroup = {
-  label: string;
-  items: NavLink[];
-};
-
-type NavEntry = NavLink | NavGroup;
-
-function isNavGroup(item: NavEntry): item is NavGroup {
-  return "items" in item;
-}
-
-const NAV_MENUS: Record<(typeof LOWER_NAV_ITEMS)[number], NavEntry[]> = {
-  "About us": [
-    { label: "About us" },
-    { label: "Milestones" },
-    { label: "Board of Trustees" },
-    { label: "Appeal" },
-    { label: "Scope of Services" },
-  ],
-  Diagnostics: [
-    { label: "Audiology and Speech Therapy" },
-    { label: "Cardiology" },
-    { label: "Endoscopy" },
-    { label: "Pathology" },
-    { label: "Neurology" },
-    { label: "Pulmonary Function Test" },
-    {
-      label: "Imaging-Sciences",
-      items: [
-        { label: "Radiology" },
-        { label: "Ultrasonography" },
-        { label: "Computed Tomography Scan (CT Scan)" },
-        { label: "Magnetic Resonance Imaging (MRI)" },
-      ],
-    },
-  ],
-  Specialities: [
-    { label: "Ayurveda" },
-    { label: "Chest Medicine and Interventional Pulmonology" },
-    { label: "Critical Care" },
-    { label: "Diabetology" },
-    { label: "Dermatology" },
-    { label: "Ear Nose and Throat (ENT)" },
-    { label: "Gynaecology and Obstretrics" },
-    { label: "Homeopathy" },
-    { label: "Medicine" },
-    { label: "Orthopaedics" },
-    { label: "Ophthalmology" },
-    { label: "Paediatrics" },
-    { label: "Pain Clinic" },
-    { label: "Psychiatry" },
-    { label: "Surgery" },
-  ],
-  "Super Specialities": [
-    { label: "Anaesthesia" },
-    { label: "Bariatric and Metabolic Surgery" },
-    { label: "Cardiac Sciences" },
-    { label: "Chest Diseases" },
-    { label: "Endocrinology" },
-    { label: "Head & Neck Oncology" },
-    { label: "Gastroenterology" },
-    { label: "Nephrology" },
-    { label: "Neuro Sciences" },
-    { label: "Oncology" },
-    { label: "Plastic Surgery" },
-    { label: "Rheumatology" },
-    { label: "Urology" },
-  ],
-  Services: [
-    { label: "Blood Bank" },
-    { label: "Dialysis" },
-    { label: "Physiotherapy Rehabilitation" },
-  ],
-  "Patient Guide": [
-    { label: "TPA and Insurance" },
-    { label: "Registration Admission" },
-    { label: "Room Category Tariff" },
-    { label: "I & P Scheme" },
-    { label: "Attendant Visitors" },
-    { label: "ATM's" },
-    { label: "Cafeteria Transports" },
-    { label: "Hotels and Restaurants" },
-  ],
-};
 
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 overflow-visible shadow-sm">
       <div className="border-b border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-          <Link
-            href="/"
-            className="flex shrink-0 items-center gap-3 text-teal-900 transition-opacity hover:opacity-90"
-          >
-            <Image
-              src="/shivneri-logo.png"
-              alt=""
-              width={44}
-              height={44}
-              className="h-10 w-auto object-contain sm:h-11"
-              priority
-            />
-            <span
-              className="h-8 w-px shrink-0 bg-slate-300 sm:h-9"
-              aria-hidden
-            />
-            <span className="text-lg font-bold tracking-tight">
-              Shivneri Hospital
-            </span>
-          </Link>
+        <div className="mx-auto max-w-6xl px-4 py-3 lg:flex lg:items-center lg:justify-between lg:px-6 lg:py-2.5">
+          <div className="flex items-center justify-between gap-3 lg:flex-initial lg:justify-start">
+            <Link
+              href="/"
+              className="flex min-w-0 items-center gap-3 text-teal-900 transition-opacity hover:opacity-90"
+            >
+              <Image
+                src="/shivneri-logo.png"
+                alt=""
+                width={44}
+                height={44}
+                className="h-10 w-auto shrink-0 object-contain lg:h-11"
+                priority
+              />
+              <span
+                className="h-8 w-px shrink-0 bg-slate-300 lg:h-9"
+                aria-hidden
+              />
+              <span className="truncate text-base font-bold tracking-tight sm:text-lg">
+                Shivneri Hospital
+              </span>
+            </Link>
 
-          <div className="flex flex-col gap-2 sm:items-end lg:flex-row lg:items-center lg:gap-6">
+            <MobileNav />
+          </div>
+
+          <div className="mt-3 grid grid-cols-3 gap-2 lg:hidden">
+            <MobileContactChip
+              icon={<BloodBankIcon className="h-4 w-4 text-red-600" />}
+              label="Blood Bank"
+              detail="24 Hour Service"
+            />
+            <MobileContactChip
+              icon={<EmergencyIcon className="h-4 w-4 text-red-600" />}
+              label="Emergency"
+              detail="Call now"
+              href={`tel:${EMERGENCY_PHONE.replace(/\s/g, "")}`}
+            />
+            <MobileContactChip
+              icon={<AppointmentIcon className="h-4 w-4 text-teal-700" />}
+              label="Appointment"
+              detail="Call to book"
+              href={`tel:${APPOINTMENT_PHONE.replace(/\s/g, "")}`}
+            />
+          </div>
+
+          <div className="hidden lg:flex lg:items-center lg:gap-6">
             <TopBarContact
               icon={<BloodBankIcon className="h-4 w-4 text-red-600" />}
               label="24 Hour Blood Bank Service"
@@ -148,19 +82,54 @@ export function SiteHeader() {
         </div>
       </div>
 
-      <div className="overflow-visible border-b border-slate-200 bg-white px-4 sm:px-6">
+      <div className="hidden overflow-visible border-b border-slate-200 bg-white px-4 lg:block lg:px-6">
         <nav className="mx-auto flex max-w-6xl overflow-visible" aria-label="Main">
           {LOWER_NAV_ITEMS.map((label) => (
-            <NavDropdown
-              key={label}
-              label={label}
-              items={NAV_MENUS[label]}
-            />
+            <NavDropdown key={label} label={label} items={NAV_MENUS[label]} />
           ))}
         </nav>
       </div>
     </header>
   );
+}
+
+function MobileContactChip({
+  icon,
+  label,
+  detail,
+  href,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  detail: string;
+  href?: string;
+}) {
+  const className =
+    "flex flex-col items-center rounded-xl border border-slate-100 bg-slate-50 px-2 py-2.5 text-center transition-colors hover:bg-slate-100";
+
+  const content = (
+    <>
+      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-sm">
+        {icon}
+      </span>
+      <span className="mt-1.5 text-[11px] font-semibold leading-tight text-slate-800">
+        {label}
+      </span>
+      <span className="mt-0.5 text-[10px] leading-tight text-slate-500">
+        {detail}
+      </span>
+    </>
+  );
+
+  if (href) {
+    return (
+      <a href={href} className={className}>
+        {content}
+      </a>
+    );
+  }
+
+  return <div className={className}>{content}</div>;
 }
 
 function TopBarContact({
@@ -182,7 +151,7 @@ function TopBarContact({
   );
 
   const className =
-    "flex items-center gap-2 text-xs sm:text-sm transition-opacity hover:opacity-80";
+    "flex items-center gap-2 text-sm transition-opacity hover:opacity-80";
 
   if (href) {
     return (
@@ -200,7 +169,7 @@ function NavDropdown({ label, items }: { label: string; items: NavEntry[] }) {
     <div className="group relative min-w-0 flex-1">
       <button
         type="button"
-        className="flex w-full items-center justify-center gap-1 px-2 py-3 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-teal-800 sm:gap-1.5 sm:px-3 sm:text-sm"
+        className="flex w-full items-center justify-center gap-1.5 px-3 py-3 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-teal-800"
         aria-haspopup="true"
         aria-expanded="false"
       >

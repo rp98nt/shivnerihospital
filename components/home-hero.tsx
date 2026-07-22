@@ -22,25 +22,30 @@ export function HomeHero() {
         <div className="pointer-events-none absolute -right-20 top-0 h-64 w-64 rounded-full bg-teal-600/20 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-16 left-1/4 h-48 w-48 rounded-full bg-cyan-500/10 blur-3xl" />
 
-        <div className="relative mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:py-16">
-          <div className="grid items-start gap-10 lg:grid-cols-[1fr_380px] lg:gap-12">
+        <div className="relative mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-14 lg:py-16">
+          <div className="grid items-start gap-8 lg:grid-cols-[1fr_380px] lg:gap-12">
             <div>
-              <h1 className="max-w-xl text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-[2.65rem] lg:leading-[1.15]">
+              <h1 className="max-w-xl text-2xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-[2.65rem] lg:leading-[1.15]">
                 Your health is in{" "}
                 <span className="text-lime-300">safe hands</span> at Shivneri
                 Hospital
               </h1>
-              <p className="mt-4 max-w-lg text-base leading-relaxed text-teal-50/90 sm:text-lg">
+              <p className="mt-3 max-w-lg text-sm leading-relaxed text-teal-50/90 sm:mt-4 sm:text-lg">
                 Share your details. We&apos;ll help you find the right doctor and
                 support for you till recovery.
               </p>
 
-              <div className="mt-6 inline-grid gap-y-6 sm:gap-y-8">
-                <div className="inline-flex w-fit items-center gap-2 rounded-full border border-lime-400/40 bg-lime-400/15 px-4 py-2 text-xs font-medium text-lime-100 sm:text-sm">
+              <div className="mt-5 inline-grid w-full gap-y-5 sm:mt-6 sm:gap-y-8">
+                <div className="inline-flex w-full max-w-md items-center justify-center gap-2 rounded-full border border-lime-400/40 bg-lime-400/15 px-4 py-2.5 text-center text-xs font-medium leading-snug text-lime-100 sm:w-fit sm:justify-start sm:text-left sm:text-sm">
                   <ShieldIcon className="h-4 w-4 shrink-0 text-lime-300" />
-                  Same-Day Doctor Appointments | 24/7 Patient Support
+                  <span className="sm:hidden">
+                    Same-Day Appointments · 24/7 Support
+                  </span>
+                  <span className="hidden sm:inline">
+                    Same-Day Doctor Appointments | 24/7 Patient Support
+                  </span>
                 </div>
-                <div className="grid w-full grid-cols-3 gap-2 sm:gap-3">
+                <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-2 lg:gap-3">
                   <FeatureCard
                     icon={<DoctorIcon />}
                     label="Expert Team of Doctors"
@@ -122,11 +127,11 @@ function FeatureCard({
   label: string;
 }) {
   return (
-    <div className="flex h-28 w-full min-w-0 flex-col items-center justify-center rounded-xl bg-white px-2 text-center shadow-md sm:h-32">
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-teal-50 text-teal-700 sm:h-10 sm:w-10">
+    <div className="flex w-full min-w-0 flex-row items-center gap-3 rounded-xl bg-white px-4 py-3.5 text-left shadow-md sm:h-28 sm:flex-col sm:justify-center sm:px-2 sm:py-0 sm:text-center lg:h-32">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-teal-50 text-teal-700 sm:h-10 sm:w-10">
         {icon}
       </div>
-      <p className="mt-1.5 px-1 text-xs font-medium leading-snug text-slate-700 sm:text-sm">
+      <p className="min-w-0 text-sm font-medium leading-snug text-slate-700 sm:mt-1.5 sm:px-1 sm:text-xs lg:text-sm">
         {label}
       </p>
     </div>

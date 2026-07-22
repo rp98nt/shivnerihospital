@@ -48,7 +48,7 @@ export function OurSpecialties() {
           Our Specialties
         </h2>
 
-        <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-10 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
+        <div className="mt-6 grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:mt-10 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
           {SPECIALTIES.map((specialty) => (
             <SpecialtyCard key={specialty.name} specialty={specialty} />
           ))}
@@ -62,12 +62,12 @@ function SpecialtyCard({ specialty }: { specialty: Specialty }) {
   return (
     <Link
       href={specialty.href}
-      className="group flex aspect-square flex-col items-center justify-center rounded-2xl border-2 border-blue-800 bg-white px-2 py-4 text-blue-800 shadow-sm transition duration-300 hover:bg-blue-800 hover:text-white hover:shadow-lg sm:px-3 sm:py-5"
+      className="group flex min-h-[5.5rem] flex-row items-center gap-4 rounded-2xl border-2 border-blue-800 bg-white px-4 py-4 text-blue-800 shadow-sm transition duration-300 hover:bg-blue-800 hover:text-white hover:shadow-lg sm:aspect-square sm:min-h-0 sm:flex-col sm:justify-center sm:px-3 sm:py-5"
     >
-      <div className="flex h-14 w-14 items-center justify-center sm:h-16 sm:w-16">
+      <div className="flex h-12 w-12 shrink-0 items-center justify-center sm:h-16 sm:w-16">
         {specialty.icon}
       </div>
-      <p className="mt-3 px-1 text-center text-xs font-medium leading-snug sm:text-sm">
+      <p className="min-w-0 text-left text-sm font-medium leading-snug sm:mt-3 sm:px-1 sm:text-center sm:text-xs lg:text-sm">
         {specialty.name}
       </p>
     </Link>
