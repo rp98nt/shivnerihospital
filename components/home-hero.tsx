@@ -1,6 +1,7 @@
 "use client";
 
 import { InsurancePartners } from "@/components/insurance-partners";
+import { OurSpecialties } from "@/components/our-specialties";
 import { FormEvent, useState, type ReactNode } from "react";
 
 export function HomeHero() {
@@ -108,6 +109,7 @@ export function HomeHero() {
       </section>
 
       <InsurancePartners />
+      <OurSpecialties />
     </>
   );
 }
