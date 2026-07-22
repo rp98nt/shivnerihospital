@@ -50,7 +50,7 @@ export function InsurancePartners() {
 
 function InsurancePartnerCard({ partner }: { partner: InsurancePartner }) {
   return (
-    <article className="insurance-partner-card group relative z-0 flex h-[6.4rem] w-56 shrink-0 origin-center items-center justify-center rounded-xl border border-slate-100 bg-white px-5 py-3 shadow-md hover:z-10 hover:shadow-xl sm:h-[7.2rem] sm:w-[15.4rem] sm:px-6 sm:py-3.5">
+    <article className="insurance-partner-card group relative flex shrink-0 items-center justify-center rounded-xl border border-slate-100 bg-white px-5 py-3 shadow-md hover:shadow-xl sm:px-6 sm:py-3.5">
       <Image
         src={partner.logo}
         alt={partner.name}

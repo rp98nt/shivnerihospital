@@ -92,14 +92,30 @@ body {
 }
 
 .insurance-partner-card {
-  transform: scale(1);
+  flex-shrink: 0;
+  width: 14rem;
+  height: 6.4rem;
   transition:
-    transform 0.45s ease-in-out,
+    width 0.45s ease-in-out,
+    height 0.45s ease-in-out,
     box-shadow 0.45s ease-in-out;
 }
 
 .insurance-partner-card:hover {
-  transform: scale(1.2);
+  width: 16.8rem;
+  height: 7.68rem;
+}
+
+@media (min-width: 640px) {
+  .insurance-partner-card {
+    width: 15.4rem;
+    height: 7.2rem;
+  }
+
+  .insurance-partner-card:hover {
+    width: 18.48rem;
+    height: 8.64rem;
+  }
 }
 
 @keyframes doctors-carousel-scroll {
@@ -152,7 +168,15 @@ body {
   }
 
   .insurance-partner-card:hover {
-    transform: none;
+    width: 14rem;
+    height: 6.4rem;
+  }
+
+  @media (min-width: 640px) {
+    .insurance-partner-card:hover {
+      width: 15.4rem;
+      height: 7.2rem;
+    }
   }
 
   .doctors-carousel-track {
