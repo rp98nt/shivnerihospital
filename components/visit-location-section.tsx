@@ -2,41 +2,53 @@ import { VISIT_LOCATION } from "@/lib/hospital-contact";
 
 export function VisitLocationSection() {
   return (
-    <section className="grid min-h-[360px] grid-cols-1 lg:min-h-[420px] lg:grid-cols-2">
-      <div className="flex flex-col justify-center bg-linear-to-r from-amber-200 via-orange-200 to-rose-300 px-8 py-10 sm:px-12 sm:py-14 lg:px-16 lg:py-16">
-        <h2 className="max-w-lg text-2xl font-bold leading-tight text-slate-900 sm:text-3xl lg:text-4xl">
-          {VISIT_LOCATION.heading}
-        </h2>
+    <section className="border-t border-slate-200 bg-slate-50 py-10 sm:py-14">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-md">
+          <div className="grid min-h-[360px] grid-cols-1 lg:min-h-[420px] lg:grid-cols-2">
+            <div className="relative flex flex-col justify-center overflow-hidden bg-linear-to-br from-teal-100 via-teal-50 to-emerald-100 px-8 py-10 sm:px-10 sm:py-12 lg:px-12 lg:py-14">
+              <div className="pointer-events-none absolute -right-10 top-0 h-32 w-32 rounded-full bg-teal-300/30 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-8 left-0 h-24 w-24 rounded-full bg-emerald-300/25 blur-2xl" />
 
-        <div className="mt-8 space-y-5">
-          <div className="flex items-start gap-3">
-            <LocationPinIcon className="mt-0.5 h-5 w-5 shrink-0 text-slate-900" />
-            <p className="text-sm leading-relaxed text-slate-900 sm:text-base">
-              {VISIT_LOCATION.address}
-            </p>
-          </div>
+              <div className="relative">
+                <h2 className="max-w-lg text-2xl font-bold leading-tight text-slate-900 sm:text-3xl">
+                  Visit Our{" "}
+                  <span className="text-teal-800">Parbhani Center Clinic</span>
+                </h2>
 
-          <div className="flex items-center gap-3">
-            <PhoneIcon className="h-5 w-5 shrink-0 text-slate-900" />
-            <a
-              href={`tel:${VISIT_LOCATION.phoneTel}`}
-              className="text-sm font-medium text-slate-900 transition hover:text-teal-900 sm:text-base"
-            >
-              {VISIT_LOCATION.phone}
-            </a>
+                <div className="mt-8 space-y-5">
+                  <div className="flex items-start gap-3">
+                    <LocationPinIcon className="mt-0.5 h-5 w-5 shrink-0 text-teal-800" />
+                    <p className="text-sm leading-relaxed text-slate-700 sm:text-base">
+                      {VISIT_LOCATION.address}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <PhoneIcon className="h-5 w-5 shrink-0 text-teal-800" />
+                    <a
+                      href={`tel:${VISIT_LOCATION.phoneTel}`}
+                      className="text-sm font-medium text-slate-800 transition hover:text-teal-900 sm:text-base"
+                    >
+                      {VISIT_LOCATION.phone}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative min-h-[320px] w-full sm:min-h-[360px] lg:min-h-full">
+              <iframe
+                src={VISIT_LOCATION.mapsEmbedSrc}
+                title={`${VISIT_LOCATION.heading} map`}
+                loading="lazy"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                className="absolute inset-0 h-full w-full border-0"
+              />
+            </div>
           </div>
         </div>
-      </div>
-
-      <div className="relative min-h-[320px] w-full sm:min-h-[360px] lg:min-h-full">
-        <iframe
-          src={VISIT_LOCATION.mapsEmbedSrc}
-          title={`${VISIT_LOCATION.heading} map`}
-          loading="lazy"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allowFullScreen
-          className="absolute inset-0 h-full w-full border-0"
-        />
       </div>
     </section>
   );
