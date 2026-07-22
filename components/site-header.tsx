@@ -45,12 +45,8 @@ export function SiteHeader() {
             <MobileNav />
           </div>
 
-          <div className="mt-3 lg:hidden">
-            <TopBarContactGroup layout="mobile" />
-          </div>
-
-          <div className="hidden lg:block">
-            <TopBarContactGroup layout="desktop" />
+          <div className="mt-3 lg:mt-0 lg:shrink-0">
+            <TopBarContactGroup />
           </div>
         </div>
       </div>
@@ -66,24 +62,15 @@ export function SiteHeader() {
   );
 }
 
-function TopBarContactGroup({ layout }: { layout: "mobile" | "desktop" }) {
-  const isMobile = layout === "mobile";
-
+function TopBarContactGroup() {
   return (
-    <div
-      className={`flex items-stretch rounded-2xl border border-slate-100 bg-slate-50 ${
-        isMobile ? "gap-1 p-2" : "gap-4 px-4 py-2.5"
-      }`}
-    >
+    <div className="flex items-stretch gap-1 rounded-2xl border border-slate-100 bg-slate-50 p-2 lg:gap-4 lg:px-4 lg:py-2.5">
       <TopBarPhoneContact
         icon={<EmergencyIcon className="h-4 w-4 text-red-600" />}
         title="For Emergency"
         phone={EMERGENCY_MOBILE}
         phoneTel={EMERGENCY_MOBILE_TEL}
         phoneClassName="hover:text-red-600"
-        compact={isMobile}
-        singleLine
-        className="flex-1"
       />
 
       <span className="w-px shrink-0 self-stretch bg-slate-200" aria-hidden />
@@ -94,8 +81,6 @@ function TopBarContactGroup({ layout }: { layout: "mobile" | "desktop" }) {
         phone={APPOINTMENT_PHONE}
         phoneTel={APPOINTMENT_PHONE_TEL}
         phoneClassName="hover:text-teal-800"
-        compact={isMobile}
-        className="flex-1"
       />
     </div>
   );
@@ -107,52 +92,24 @@ function TopBarPhoneContact({
   phone,
   phoneTel,
   phoneClassName,
-  compact = false,
-  singleLine = false,
-  className = "",
 }: {
   icon: React.ReactNode;
   title: string;
   phone: string;
   phoneTel: string;
   phoneClassName: string;
-  compact?: boolean;
-  singleLine?: boolean;
-  className?: string;
 }) {
   return (
     <a
       href={`tel:${phoneTel}`}
-      className={`flex min-w-0 items-center gap-2 rounded-xl transition-colors hover:bg-white ${className} ${
-        compact ? "px-2 py-2" : "px-1 py-1"
-      }`}
+      className="flex min-w-0 flex-1 items-center gap-2 rounded-xl px-1 py-1 transition-opacity hover:opacity-80"
     >
-      <span
-        className={`flex shrink-0 items-center justify-center rounded-full bg-white shadow-sm ${
-          compact ? "h-8 w-8" : "h-7 w-7"
-        }`}
-      >
+      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white shadow-sm">
         {icon}
       </span>
-      <span
-        className={`min-w-0 font-medium leading-snug text-slate-700 ${
-          singleLine || !compact
-            ? "flex flex-wrap items-center gap-x-1.5 text-sm"
-            : "text-[11px] leading-tight"
-        }`}
-      >
-        <span className={compact && !singleLine ? "block" : "shrink-0"}>
-          {title}
-        </span>
-        <span
-          className={`text-slate-600 transition-colors ${phoneClassName} ${
-            compact && !singleLine
-              ? "mt-0.5 block text-[10px]"
-              : compact
-                ? "text-[10px]"
-                : "text-sm"
-          }`}
-        >
+      <span className="min-w-0 text-[11px] font-medium leading-snug text-slate-700 sm:text-sm">
+        {title}{" "}
+        <span className={`text-slate-600 transition-colors ${phoneClassName}`}>
           {phone}
         </span>
       </span>
