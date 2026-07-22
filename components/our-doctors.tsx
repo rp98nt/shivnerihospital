@@ -96,52 +96,48 @@ export function OurDoctors() {
 function DoctorCard({ doctor }: { doctor: Doctor }) {
   return (
     <article
-      className={`flex w-[19.5rem] shrink-0 flex-col overflow-hidden rounded-2xl bg-white shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-xl sm:w-[21rem] ${
+      className={`flex min-h-[35.625rem] w-[19.5rem] shrink-0 flex-col overflow-hidden rounded-2xl bg-white shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-xl sm:w-[21rem] ${
         doctor.isGuest
           ? "ring-2 ring-amber-300 ring-offset-2 ring-offset-slate-50"
           : "border border-slate-100"
       }`}
     >
-      <div className="flex min-h-[35.625rem]">
-        <div className="relative w-[7.5rem] shrink-0 bg-linear-to-b from-teal-50 to-slate-100 sm:w-[8rem]">
-          <DoctorPhotoPlaceholder />
-          {doctor.isGuest ? (
-            <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-amber-400 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-amber-950 shadow-sm">
-              <StarIcon className="h-3 w-3" />
-              Guest
-            </span>
-          ) : null}
+      <div className="relative min-h-0 flex-[7] bg-linear-to-b from-teal-50 to-slate-100">
+        <DoctorPhotoPlaceholder />
+        {doctor.isGuest ? (
+          <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-amber-400 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-amber-950 shadow-sm">
+            <StarIcon className="h-3 w-3" />
+            Guest
+          </span>
+        ) : null}
+      </div>
+
+      <div className="flex min-h-0 flex-[3] flex-col border-t border-slate-100 px-3 py-3 sm:px-4 sm:py-4">
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0">
+            <h3 className="flex items-start gap-1 text-sm font-bold leading-snug text-slate-900">
+              {doctor.isGuest ? (
+                <StarIcon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-500" />
+              ) : null}
+              <span>{doctor.name}</span>
+            </h3>
+            <p className="mt-0.5 text-xs text-slate-500">{doctor.specialty}</p>
+          </div>
+          <ShareIcon className="h-4 w-4 shrink-0 text-slate-400" />
         </div>
 
-        <div className="flex min-w-0 flex-1 flex-col px-3 py-4 sm:px-4 sm:py-5">
-          <div className="flex items-start justify-between gap-2">
-            <div className="min-w-0">
-              <h3 className="flex items-start gap-1 text-sm font-bold leading-snug text-slate-900 sm:text-[15px]">
-                {doctor.isGuest ? (
-                  <StarIcon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-500" />
-                ) : null}
-                <span>{doctor.name}</span>
-              </h3>
-              <p className="mt-1 text-xs text-slate-500 sm:text-sm">
-                {doctor.specialty}
-              </p>
-            </div>
-            <ShareIcon className="h-4 w-4 shrink-0 text-slate-400" />
-          </div>
+        <p className="mt-2 line-clamp-2 text-[11px] leading-relaxed text-slate-600 sm:text-xs">
+          {doctor.qualifications}
+        </p>
 
-          <p className="mt-4 text-[11px] leading-relaxed text-slate-600 sm:text-xs">
-            {doctor.qualifications}
+        <div className="mt-auto pt-2">
+          <div className="h-px w-full bg-slate-200">
+            <div className="h-px w-1/4 bg-teal-600" />
+          </div>
+          <p className="mt-2 flex items-center gap-1.5 text-[11px] text-slate-500">
+            <LocationIcon className="h-3.5 w-3.5 shrink-0 text-teal-700" />
+            Shivneri Hospital
           </p>
-
-          <div className="mt-auto pt-6">
-            <div className="h-px w-full bg-slate-200">
-              <div className="h-px w-1/4 bg-teal-600" />
-            </div>
-            <p className="mt-3 flex items-center gap-1.5 text-[11px] text-slate-500 sm:text-xs">
-              <LocationIcon className="h-3.5 w-3.5 shrink-0 text-teal-700" />
-              Shivneri Hospital
-            </p>
-          </div>
         </div>
       </div>
     </article>
@@ -152,7 +148,7 @@ function DoctorPhotoPlaceholder() {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-2 p-3 text-teal-700/70">
       <svg
-        className="h-20 w-20 sm:h-24 sm:w-24"
+        className="h-24 w-24 sm:h-28 sm:w-28"
         viewBox="0 0 64 64"
         fill="none"
         aria-hidden
