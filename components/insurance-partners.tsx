@@ -1,0 +1,83 @@
+"use client";
+
+type InsurancePartner = {
+  name: string;
+  abbr: string;
+  accent: string;
+  iconBg: string;
+};
+
+const PARTNERS: InsurancePartner[] = [
+  { name: "Aditya Birla", abbr: "AB", accent: "text-red-700", iconBg: "bg-red-50 ring-red-200" },
+  { name: "ICICI Lombard", abbr: "IL", accent: "text-orange-700", iconBg: "bg-orange-50 ring-orange-200" },
+  { name: "Star Health Insurance", abbr: "SH", accent: "text-blue-700", iconBg: "bg-blue-50 ring-blue-200" },
+  { name: "HDFC Ergo", abbr: "HE", accent: "text-sky-800", iconBg: "bg-sky-50 ring-sky-200" },
+  { name: "Bajaj Allianz", abbr: "BA", accent: "text-indigo-800", iconBg: "bg-indigo-50 ring-indigo-200" },
+  { name: "Care Health", abbr: "CH", accent: "text-emerald-700", iconBg: "bg-emerald-50 ring-emerald-200" },
+  { name: "Indus Ind", abbr: "II", accent: "text-rose-800", iconBg: "bg-rose-50 ring-rose-200" },
+  { name: "Niva Bupa", abbr: "NB", accent: "text-teal-700", iconBg: "bg-teal-50 ring-teal-200" },
+  { name: "Tata AIG", abbr: "TA", accent: "text-blue-800", iconBg: "bg-blue-50 ring-blue-200" },
+  { name: "SBI General", abbr: "SG", accent: "text-cyan-800", iconBg: "bg-cyan-50 ring-cyan-200" },
+  { name: "Zurich Kotak", abbr: "ZK", accent: "text-red-800", iconBg: "bg-red-50 ring-red-200" },
+  { name: "Manipal Cigna", abbr: "MC", accent: "text-green-700", iconBg: "bg-green-50 ring-green-200" },
+  { name: "Liberty General", abbr: "LG", accent: "text-amber-800", iconBg: "bg-amber-50 ring-amber-200" },
+];
+
+export function InsurancePartners() {
+  const carouselItems = [...PARTNERS, ...PARTNERS];
+
+  return (
+    <section className="border-b border-slate-200 bg-white py-10 sm:py-12">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <h2 className="text-center text-xl font-semibold text-slate-800 sm:text-2xl">
+          Insurance <span className="text-teal-800">Partners</span>
+        </h2>
+
+        <div className="insurance-carousel-mask relative mt-8 sm:mt-10">
+          <div className="insurance-carousel-track flex w-max gap-4 sm:gap-5">
+            {carouselItems.map((partner, index) => (
+              <InsurancePartnerCard
+                key={`${partner.name}-${index}`}
+                partner={partner}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function InsurancePartnerCard({ partner }: { partner: InsurancePartner }) {
+  return (
+    <article className="group flex h-40 w-44 shrink-0 flex-col items-center justify-center rounded-xl border border-slate-100 bg-white px-4 py-5 shadow-md transition duration-300 hover:-translate-y-1.5 hover:shadow-xl sm:h-44 sm:w-48">
+      <div
+        className={`flex h-14 w-14 items-center justify-center rounded-full ring-2 ${partner.iconBg}`}
+      >
+        <InsuranceShieldIcon className={`h-7 w-7 ${partner.accent}`} />
+      </div>
+      <p className="mt-1 text-[10px] font-bold uppercase tracking-wide text-slate-400">
+        {partner.abbr}
+      </p>
+      <p className="mt-1 px-1 text-center text-sm font-semibold leading-snug text-slate-800">
+        {partner.name}
+      </p>
+    </article>
+  );
+}
+
+function InsuranceShieldIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      aria-hidden
+    >
+      <path d="M12 2 4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z" />
+      <path d="M9 12l2 2 4-4" />
+    </svg>
+  );
+}

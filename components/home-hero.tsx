@@ -1,5 +1,6 @@
 "use client";
 
+import { InsurancePartners } from "@/components/insurance-partners";
 import { FormEvent, useState, type ReactNode } from "react";
 
 export function HomeHero() {
@@ -106,14 +107,7 @@ export function HomeHero() {
         </div>
       </section>
 
-      <section className="border-b border-slate-200 bg-white py-10 sm:py-12">
-        <div className="mx-auto max-w-6xl px-4 text-center sm:px-6">
-          <h2 className="text-xl font-semibold text-slate-800 sm:text-2xl">
-            How to Skip the Wait Time at{" "}
-            <span className="text-teal-800">Shivneri Hospital</span>
-          </h2>
-        </div>
-      </section>
+      <InsurancePartners />
     </>
   );
 }
