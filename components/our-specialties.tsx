@@ -44,8 +44,8 @@ export function OurSpecialties() {
   return (
     <section className="border-b border-slate-200 bg-white py-10 sm:py-12">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <h2 className="text-center text-2xl font-bold text-blue-900 sm:text-3xl">
-          Our Specialties
+        <h2 className="text-center text-2xl font-bold text-teal-900 sm:text-3xl">
+          Our <span className="text-teal-700">Specialties</span>
         </h2>
 
         <div className="mt-6 grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:mt-10 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
@@ -62,7 +62,7 @@ function SpecialtyCard({ specialty }: { specialty: Specialty }) {
   return (
     <Link
       href={specialty.href}
-      className="group flex min-h-[5.5rem] flex-row items-center gap-4 rounded-2xl border-2 border-blue-800 bg-white px-4 py-4 text-blue-800 shadow-sm transition duration-300 hover:bg-blue-800 hover:text-white hover:shadow-lg sm:aspect-square sm:min-h-0 sm:flex-col sm:justify-center sm:px-3 sm:py-5"
+      className="group flex min-h-[5.5rem] flex-row items-center gap-4 rounded-2xl border-2 border-teal-700 bg-white px-4 py-4 text-teal-800 shadow-sm transition duration-300 hover:bg-teal-800 hover:text-white hover:shadow-lg sm:aspect-square sm:min-h-0 sm:flex-col sm:justify-center sm:px-3 sm:py-5"
     >
       <div className="flex h-12 w-12 shrink-0 items-center justify-center sm:h-16 sm:w-16">
         {specialty.icon}
