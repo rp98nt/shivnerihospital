@@ -3,10 +3,10 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-const MIN_SPLASH_MS = 650;
-const FILL_MS = 900;
-const HOLD_MS = 400;
-const FADE_OUT_MS = 300;
+const MIN_SPLASH_MS = 750;
+const FILL_MS = 1050;
+const HOLD_MS = 500;
+const FADE_OUT_MS = 350;
 const LOGO_OPACITY_START = 0.25;
 const LOGO_OPACITY_END = 0.6;
 
@@ -68,7 +68,7 @@ export function PageLoader() {
   return (
     <div
       id="page-loader"
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-slate-50 transition-opacity duration-300 ease-out ${
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-slate-50 transition-opacity ease-out duration-[350ms] ${
         phase === "exit" ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
       aria-hidden="true"
