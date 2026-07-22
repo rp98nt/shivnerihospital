@@ -102,7 +102,7 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
           : "border border-slate-100"
       }`}
     >
-      <div className="flex min-h-[23.75rem]">
+      <div className="flex min-h-[35.625rem]">
         <div className="relative w-[7.5rem] shrink-0 bg-linear-to-b from-teal-50 to-slate-100 sm:w-[8rem]">
           <DoctorPhotoPlaceholder />
           {doctor.isGuest ? (
