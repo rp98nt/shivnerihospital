@@ -196,10 +196,6 @@ function TopBarContact({
 }
 
 function NavDropdown({ label, items }: { label: string; items: NavEntry[] }) {
-  const isMultiColumn =
-    label === "Specialities" || label === "Super Specialities";
-  const alignWithTab = label === "About us" || label === "Patient Guide";
-
   return (
     <div className="group relative min-w-0 flex-1">
       <button
@@ -212,21 +208,10 @@ function NavDropdown({ label, items }: { label: string; items: NavEntry[] }) {
         <ChevronDownIcon className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:rotate-180" />
       </button>
 
-      <div
-        className={`pointer-events-none absolute top-full z-50 overflow-visible rounded-b-lg border border-slate-200 bg-white py-1 text-slate-700 opacity-0 shadow-lg transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100 ${
-          alignWithTab
-            ? "left-0 w-full"
-            : `left-1/2 -translate-x-1/2 ${
-                isMultiColumn ? "min-w-[28rem]" : "min-w-[17rem]"
-              }`
-        }`}
-      >
-        <ul className={isMultiColumn ? "grid grid-cols-2" : undefined}>
+      <div className="pointer-events-none absolute left-0 top-full z-50 w-full overflow-visible rounded-b-lg border border-slate-200 bg-white py-1 text-slate-700 opacity-0 shadow-lg transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
+        <ul>
           {items.map((item) => (
-            <li
-              key={item.label}
-              className={isNavGroup(item) ? "col-span-2" : undefined}
-            >
+            <li key={item.label}>
               {isNavGroup(item) ? (
                 <NavSubmenu item={item} />
               ) : (
