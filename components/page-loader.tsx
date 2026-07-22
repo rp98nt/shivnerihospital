@@ -3,51 +3,67 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-const MIN_SPLASH_MS = 450;
-const FILL_MS = 450;
+const MIN_SPLASH_MS = 650;
+const FILL_MS = 900;
+const HOLD_MS = 400;
 const FADE_OUT_MS = 300;
 const LOGO_OPACITY_START = 0.25;
 const LOGO_OPACITY_END = 0.6;
 
 export function PageLoader() {
   const [phase, setPhase] = useState<
-    "loading" | "filling" | "exit" | "done"
+    "loading" | "filling" | "holding" | "exit" | "done"
   >("loading");
 
   useEffect(() => {
     const startedAt = performance.now();
+    const timeouts: number[] = [];
+
+    function schedule(fn: () => void, delay: number) {
+      timeouts.push(window.setTimeout(fn, delay));
+    }
 
     function complete() {
       const elapsed = performance.now() - startedAt;
       const waitBeforeFill = Math.max(0, MIN_SPLASH_MS - elapsed);
 
-      window.setTimeout(() => {
+      schedule(() => {
         setPhase("filling");
 
-        window.setTimeout(() => {
-          document.documentElement.classList.remove("loading");
-          document.documentElement.classList.add("app-ready");
-          setPhase("exit");
+        schedule(() => {
+          setPhase("holding");
 
-          window.setTimeout(() => {
-            setPhase("done");
-          }, FADE_OUT_MS);
+          schedule(() => {
+            document.documentElement.classList.remove("loading");
+            document.documentElement.classList.add("app-ready");
+            setPhase("exit");
+
+            schedule(() => {
+              setPhase("done");
+            }, FADE_OUT_MS);
+          }, HOLD_MS);
         }, FILL_MS);
       }, waitBeforeFill);
     }
 
     if (document.readyState === "complete") {
       complete();
-      return;
+    } else {
+      window.addEventListener("load", complete, { once: true });
     }
 
-    window.addEventListener("load", complete, { once: true });
-    return () => window.removeEventListener("load", complete);
+    return () => {
+      window.removeEventListener("load", complete);
+      timeouts.forEach((id) => window.clearTimeout(id));
+    };
   }, []);
 
   if (phase === "done") {
     return null;
   }
+
+  const showFilledLogo =
+    phase === "filling" || phase === "holding" || phase === "exit";
 
   return (
     <div
@@ -57,7 +73,7 @@ export function PageLoader() {
       }`}
       aria-hidden="true"
     >
-      <LogoWaterFill filling={phase === "filling" || phase === "exit"} />
+      <LogoWaterFill filling={showFilledLogo} />
     </div>
   );
 }
@@ -65,7 +81,7 @@ export function PageLoader() {
 function LogoWaterFill({ filling }: { filling: boolean }) {
   return (
     <div
-      className="relative h-36 w-36 sm:h-[168px] sm:w-[168px]"
+      className="relative h-[216px] w-[216px] sm:h-[252px] sm:w-[252px]"
       style={
         {
           "--logo-fill-duration": `${FILL_MS}ms`,
@@ -77,7 +93,7 @@ function LogoWaterFill({ filling }: { filling: boolean }) {
         alt=""
         fill
         priority
-        sizes="(max-width: 640px) 144px, 168px"
+        sizes="(max-width: 640px) 216px, 252px"
         className="object-contain"
         style={{ opacity: LOGO_OPACITY_START }}
       />
@@ -91,7 +107,7 @@ function LogoWaterFill({ filling }: { filling: boolean }) {
           alt=""
           fill
           priority
-          sizes="(max-width: 640px) 144px, 168px"
+          sizes="(max-width: 640px) 216px, 252px"
           className="object-contain"
           style={{ opacity: LOGO_OPACITY_END }}
         />
