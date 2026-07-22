@@ -11,7 +11,8 @@ type InsurancePartner = {
   iconBg: string;
   icon: IconVariant;
   logo?: string;
-  logoSize?: "standard" | "large";
+  /** Multiplier on the default large logo size (ICICI 1.3×, Care/Bajaj 1.5×). */
+  logoScale?: number;
 };
 
 const PARTNERS: InsurancePartner[] = [
@@ -23,7 +24,7 @@ const PARTNERS: InsurancePartner[] = [
     iconBg: "bg-orange-50 ring-orange-200",
     icon: "shield",
     logo: "/insurance-partners/icici-lombard.png",
-    logoSize: "large",
+    logoScale: 1.3,
   },
   { name: "Star Health Insurance", abbr: "SH", accent: "text-blue-700", iconBg: "bg-blue-50 ring-blue-200", icon: "shield" },
   {
@@ -41,7 +42,7 @@ const PARTNERS: InsurancePartner[] = [
     iconBg: "bg-indigo-50 ring-indigo-200",
     icon: "shield",
     logo: "/insurance-partners/bajaj-allianz.png",
-    logoSize: "large",
+    logoScale: 1.5,
   },
   {
     name: "Care Health",
@@ -50,7 +51,7 @@ const PARTNERS: InsurancePartner[] = [
     iconBg: "bg-emerald-50 ring-emerald-200",
     icon: "shield",
     logo: "/insurance-partners/care-health.png",
-    logoSize: "large",
+    logoScale: 1.5,
   },
   { name: "Indus Ind", abbr: "II", accent: "text-rose-800", iconBg: "bg-rose-50 ring-rose-200", icon: "shield" },
   { name: "Niva Bupa", abbr: "NB", accent: "text-teal-700", iconBg: "bg-teal-50 ring-teal-200", icon: "shield" },
@@ -87,27 +88,48 @@ export function InsurancePartners() {
   );
 }
 
+const LOGO_SIZING = {
+  standard: {
+    container: "h-24 sm:h-28",
+    image: "h-20 w-full max-w-[11rem] object-contain sm:h-24 sm:max-w-[12rem]",
+    card: "h-44 w-48 sm:h-48 sm:w-52",
+  },
+  scaled130: {
+    container: "h-36 sm:h-[10.4rem]",
+    image:
+      "h-[7.8rem] w-full max-w-[16.25rem] object-contain sm:h-[9.1rem] sm:max-w-[17.55rem]",
+    card: "h-52 w-52 sm:h-56 sm:w-56",
+  },
+  scaled150: {
+    container: "h-42 sm:h-48",
+    image:
+      "h-36 w-full max-w-[18.75rem] object-contain sm:h-42 sm:max-w-[20.25rem]",
+    card: "h-56 w-56 sm:h-60 sm:w-60",
+  },
+} as const;
+
+function getLogoSizing(partner: InsurancePartner) {
+  if (!partner.logo) return LOGO_SIZING.standard;
+  if (partner.logoScale === 1.5) return LOGO_SIZING.scaled150;
+  if (partner.logoScale === 1.3) return LOGO_SIZING.scaled130;
+  return LOGO_SIZING.standard;
+}
+
 function InsurancePartnerCard({ partner }: { partner: InsurancePartner }) {
-  const isLargeLogo = partner.logoSize === "large";
+  const sizing = getLogoSizing(partner);
 
   return (
-    <article className="group flex h-44 w-48 shrink-0 flex-col items-center justify-center rounded-xl border border-slate-100 bg-white px-3 py-4 shadow-md transition duration-300 hover:-translate-y-1.5 hover:shadow-xl sm:h-48 sm:w-52 sm:px-4 sm:py-5">
-      <div
-        className={`flex w-full items-center justify-center ${
-          isLargeLogo ? "h-28 sm:h-32" : "h-24 sm:h-28"
-        }`}
-      >
+    <article
+      className={`group flex shrink-0 flex-col items-center justify-center rounded-xl border border-slate-100 bg-white px-3 py-4 shadow-md transition duration-300 hover:-translate-y-1.5 hover:shadow-xl sm:px-4 sm:py-5 ${sizing.card}`}
+    >
+      <div className={`flex w-full items-center justify-center ${sizing.container}`}>
         {partner.logo ? (
           <Image
             src={partner.logo}
             alt=""
             width={208}
             height={128}
-            className={
-              isLargeLogo
-                ? "h-24 w-full max-w-[12.5rem] object-contain sm:h-28 sm:max-w-[13.5rem]"
-                : "h-20 w-full max-w-[11rem] object-contain sm:h-24 sm:max-w-[12rem]"
-            }
+            className={sizing.image}
           />
         ) : partner.icon === "accreditation" ? (
           <AccreditationIcon className={`h-12 w-12 sm:h-14 sm:w-14 ${partner.accent}`} />
