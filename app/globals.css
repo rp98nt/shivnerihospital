@@ -91,19 +91,15 @@ body {
   animation-play-state: paused;
 }
 
-@media (hover: hover) {
-  .insurance-partner-logo {
-    filter: grayscale(100%);
-    opacity: 0.6;
-    transition:
-      filter 0.35s ease,
-      opacity 0.35s ease;
-  }
+.insurance-partner-card {
+  transform: scale(1);
+  transition:
+    transform 0.45s ease-in-out,
+    box-shadow 0.45s ease-in-out;
+}
 
-  .insurance-partner-card:hover .insurance-partner-logo {
-    filter: grayscale(0%);
-    opacity: 1;
-  }
+.insurance-partner-card:hover {
+  transform: scale(1.2);
 }
 
 @keyframes doctors-carousel-scroll {
@@ -151,9 +147,12 @@ body {
     overflow: visible;
   }
 
-  .insurance-partner-logo {
-    filter: none;
-    opacity: 1;
+  .insurance-partner-card {
+    transition: none;
+  }
+
+  .insurance-partner-card:hover {
+    transform: none;
   }
 
   .doctors-carousel-track {
