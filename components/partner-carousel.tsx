@@ -16,6 +16,7 @@ type PartnerCarouselProps = {
   partners: PartnerCarouselItem[];
   direction?: "ltr" | "rtl";
   spacing?: "first" | "middle" | "last";
+  grouped?: boolean;
   className?: string;
 };
 
@@ -37,6 +38,7 @@ export function PartnerCarousel({
   partners,
   direction = "rtl",
   spacing = "middle",
+  grouped = false,
   className = "",
 }: PartnerCarouselProps) {
   const carouselItems = [...partners, ...partners];
@@ -46,27 +48,41 @@ export function PartnerCarousel({
       : "partner-carousel-track--rtl";
   const scrollDuration = getPartnerCarouselDuration(partners.length);
 
-  return (
-    <section className={`bg-white ${SPACING_CLASSES[spacing]} ${className}`.trim()}>
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <h2 className="text-center text-xl font-semibold text-slate-800 sm:text-2xl">
-          {heading}
-        </h2>
+  const content = (
+    <>
+      <h2 className="text-center text-xl font-semibold text-slate-800 sm:text-2xl">
+        {heading}
+      </h2>
 
-        <div className="partner-carousel-mask relative mt-8 sm:mt-10">
-          <div
-            className={`partner-carousel-track flex w-max gap-4 sm:gap-5 ${trackDirectionClass}`}
-            style={{ animationDuration: `${scrollDuration}s` }}
-          >
-            {carouselItems.map((partner, index) => (
-              <PartnerCarouselCard
-                key={`${partner.name}-${index}`}
-                partner={partner}
-              />
-            ))}
-          </div>
+      <div className="partner-carousel-mask relative mt-8 sm:mt-10">
+        <div
+          className={`partner-carousel-track flex w-max gap-4 sm:gap-5 ${trackDirectionClass}`}
+          style={{ animationDuration: `${scrollDuration}s` }}
+        >
+          {carouselItems.map((partner, index) => (
+            <PartnerCarouselCard
+              key={`${partner.name}-${index}`}
+              partner={partner}
+            />
+          ))}
         </div>
       </div>
+    </>
+  );
+
+  if (grouped) {
+    return (
+      <div
+        className={`px-4 py-8 sm:px-6 sm:py-10 ${className}`.trim()}
+      >
+        {content}
+      </div>
+    );
+  }
+
+  return (
+    <section className={`bg-white ${SPACING_CLASSES[spacing]} ${className}`.trim()}>
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">{content}</div>
     </section>
   );
 }

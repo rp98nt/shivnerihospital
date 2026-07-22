@@ -37,7 +37,7 @@ export function HomePartnerCarousels() {
         }
         partners={FINANCE_PARTNERS}
         direction="ltr"
-        spacing="middle"
+        grouped
       />
       <PartnerCarousel
         heading={
@@ -47,7 +47,7 @@ export function HomePartnerCarousels() {
         }
         partners={QUALITY_PARTNERS}
         direction="rtl"
-        spacing="middle"
+        grouped
       />
       <PartnerCarousel
         heading={
@@ -57,7 +57,7 @@ export function HomePartnerCarousels() {
         }
         partners={RESEARCH_PARTNERS}
         direction="ltr"
-        spacing="last"
+        grouped
       />
     </>
   );

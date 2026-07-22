@@ -28,7 +28,7 @@ export function InsurancePartners() {
       }
       partners={PARTNERS}
       direction="rtl"
-      spacing="first"
+      grouped
     />
   );
 }

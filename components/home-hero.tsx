@@ -1,7 +1,6 @@
 "use client";
 
-import { HomePartnerCarousels } from "@/components/home-partner-carousels";
-import { InsurancePartners } from "@/components/insurance-partners";
+import { PartnerCarouselsGroup } from "@/components/partner-carousels-group";
 import { OurDoctors } from "@/components/our-doctors";
 import { OurSpecialties } from "@/components/our-specialties";
 import { FormEvent, useState, type ReactNode } from "react";
@@ -115,10 +114,7 @@ export function HomeHero() {
         </div>
       </section>
 
-      <div className="border-b border-slate-200 bg-white">
-        <InsurancePartners />
-        <HomePartnerCarousels />
-      </div>
+      <PartnerCarouselsGroup />
       <OurSpecialties />
       <OurDoctors />
     </>
