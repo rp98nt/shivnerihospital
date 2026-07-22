@@ -1,26 +1,30 @@
 "use client";
 
+type IconVariant = "shield" | "accreditation";
+
 type InsurancePartner = {
   name: string;
   abbr: string;
   accent: string;
   iconBg: string;
+  icon: IconVariant;
 };
 
 const PARTNERS: InsurancePartner[] = [
-  { name: "Aditya Birla", abbr: "AB", accent: "text-red-700", iconBg: "bg-red-50 ring-red-200" },
-  { name: "ICICI Lombard", abbr: "IL", accent: "text-orange-700", iconBg: "bg-orange-50 ring-orange-200" },
-  { name: "Star Health Insurance", abbr: "SH", accent: "text-blue-700", iconBg: "bg-blue-50 ring-blue-200" },
-  { name: "HDFC Ergo", abbr: "HE", accent: "text-sky-800", iconBg: "bg-sky-50 ring-sky-200" },
-  { name: "Bajaj Allianz", abbr: "BA", accent: "text-indigo-800", iconBg: "bg-indigo-50 ring-indigo-200" },
-  { name: "Care Health", abbr: "CH", accent: "text-emerald-700", iconBg: "bg-emerald-50 ring-emerald-200" },
-  { name: "Indus Ind", abbr: "II", accent: "text-rose-800", iconBg: "bg-rose-50 ring-rose-200" },
-  { name: "Niva Bupa", abbr: "NB", accent: "text-teal-700", iconBg: "bg-teal-50 ring-teal-200" },
-  { name: "Tata AIG", abbr: "TA", accent: "text-blue-800", iconBg: "bg-blue-50 ring-blue-200" },
-  { name: "SBI General", abbr: "SG", accent: "text-cyan-800", iconBg: "bg-cyan-50 ring-cyan-200" },
-  { name: "Zurich Kotak", abbr: "ZK", accent: "text-red-800", iconBg: "bg-red-50 ring-red-200" },
-  { name: "Manipal Cigna", abbr: "MC", accent: "text-green-700", iconBg: "bg-green-50 ring-green-200" },
-  { name: "Liberty General", abbr: "LG", accent: "text-amber-800", iconBg: "bg-amber-50 ring-amber-200" },
+  { name: "Aditya Birla", abbr: "AB", accent: "text-red-700", iconBg: "bg-red-50 ring-red-200", icon: "shield" },
+  { name: "ICICI Lombard", abbr: "IL", accent: "text-orange-700", iconBg: "bg-orange-50 ring-orange-200", icon: "shield" },
+  { name: "Star Health Insurance", abbr: "SH", accent: "text-blue-700", iconBg: "bg-blue-50 ring-blue-200", icon: "shield" },
+  { name: "HDFC Ergo", abbr: "HE", accent: "text-sky-800", iconBg: "bg-sky-50 ring-sky-200", icon: "shield" },
+  { name: "Bajaj Allianz", abbr: "BA", accent: "text-indigo-800", iconBg: "bg-indigo-50 ring-indigo-200", icon: "shield" },
+  { name: "Care Health", abbr: "CH", accent: "text-emerald-700", iconBg: "bg-emerald-50 ring-emerald-200", icon: "shield" },
+  { name: "Indus Ind", abbr: "II", accent: "text-rose-800", iconBg: "bg-rose-50 ring-rose-200", icon: "shield" },
+  { name: "Niva Bupa", abbr: "NB", accent: "text-teal-700", iconBg: "bg-teal-50 ring-teal-200", icon: "shield" },
+  { name: "Tata AIG", abbr: "TA", accent: "text-blue-800", iconBg: "bg-blue-50 ring-blue-200", icon: "shield" },
+  { name: "SBI General", abbr: "SG", accent: "text-cyan-800", iconBg: "bg-cyan-50 ring-cyan-200", icon: "shield" },
+  { name: "Zurich Kotak", abbr: "ZK", accent: "text-red-800", iconBg: "bg-red-50 ring-red-200", icon: "shield" },
+  { name: "Manipal Cigna", abbr: "MC", accent: "text-green-700", iconBg: "bg-green-50 ring-green-200", icon: "shield" },
+  { name: "Liberty General", abbr: "LG", accent: "text-amber-800", iconBg: "bg-amber-50 ring-amber-200", icon: "shield" },
+  { name: "NABH Accreditation", abbr: "NABH", accent: "text-violet-800", iconBg: "bg-violet-50 ring-violet-200", icon: "accreditation" },
 ];
 
 export function InsurancePartners() {
@@ -54,7 +58,11 @@ function InsurancePartnerCard({ partner }: { partner: InsurancePartner }) {
       <div
         className={`flex h-14 w-14 items-center justify-center rounded-full ring-2 ${partner.iconBg}`}
       >
-        <InsuranceShieldIcon className={`h-7 w-7 ${partner.accent}`} />
+        {partner.icon === "accreditation" ? (
+          <AccreditationIcon className={`h-7 w-7 ${partner.accent}`} />
+        ) : (
+          <InsuranceShieldIcon className={`h-7 w-7 ${partner.accent}`} />
+        )}
       </div>
       <p className="mt-1 text-[10px] font-bold uppercase tracking-wide text-slate-400">
         {partner.abbr}
@@ -63,6 +71,23 @@ function InsurancePartnerCard({ partner }: { partner: InsurancePartner }) {
         {partner.name}
       </p>
     </article>
+  );
+}
+
+function AccreditationIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      aria-hidden
+    >
+      <circle cx="12" cy="9" r="5" />
+      <path d="M8.5 14 7 22l5-2 5 2-1.5-8" />
+      <path d="M10 9h4M12 7v4" />
+    </svg>
   );
 }
 
