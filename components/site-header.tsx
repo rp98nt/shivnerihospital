@@ -82,6 +82,7 @@ function TopBarContactGroup({ layout }: { layout: "mobile" | "desktop" }) {
         phoneTel={EMERGENCY_MOBILE_TEL}
         phoneClassName="hover:text-red-600"
         compact={isMobile}
+        singleLine
         className="flex-1"
       />
 
@@ -107,6 +108,7 @@ function TopBarPhoneContact({
   phoneTel,
   phoneClassName,
   compact = false,
+  singleLine = false,
   className = "",
 }: {
   icon: React.ReactNode;
@@ -115,6 +117,7 @@ function TopBarPhoneContact({
   phoneTel: string;
   phoneClassName: string;
   compact?: boolean;
+  singleLine?: boolean;
   className?: string;
 }) {
   return (
@@ -132,14 +135,22 @@ function TopBarPhoneContact({
         {icon}
       </span>
       <span
-        className={`min-w-0 font-medium text-slate-700 ${
-          compact ? "text-[11px] leading-tight" : "flex items-center gap-2 text-sm"
+        className={`min-w-0 font-medium leading-snug text-slate-700 ${
+          singleLine || !compact
+            ? "flex flex-wrap items-center gap-x-1.5 text-sm"
+            : "text-[11px] leading-tight"
         }`}
       >
-        <span className={compact ? "block" : "shrink-0"}>{title}</span>
+        <span className={compact && !singleLine ? "block" : "shrink-0"}>
+          {title}
+        </span>
         <span
-          className={`block text-slate-600 transition-colors ${phoneClassName} ${
-            compact ? "mt-0.5 text-[10px]" : "text-sm"
+          className={`text-slate-600 transition-colors ${phoneClassName} ${
+            compact && !singleLine
+              ? "mt-0.5 block text-[10px]"
+              : compact
+                ? "text-[10px]"
+                : "text-sm"
           }`}
         >
           {phone}
