@@ -4,27 +4,36 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const MIN_SPLASH_MS = 450;
+const FILL_MS = 450;
 const FADE_OUT_MS = 300;
+const LOGO_OPACITY_START = 0.25;
+const LOGO_OPACITY_END = 0.6;
 
 export function PageLoader() {
-  const [phase, setPhase] = useState<"splash" | "exit" | "done">("splash");
+  const [phase, setPhase] = useState<
+    "loading" | "filling" | "exit" | "done"
+  >("loading");
 
   useEffect(() => {
     const startedAt = performance.now();
 
     function complete() {
       const elapsed = performance.now() - startedAt;
-      const remaining = Math.max(0, MIN_SPLASH_MS - elapsed);
+      const waitBeforeFill = Math.max(0, MIN_SPLASH_MS - elapsed);
 
       window.setTimeout(() => {
-        document.documentElement.classList.remove("loading");
-        document.documentElement.classList.add("app-ready");
-        setPhase("exit");
+        setPhase("filling");
 
         window.setTimeout(() => {
-          setPhase("done");
-        }, FADE_OUT_MS);
-      }, remaining);
+          document.documentElement.classList.remove("loading");
+          document.documentElement.classList.add("app-ready");
+          setPhase("exit");
+
+          window.setTimeout(() => {
+            setPhase("done");
+          }, FADE_OUT_MS);
+        }, FILL_MS);
+      }, waitBeforeFill);
     }
 
     if (document.readyState === "complete") {
@@ -48,14 +57,45 @@ export function PageLoader() {
       }`}
       aria-hidden="true"
     >
+      <LogoWaterFill filling={phase === "filling" || phase === "exit"} />
+    </div>
+  );
+}
+
+function LogoWaterFill({ filling }: { filling: boolean }) {
+  return (
+    <div
+      className="relative h-24 w-24 sm:h-28 sm:w-28"
+      style={
+        {
+          "--logo-fill-duration": `${FILL_MS}ms`,
+        } as React.CSSProperties
+      }
+    >
       <Image
         src="/shivneri-logo.png"
         alt=""
-        width={128}
-        height={128}
+        fill
         priority
-        className="h-24 w-auto opacity-50 sm:h-28"
+        sizes="(max-width: 640px) 96px, 112px"
+        className="object-contain"
+        style={{ opacity: LOGO_OPACITY_START }}
       />
+      <div
+        className={`logo-water-fill absolute inset-0 overflow-hidden ${
+          filling ? "logo-water-fill--active" : ""
+        }`}
+      >
+        <Image
+          src="/shivneri-logo.png"
+          alt=""
+          fill
+          priority
+          sizes="(max-width: 640px) 96px, 112px"
+          className="object-contain"
+          style={{ opacity: LOGO_OPACITY_END }}
+        />
+      </div>
     </div>
   );
 }

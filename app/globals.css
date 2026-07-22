@@ -29,6 +29,24 @@ html.app-ready .app-shell-content {
   animation: app-content-in 0.3s ease-out both;
 }
 
+@keyframes logo-water-fill {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.logo-water-fill {
+  clip-path: inset(100% 0 0 0);
+}
+
+.logo-water-fill--active {
+  animation: logo-water-fill var(--logo-fill-duration, 450ms) ease-in-out
+    forwards;
+}
+
 @keyframes app-content-in {
   from {
     opacity: 0;
