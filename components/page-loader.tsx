@@ -9,6 +9,7 @@ const HOLD_MS = 500;
 const FADE_OUT_MS = 350;
 const LOGO_OPACITY_START = 0.25;
 const LOGO_OPACITY_END = 0.6;
+const SPLASH_LOGO_SRC = "/loading-logo.jpeg";
 
 export function PageLoader() {
   const [phase, setPhase] = useState<
@@ -89,7 +90,7 @@ function LogoWaterFill({ filling }: { filling: boolean }) {
       }
     >
       <Image
-        src="/shivneri-logo.png"
+        src={SPLASH_LOGO_SRC}
         alt=""
         fill
         priority
@@ -103,7 +104,7 @@ function LogoWaterFill({ filling }: { filling: boolean }) {
         }`}
       >
         <Image
-          src="/shivneri-logo.png"
+          src={SPLASH_LOGO_SRC}
           alt=""
           fill
           priority
