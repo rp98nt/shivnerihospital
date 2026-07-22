@@ -65,7 +65,7 @@ export function PageLoader() {
 function LogoWaterFill({ filling }: { filling: boolean }) {
   return (
     <div
-      className="relative h-24 w-24 sm:h-28 sm:w-28"
+      className="relative h-36 w-36 sm:h-[168px] sm:w-[168px]"
       style={
         {
           "--logo-fill-duration": `${FILL_MS}ms`,
@@ -77,7 +77,7 @@ function LogoWaterFill({ filling }: { filling: boolean }) {
         alt=""
         fill
         priority
-        sizes="(max-width: 640px) 96px, 112px"
+        sizes="(max-width: 640px) 144px, 168px"
         className="object-contain"
         style={{ opacity: LOGO_OPACITY_START }}
       />
@@ -91,7 +91,7 @@ function LogoWaterFill({ filling }: { filling: boolean }) {
           alt=""
           fill
           priority
-          sizes="(max-width: 640px) 96px, 112px"
+          sizes="(max-width: 640px) 144px, 168px"
           className="object-contain"
           style={{ opacity: LOGO_OPACITY_END }}
         />
