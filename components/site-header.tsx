@@ -8,7 +8,8 @@ const LOWER_NAV_ITEMS = [
   "About us",
   "Diagnostics",
   "Specialities",
-  "Service",
+  "Super Specialities",
+  "Services",
   "Patient Guide",
 ] as const;
 
