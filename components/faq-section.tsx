@@ -102,7 +102,7 @@ const FAQ_ITEMS = [
 export function FaqSection() {
   return (
     <section className="border-t border-slate-200 bg-slate-50 py-10 sm:py-14">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <h2 className="text-center text-xl font-semibold text-slate-800 sm:text-2xl">
           Frequently Asked <span className="text-teal-800">Questions</span>
         </h2>
