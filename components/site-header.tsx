@@ -105,7 +105,7 @@ const NAV_MENUS: Record<(typeof LOWER_NAV_ITEMS)[number], NavEntry[]> = {
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 shadow-sm">
+    <header className="sticky top-0 z-50 overflow-visible shadow-sm">
       <div className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <Link
@@ -148,8 +148,8 @@ export function SiteHeader() {
         </div>
       </div>
 
-      <div className="border-b border-slate-200 bg-white px-4 sm:px-6">
-        <nav className="mx-auto flex max-w-6xl" aria-label="Main">
+      <div className="overflow-visible border-b border-slate-200 bg-white px-4 sm:px-6">
+        <nav className="mx-auto flex max-w-6xl overflow-visible" aria-label="Main">
           {LOWER_NAV_ITEMS.map((label) => (
             <NavDropdown
               key={label}
@@ -196,6 +196,9 @@ function TopBarContact({
 }
 
 function NavDropdown({ label, items }: { label: string; items: NavEntry[] }) {
+  const isMultiColumn =
+    label === "Specialities" || label === "Super Specialities";
+
   return (
     <div className="group relative min-w-0 flex-1">
       <button
@@ -208,10 +211,17 @@ function NavDropdown({ label, items }: { label: string; items: NavEntry[] }) {
         <ChevronDownIcon className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:rotate-180" />
       </button>
 
-      <div className="pointer-events-none absolute left-1/2 top-full z-50 max-h-[min(24rem,calc(100dvh-8rem))] min-w-[240px] -translate-x-1/2 overflow-y-auto rounded-b-lg border border-slate-200 bg-white py-1 text-slate-700 opacity-0 shadow-lg transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
-        <ul>
+      <div
+        className={`pointer-events-none absolute left-1/2 top-full z-50 -translate-x-1/2 overflow-visible rounded-b-lg border border-slate-200 bg-white py-1 text-slate-700 opacity-0 shadow-lg transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100 ${
+          isMultiColumn ? "min-w-[28rem]" : "min-w-[17rem]"
+        }`}
+      >
+        <ul className={isMultiColumn ? "grid grid-cols-2" : undefined}>
           {items.map((item) => (
-            <li key={item.label}>
+            <li
+              key={item.label}
+              className={isNavGroup(item) ? "col-span-2" : undefined}
+            >
               {isNavGroup(item) ? (
                 <NavSubmenu item={item} />
               ) : (
@@ -238,24 +248,30 @@ function NavMenuLink({ item }: { item: NavLink }) {
 
 function NavSubmenu({ item }: { item: NavGroup }) {
   return (
-    <div className="group/sub relative">
-      <button
-        type="button"
-        className="flex w-full items-center justify-between gap-3 px-4 py-2 text-left text-sm text-slate-700 transition-colors hover:bg-slate-50 hover:text-teal-800"
-        aria-haspopup="true"
-      >
-        {item.label}
-        <ChevronRightIcon className="h-4 w-4 shrink-0" />
-      </button>
+    <div className="group/sub relative mt-1 border-t border-slate-100">
+      <div className="flex items-stretch">
+        <span className="flex min-w-0 flex-1 items-center px-4 py-2.5 text-sm font-medium text-slate-700">
+          {item.label}
+        </span>
 
-      <div className="pointer-events-none absolute left-full top-0 z-50 min-w-[280px] rounded-lg border border-slate-200 bg-white py-1 opacity-0 shadow-lg transition-opacity duration-200 group-hover/sub:pointer-events-auto group-hover/sub:opacity-100">
-        <ul>
-          {item.items.map((child) => (
-            <li key={child.label}>
-              <NavMenuLink item={child} />
-            </li>
-          ))}
-        </ul>
+        <div className="relative flex shrink-0 items-center border-l border-slate-100 bg-slate-50/80 px-3 transition-colors group-hover/sub:bg-teal-50">
+          <ChevronRightIcon className="h-4 w-4 shrink-0 text-slate-500 transition-transform duration-200 group-hover/sub:rotate-90 group-hover/sub:text-teal-700" />
+
+          <div className="pointer-events-none absolute left-full top-0 z-[60] pl-2 opacity-0 transition-opacity duration-200 group-hover/sub:pointer-events-auto group-hover/sub:opacity-100">
+            <div className="min-w-[19rem] overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xl">
+              <p className="border-b border-slate-100 bg-teal-50 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-teal-900">
+                {item.label}
+              </p>
+              <ul className="py-1">
+                {item.items.map((child) => (
+                  <li key={child.label}>
+                    <NavMenuLink item={child} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
