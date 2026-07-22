@@ -3,42 +3,58 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+const MIN_SPLASH_MS = 900;
+const FADE_OUT_MS = 500;
+
 export function PageLoader() {
-  const [phase, setPhase] = useState<"visible" | "fading" | "hidden">("visible");
+  const [phase, setPhase] = useState<"splash" | "exit" | "done">("splash");
 
   useEffect(() => {
-    function finishLoading() {
-      setPhase("fading");
-      window.setTimeout(() => setPhase("hidden"), 400);
+    const startedAt = performance.now();
+
+    function complete() {
+      const elapsed = performance.now() - startedAt;
+      const remaining = Math.max(0, MIN_SPLASH_MS - elapsed);
+
+      window.setTimeout(() => {
+        document.documentElement.classList.remove("loading");
+        document.documentElement.classList.add("app-ready");
+        setPhase("exit");
+
+        window.setTimeout(() => {
+          setPhase("done");
+        }, FADE_OUT_MS);
+      }, remaining);
     }
 
     if (document.readyState === "complete") {
-      finishLoading();
+      complete();
       return;
     }
 
-    window.addEventListener("load", finishLoading);
-    return () => window.removeEventListener("load", finishLoading);
+    window.addEventListener("load", complete, { once: true });
+    return () => window.removeEventListener("load", complete);
   }, []);
 
-  if (phase === "hidden") {
+  if (phase === "done") {
     return null;
   }
 
   return (
     <div
-      className={`fixed inset-0 z-[100] flex items-center justify-center bg-slate-50 transition-opacity duration-500 ${
-        phase === "fading" ? "pointer-events-none opacity-0" : "opacity-100"
+      id="page-loader"
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-slate-50 transition-opacity duration-500 ease-out ${
+        phase === "exit" ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
-      aria-hidden={phase === "fading"}
+      aria-hidden="true"
     >
       <Image
         src="/shivneri-logo.png"
         alt=""
-        width={120}
-        height={120}
+        width={128}
+        height={128}
         priority
-        className="h-24 w-auto opacity-45 sm:h-28 sm:opacity-50"
+        className="h-24 w-auto opacity-50 sm:h-28"
       />
     </div>
   );
