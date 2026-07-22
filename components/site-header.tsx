@@ -13,6 +13,96 @@ const LOWER_NAV_ITEMS = [
   "Patient Guide",
 ] as const;
 
+type NavLink = {
+  label: string;
+  href?: string;
+};
+
+type NavGroup = {
+  label: string;
+  items: NavLink[];
+};
+
+type NavEntry = NavLink | NavGroup;
+
+function isNavGroup(item: NavEntry): item is NavGroup {
+  return "items" in item;
+}
+
+const NAV_MENUS: Record<(typeof LOWER_NAV_ITEMS)[number], NavEntry[]> = {
+  "About us": [
+    { label: "About us" },
+    { label: "Milestones" },
+    { label: "Board of Trustees" },
+    { label: "Appeal" },
+    { label: "Scope of Services" },
+  ],
+  Diagnostics: [
+    { label: "Audiology and Speech Therapy" },
+    { label: "Cardiology" },
+    { label: "Endoscopy" },
+    { label: "Pathology" },
+    { label: "Neurology" },
+    { label: "Pulmonary Function Test" },
+    {
+      label: "Imaging-Sciences",
+      items: [
+        { label: "Radiology" },
+        { label: "Ultrasonography" },
+        { label: "Computed Tomography Scan (CT Scan)" },
+        { label: "Magnetic Resonance Imaging (MRI)" },
+      ],
+    },
+  ],
+  Specialities: [
+    { label: "Ayurveda" },
+    { label: "Chest Medicine and Interventional Pulmonology" },
+    { label: "Critical Care" },
+    { label: "Diabetology" },
+    { label: "Dermatology" },
+    { label: "Ear Nose and Throat (ENT)" },
+    { label: "Gynaecology and Obstretrics" },
+    { label: "Homeopathy" },
+    { label: "Medicine" },
+    { label: "Orthopaedics" },
+    { label: "Ophthalmology" },
+    { label: "Paediatrics" },
+    { label: "Pain Clinic" },
+    { label: "Psychiatry" },
+    { label: "Surgery" },
+  ],
+  "Super Specialities": [
+    { label: "Anaesthesia" },
+    { label: "Bariatric and Metabolic Surgery" },
+    { label: "Cardiac Sciences" },
+    { label: "Chest Diseases" },
+    { label: "Endocrinology" },
+    { label: "Head & Neck Oncology" },
+    { label: "Gastroenterology" },
+    { label: "Nephrology" },
+    { label: "Neuro Sciences" },
+    { label: "Oncology" },
+    { label: "Plastic Surgery" },
+    { label: "Rheumatology" },
+    { label: "Urology" },
+  ],
+  Services: [
+    { label: "Blood Bank" },
+    { label: "Dialysis" },
+    { label: "Physiotherapy Rehabilitation" },
+  ],
+  "Patient Guide": [
+    { label: "TPA and Insurance" },
+    { label: "Registration Admission" },
+    { label: "Room Category Tariff" },
+    { label: "I & P Scheme" },
+    { label: "Attendant Visitors" },
+    { label: "ATM's" },
+    { label: "Cafeteria Transports" },
+    { label: "Hotels and Restaurants" },
+  ],
+};
+
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 shadow-sm">
@@ -59,12 +149,13 @@ export function SiteHeader() {
       </div>
 
       <div className="border-b border-slate-200 bg-white px-4 sm:px-6">
-        <nav
-          className="mx-auto flex max-w-6xl"
-          aria-label="Main"
-        >
+        <nav className="mx-auto flex max-w-6xl" aria-label="Main">
           {LOWER_NAV_ITEMS.map((label) => (
-            <NavDropdown key={label} label={label} />
+            <NavDropdown
+              key={label}
+              label={label}
+              items={NAV_MENUS[label]}
+            />
           ))}
         </nav>
       </div>
@@ -104,7 +195,7 @@ function TopBarContact({
   return <div className={className}>{content}</div>;
 }
 
-function NavDropdown({ label }: { label: string }) {
+function NavDropdown({ label, items }: { label: string; items: NavEntry[] }) {
   return (
     <div className="group relative min-w-0 flex-1">
       <button
@@ -117,10 +208,54 @@ function NavDropdown({ label }: { label: string }) {
         <ChevronDownIcon className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:rotate-180" />
       </button>
 
-      <div className="pointer-events-none absolute left-1/2 top-full z-50 min-w-[220px] -translate-x-1/2 rounded-b-lg border border-slate-200 bg-white py-2 text-slate-700 opacity-0 shadow-lg transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
-        <p className="px-4 py-2 text-sm text-slate-500">
-          Menu items for {label} coming soon.
-        </p>
+      <div className="pointer-events-none absolute left-1/2 top-full z-50 max-h-[min(24rem,calc(100dvh-8rem))] min-w-[240px] -translate-x-1/2 overflow-y-auto rounded-b-lg border border-slate-200 bg-white py-1 text-slate-700 opacity-0 shadow-lg transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
+        <ul>
+          {items.map((item) => (
+            <li key={item.label}>
+              {isNavGroup(item) ? (
+                <NavSubmenu item={item} />
+              ) : (
+                <NavMenuLink item={item} />
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+function NavMenuLink({ item }: { item: NavLink }) {
+  return (
+    <Link
+      href={item.href ?? "#"}
+      className="block px-4 py-2 text-sm text-slate-700 transition-colors hover:bg-slate-50 hover:text-teal-800"
+    >
+      {item.label}
+    </Link>
+  );
+}
+
+function NavSubmenu({ item }: { item: NavGroup }) {
+  return (
+    <div className="group/sub relative">
+      <button
+        type="button"
+        className="flex w-full items-center justify-between gap-3 px-4 py-2 text-left text-sm text-slate-700 transition-colors hover:bg-slate-50 hover:text-teal-800"
+        aria-haspopup="true"
+      >
+        {item.label}
+        <ChevronRightIcon className="h-4 w-4 shrink-0" />
+      </button>
+
+      <div className="pointer-events-none absolute left-full top-0 z-50 min-w-[280px] rounded-lg border border-slate-200 bg-white py-1 opacity-0 shadow-lg transition-opacity duration-200 group-hover/sub:pointer-events-auto group-hover/sub:opacity-100">
+        <ul>
+          {item.items.map((child) => (
+            <li key={child.label}>
+              <NavMenuLink item={child} />
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
@@ -137,6 +272,21 @@ function ChevronDownIcon({ className }: { className?: string }) {
       aria-hidden
     >
       <path d="m6 9 6 6 6-6" />
+    </svg>
+  );
+}
+
+function ChevronRightIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      aria-hidden
+    >
+      <path d="m9 18 6-6-6-6" />
     </svg>
   );
 }
