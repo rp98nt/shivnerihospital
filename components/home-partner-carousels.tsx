@@ -15,6 +15,8 @@ const QUALITY_PARTNERS = [
   { name: "NABH", logo: "/quality-iso/nabh.jpeg" },
   { name: "ISO", logo: "/quality-iso/iso.jpeg" },
   { name: "Ayush", logo: "/quality-iso/ayush.jpeg" },
+  { name: "PMJAY", logo: "/quality-iso/pmjay.jpeg" },
+  { name: "MJPJAY", logo: "/quality-iso/mjpjay.jpeg" },
 ];
 
 const RESEARCH_PARTNERS = [
