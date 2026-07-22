@@ -1,3 +1,9 @@
+import {
+  APPOINTMENT_PHONE,
+  APPOINTMENT_PHONE_TEL,
+  EMERGENCY_MOBILE,
+  EMERGENCY_MOBILE_TEL,
+} from "@/lib/hospital-contact";
 import Image from "next/image";
 import Link from "next/link";
 import { MobileNav } from "@/components/mobile-nav";
@@ -9,11 +15,6 @@ import {
   type NavLink,
   type NavGroup,
 } from "@/lib/nav-menus";
-
-const EMERGENCY_MOBILE = "+91 84328 42222";
-const EMERGENCY_MOBILE_TEL = "+918432842222";
-const APPOINTMENT_PHONE = "02452-222350";
-const APPOINTMENT_PHONE_TEL = "02452222350";
 
 export function SiteHeader() {
   return (
