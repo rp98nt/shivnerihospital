@@ -57,9 +57,9 @@ export function SiteHeader() {
         </div>
       </div>
 
-      <div className="border-b border-teal-950 bg-teal-900">
+      <div className="border-b border-slate-200 bg-white px-4 sm:px-6">
         <nav
-          className="mx-auto flex max-w-6xl items-stretch overflow-x-auto px-4 sm:px-6"
+          className="mx-auto flex max-w-6xl divide-x divide-slate-200"
           aria-label="Main"
         >
           {LOWER_NAV_ITEMS.map((label) => (
@@ -105,10 +105,10 @@ function TopBarContact({
 
 function NavDropdown({ label }: { label: string }) {
   return (
-    <div className="group relative shrink-0">
+    <div className="group relative min-w-0 flex-1">
       <button
         type="button"
-        className="flex items-center gap-1.5 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-teal-800 sm:px-5"
+        className="flex w-full items-center justify-center gap-1 px-2 py-3 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-teal-800 sm:gap-1.5 sm:px-3 sm:text-sm"
         aria-haspopup="true"
         aria-expanded="false"
       >
@@ -116,7 +116,7 @@ function NavDropdown({ label }: { label: string }) {
         <ChevronDownIcon className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:rotate-180" />
       </button>
 
-      <div className="pointer-events-none absolute left-0 top-full z-50 min-w-[220px] rounded-b-lg border border-slate-200 bg-white py-2 text-slate-700 opacity-0 shadow-lg transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
+      <div className="pointer-events-none absolute left-1/2 top-full z-50 min-w-[220px] -translate-x-1/2 rounded-b-lg border border-slate-200 bg-white py-2 text-slate-700 opacity-0 shadow-lg transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
         <p className="px-4 py-2 text-sm text-slate-500">
           Menu items for {label} coming soon.
         </p>
