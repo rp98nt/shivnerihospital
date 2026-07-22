@@ -198,7 +198,7 @@ function TopBarContact({
 function NavDropdown({ label, items }: { label: string; items: NavEntry[] }) {
   const isMultiColumn =
     label === "Specialities" || label === "Super Specialities";
-  const alignWithTab = label === "About us";
+  const alignWithTab = label === "About us" || label === "Patient Guide";
 
   return (
     <div className="group relative min-w-0 flex-1">
