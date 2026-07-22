@@ -11,10 +11,9 @@ import {
 } from "@/lib/nav-menus";
 
 const EMERGENCY_MOBILE = "+91 84328 42222";
-const EMERGENCY_LANDLINE = "02452-222350";
 const EMERGENCY_MOBILE_TEL = "+918432842222";
-const EMERGENCY_LANDLINE_TEL = "02452222350";
-const APPOINTMENT_PHONE = "+91XXXXXXXXXX";
+const APPOINTMENT_PHONE = "02452-222350";
+const APPOINTMENT_PHONE_TEL = "02452222350";
 
 export function SiteHeader() {
   return (
@@ -46,23 +45,12 @@ export function SiteHeader() {
             <MobileNav />
           </div>
 
-          <div className="mt-3 grid grid-cols-2 gap-2 lg:hidden">
-            <MobileEmergencyChip />
-            <MobileContactChip
-              icon={<AppointmentIcon className="h-4 w-4 text-teal-700" />}
-              label="Appointment"
-              detail="Call to book"
-              href={`tel:${APPOINTMENT_PHONE.replace(/\s/g, "")}`}
-            />
+          <div className="mt-3 lg:hidden">
+            <TopBarContactGroup layout="mobile" />
           </div>
 
-          <div className="hidden lg:flex lg:items-center lg:gap-6">
-            <TopBarEmergencyContact />
-            <TopBarContact
-              icon={<AppointmentIcon className="h-4 w-4 text-teal-700" />}
-              label={`For Appointment ${APPOINTMENT_PHONE}`}
-              href={`tel:${APPOINTMENT_PHONE.replace(/\s/g, "")}`}
-            />
+          <div className="hidden lg:block">
+            <TopBarContactGroup layout="desktop" />
           </div>
         </div>
       </div>
@@ -78,131 +66,87 @@ export function SiteHeader() {
   );
 }
 
-function MobileContactChip({
-  icon,
-  label,
-  detail,
-  href,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  detail: string;
-  href?: string;
-}) {
-  const className =
-    "flex flex-col items-center rounded-xl border border-slate-100 bg-slate-50 px-2 py-2.5 text-center transition-colors hover:bg-slate-100";
+function TopBarContactGroup({ layout }: { layout: "mobile" | "desktop" }) {
+  const isMobile = layout === "mobile";
 
-  const content = (
-    <>
-      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-sm">
-        {icon}
-      </span>
-      <span className="mt-1.5 text-[11px] font-semibold leading-tight text-slate-800">
-        {label}
-      </span>
-      <span className="mt-0.5 text-[10px] leading-tight text-slate-500">
-        {detail}
-      </span>
-    </>
-  );
-
-  if (href) {
-    return (
-      <a href={href} className={className}>
-        {content}
-      </a>
-    );
-  }
-
-  return <div className={className}>{content}</div>;
-}
-
-function MobileEmergencyChip() {
   return (
-    <div className="flex items-center gap-2 rounded-xl border border-slate-100 bg-slate-50 px-3 py-2.5">
-      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white shadow-sm">
-        <EmergencyIcon className="h-4 w-4 text-red-600" />
-      </span>
-      <div className="flex min-w-0 items-center gap-2">
-        <span className="shrink-0 text-[11px] font-semibold leading-tight text-slate-800">
-          For Emergency
-        </span>
-        <span className="flex flex-col items-center leading-snug">
-          <a
-            href={`tel:${EMERGENCY_MOBILE_TEL}`}
-            className="transition-colors hover:text-red-600"
-          >
-            {EMERGENCY_MOBILE}
-          </a>
-          <a
-            href={`tel:${EMERGENCY_LANDLINE_TEL}`}
-            className="transition-colors hover:text-red-600"
-          >
-            {EMERGENCY_LANDLINE}
-          </a>
-        </span>
-      </div>
+    <div
+      className={`flex items-stretch rounded-2xl border border-slate-100 bg-slate-50 ${
+        isMobile ? "gap-1 p-2" : "gap-4 px-4 py-2.5"
+      }`}
+    >
+      <TopBarPhoneContact
+        icon={<EmergencyIcon className="h-4 w-4 text-red-600" />}
+        title="For Emergency"
+        phone={EMERGENCY_MOBILE}
+        phoneTel={EMERGENCY_MOBILE_TEL}
+        phoneClassName="hover:text-red-600"
+        compact={isMobile}
+        className="flex-1"
+      />
+
+      <span className="w-px shrink-0 self-stretch bg-slate-200" aria-hidden />
+
+      <TopBarPhoneContact
+        icon={<AppointmentIcon className="h-4 w-4 text-teal-700" />}
+        title="For Appointment"
+        phone={APPOINTMENT_PHONE}
+        phoneTel={APPOINTMENT_PHONE_TEL}
+        phoneClassName="hover:text-teal-800"
+        compact={isMobile}
+        className="flex-1"
+      />
     </div>
   );
 }
 
-function TopBarEmergencyContact() {
-  return (
-    <div className="flex items-center gap-2 text-sm">
-      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100">
-        <EmergencyIcon className="h-4 w-4 text-red-600" />
-      </span>
-      <div className="flex items-center gap-2 font-medium text-slate-700">
-        <span className="shrink-0">For Emergency</span>
-        <span className="flex flex-col items-center leading-snug">
-          <a
-            href={`tel:${EMERGENCY_MOBILE_TEL}`}
-            className="transition-colors hover:text-red-600"
-          >
-            {EMERGENCY_MOBILE}
-          </a>
-          <a
-            href={`tel:${EMERGENCY_LANDLINE_TEL}`}
-            className="transition-colors hover:text-red-600"
-          >
-            {EMERGENCY_LANDLINE}
-          </a>
-        </span>
-      </div>
-    </div>
-  );
-}
-
-function TopBarContact({
+function TopBarPhoneContact({
   icon,
-  label,
-  href,
+  title,
+  phone,
+  phoneTel,
+  phoneClassName,
+  compact = false,
+  className = "",
 }: {
   icon: React.ReactNode;
-  label: string;
-  href?: string;
+  title: string;
+  phone: string;
+  phoneTel: string;
+  phoneClassName: string;
+  compact?: boolean;
+  className?: string;
 }) {
-  const content = (
-    <>
-      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100">
+  return (
+    <a
+      href={`tel:${phoneTel}`}
+      className={`flex min-w-0 items-center gap-2 rounded-xl transition-colors hover:bg-white ${className} ${
+        compact ? "px-2 py-2" : "px-1 py-1"
+      }`}
+    >
+      <span
+        className={`flex shrink-0 items-center justify-center rounded-full bg-white shadow-sm ${
+          compact ? "h-8 w-8" : "h-7 w-7"
+        }`}
+      >
         {icon}
       </span>
-      <span className="font-medium text-slate-700">{label}</span>
-    </>
+      <span
+        className={`min-w-0 font-medium text-slate-700 ${
+          compact ? "text-[11px] leading-tight" : "flex items-center gap-2 text-sm"
+        }`}
+      >
+        <span className={compact ? "block" : "shrink-0"}>{title}</span>
+        <span
+          className={`block text-slate-600 transition-colors ${phoneClassName} ${
+            compact ? "mt-0.5 text-[10px]" : "text-sm"
+          }`}
+        >
+          {phone}
+        </span>
+      </span>
+    </a>
   );
-
-  const className =
-    "flex items-center gap-2 text-sm transition-opacity hover:opacity-80";
-
-  if (href) {
-    return (
-      <a href={href} className={className}>
-        {content}
-      </a>
-    );
-  }
-
-  return <div className={className}>{content}</div>;
 }
 
 function NavDropdown({ label, items }: { label: string; items: NavEntry[] }) {
