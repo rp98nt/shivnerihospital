@@ -64,7 +64,7 @@ export function SiteHeader() {
 
 function TopBarContactGroup() {
   return (
-    <div className="inline-flex max-w-full items-stretch gap-1 overflow-x-auto rounded-2xl border border-slate-100 bg-slate-50 p-2 lg:gap-4 lg:overflow-visible lg:px-4 lg:py-2.5">
+    <div className="inline-flex max-w-full items-center gap-4 overflow-x-auto lg:gap-6 lg:overflow-visible">
       <TopBarPhoneContact
         icon={<EmergencyIcon className="h-4 w-4 text-red-600" />}
         title="For Emergency"
@@ -72,8 +72,6 @@ function TopBarContactGroup() {
         phoneTel={EMERGENCY_MOBILE_TEL}
         phoneClassName="hover:text-red-600"
       />
-
-      <span className="w-px shrink-0 self-stretch bg-slate-200" aria-hidden />
 
       <TopBarPhoneContact
         icon={<AppointmentIcon className="h-4 w-4 text-teal-700" />}
