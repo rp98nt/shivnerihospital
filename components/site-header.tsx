@@ -10,7 +10,10 @@ import {
   type NavGroup,
 } from "@/lib/nav-menus";
 
-const EMERGENCY_PHONE = "+91XXXXXXXXXX";
+const EMERGENCY_MOBILE = "+91 84328 42222";
+const EMERGENCY_LANDLINE = "02452-222350";
+const EMERGENCY_MOBILE_TEL = "+918432842222";
+const EMERGENCY_LANDLINE_TEL = "02452222350";
 const APPOINTMENT_PHONE = "+91XXXXXXXXXX";
 
 export function SiteHeader() {
@@ -43,18 +46,8 @@ export function SiteHeader() {
             <MobileNav />
           </div>
 
-          <div className="mt-3 grid grid-cols-3 gap-2 lg:hidden">
-            <MobileContactChip
-              icon={<BloodBankIcon className="h-4 w-4 text-red-600" />}
-              label="Blood Bank"
-              detail="24 Hour Service"
-            />
-            <MobileContactChip
-              icon={<EmergencyIcon className="h-4 w-4 text-red-600" />}
-              label="Emergency"
-              detail="Call now"
-              href={`tel:${EMERGENCY_PHONE.replace(/\s/g, "")}`}
-            />
+          <div className="mt-3 grid grid-cols-2 gap-2 lg:hidden">
+            <MobileEmergencyChip />
             <MobileContactChip
               icon={<AppointmentIcon className="h-4 w-4 text-teal-700" />}
               label="Appointment"
@@ -64,15 +57,7 @@ export function SiteHeader() {
           </div>
 
           <div className="hidden lg:flex lg:items-center lg:gap-6">
-            <TopBarContact
-              icon={<BloodBankIcon className="h-4 w-4 text-red-600" />}
-              label="24 Hour Blood Bank Service"
-            />
-            <TopBarContact
-              icon={<EmergencyIcon className="h-4 w-4 text-red-600" />}
-              label={`For Emergency ${EMERGENCY_PHONE}`}
-              href={`tel:${EMERGENCY_PHONE.replace(/\s/g, "")}`}
-            />
+            <TopBarEmergencyContact />
             <TopBarContact
               icon={<AppointmentIcon className="h-4 w-4 text-teal-700" />}
               label={`For Appointment ${APPOINTMENT_PHONE}`}
@@ -130,6 +115,61 @@ function MobileContactChip({
   }
 
   return <div className={className}>{content}</div>;
+}
+
+function MobileEmergencyChip() {
+  return (
+    <div className="flex flex-col items-center rounded-xl border border-slate-100 bg-slate-50 px-2 py-2.5 text-center">
+      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-sm">
+        <EmergencyIcon className="h-4 w-4 text-red-600" />
+      </span>
+      <span className="mt-1.5 text-[11px] font-semibold leading-tight text-slate-800">
+        Emergency
+      </span>
+      <span className="mt-1 flex flex-col text-[10px] leading-tight text-slate-500">
+        <a
+          href={`tel:${EMERGENCY_MOBILE_TEL}`}
+          className="transition-colors hover:text-red-600"
+        >
+          {EMERGENCY_MOBILE}
+        </a>
+        <a
+          href={`tel:${EMERGENCY_LANDLINE_TEL}`}
+          className="transition-colors hover:text-red-600"
+        >
+          {EMERGENCY_LANDLINE}
+        </a>
+      </span>
+    </div>
+  );
+}
+
+function TopBarEmergencyContact() {
+  return (
+    <div className="flex items-start gap-2 text-sm">
+      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100">
+        <EmergencyIcon className="h-4 w-4 text-red-600" />
+      </span>
+      <div className="flex flex-wrap items-start gap-x-0.5 font-medium text-slate-700">
+        <span>For Emergency (</span>
+        <span className="flex flex-col leading-snug">
+          <a
+            href={`tel:${EMERGENCY_MOBILE_TEL}`}
+            className="transition-colors hover:text-red-600"
+          >
+            {EMERGENCY_MOBILE}
+          </a>
+          <a
+            href={`tel:${EMERGENCY_LANDLINE_TEL}`}
+            className="transition-colors hover:text-red-600"
+          >
+            {EMERGENCY_LANDLINE}
+          </a>
+        </span>
+        <span>)</span>
+      </div>
+    </div>
+  );
 }
 
 function TopBarContact({
@@ -262,19 +302,6 @@ function ChevronRightIcon({ className }: { className?: string }) {
       aria-hidden
     >
       <path d="m9 18 6-6-6-6" />
-    </svg>
-  );
-}
-
-function BloodBankIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden
-    >
-      <path d="M12 2c-1.5 3.5-4 6.2-4 9.8a4 4 0 0 0 8 0C16 8.2 13.5 5.5 12 2Z" />
     </svg>
   );
 }
