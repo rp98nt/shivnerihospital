@@ -8,17 +8,35 @@ export type PartnerCarouselItem = {
   logo?: string;
 };
 
+export const PARTNER_CAROUSEL_BASE_COUNT = 13;
+export const PARTNER_CAROUSEL_BASE_DURATION = 45;
+
 type PartnerCarouselProps = {
   heading: ReactNode;
   partners: PartnerCarouselItem[];
   direction?: "ltr" | "rtl";
+  spacing?: "first" | "middle" | "last";
   className?: string;
 };
+
+const SPACING_CLASSES = {
+  first: "pt-10 pb-6 sm:pt-12 sm:pb-8",
+  middle: "py-6 sm:py-8",
+  last: "pt-6 pb-10 sm:pt-8 sm:pb-12",
+} as const;
+
+export function getPartnerCarouselDuration(partnerCount: number) {
+  return (
+    PARTNER_CAROUSEL_BASE_DURATION *
+    (partnerCount / PARTNER_CAROUSEL_BASE_COUNT)
+  );
+}
 
 export function PartnerCarousel({
   heading,
   partners,
   direction = "rtl",
+  spacing = "middle",
   className = "",
 }: PartnerCarouselProps) {
   const carouselItems = [...partners, ...partners];
@@ -26,11 +44,10 @@ export function PartnerCarousel({
     direction === "ltr"
       ? "partner-carousel-track--ltr"
       : "partner-carousel-track--rtl";
+  const scrollDuration = getPartnerCarouselDuration(partners.length);
 
   return (
-    <section
-      className={`border-b border-slate-200 bg-white py-10 sm:py-12 ${className}`.trim()}
-    >
+    <section className={`bg-white ${SPACING_CLASSES[spacing]} ${className}`.trim()}>
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <h2 className="text-center text-xl font-semibold text-slate-800 sm:text-2xl">
           {heading}
@@ -39,6 +56,7 @@ export function PartnerCarousel({
         <div className="partner-carousel-mask relative mt-8 sm:mt-10">
           <div
             className={`partner-carousel-track flex w-max gap-4 sm:gap-5 ${trackDirectionClass}`}
+            style={{ animationDuration: `${scrollDuration}s` }}
           >
             {carouselItems.map((partner, index) => (
               <PartnerCarouselCard

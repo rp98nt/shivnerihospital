@@ -1,3 +1,4 @@
+import { FaqSection } from "@/components/faq-section";
 import { HomeHero } from "@/components/home-hero";
 import { SiteHeader } from "@/components/site-header";
 
@@ -7,6 +8,7 @@ export default function Home() {
       <SiteHeader />
       <main className="flex flex-1 flex-col">
         <HomeHero />
+        <FaqSection />
       </main>
 
       <footer className="border-t border-slate-200 bg-white px-6 py-6 text-center text-sm text-slate-500">

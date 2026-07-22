@@ -115,8 +115,10 @@ export function HomeHero() {
         </div>
       </section>
 
-      <InsurancePartners />
-      <HomePartnerCarousels />
+      <div className="border-b border-slate-200 bg-white">
+        <InsurancePartners />
+        <HomePartnerCarousels />
+      </div>
       <OurSpecialties />
       <OurDoctors />
     </>
