@@ -9,7 +9,7 @@ const HOLD_MS = 500;
 const FADE_OUT_MS = 350;
 const LOGO_OPACITY_START = 0.25;
 const LOGO_OPACITY_END = 0.6;
-const SPLASH_LOGO_SRC = "/loading-logo.jpeg";
+const SPLASH_LOGO_SRC = "/loading-logo.png";
 
 export function PageLoader() {
   const [phase, setPhase] = useState<
