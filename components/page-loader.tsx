@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-const MIN_SPLASH_MS = 900;
-const FADE_OUT_MS = 500;
+const MIN_SPLASH_MS = 450;
+const FADE_OUT_MS = 300;
 
 export function PageLoader() {
   const [phase, setPhase] = useState<"splash" | "exit" | "done">("splash");
@@ -43,7 +43,7 @@ export function PageLoader() {
   return (
     <div
       id="page-loader"
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-slate-50 transition-opacity duration-500 ease-out ${
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-slate-50 transition-opacity duration-300 ease-out ${
         phase === "exit" ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
       aria-hidden="true"

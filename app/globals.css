@@ -26,7 +26,7 @@ html.loading .app-shell-content {
 
 html.app-ready .app-shell-content {
   visibility: visible;
-  animation: app-content-in 0.45s ease-out both;
+  animation: app-content-in 0.3s ease-out both;
 }
 
 @keyframes app-content-in {
