@@ -1,7 +1,7 @@
 export const HOSPITAL_NAME = "Shivneri Hospital";
 
 export const VISIT_LOCATION = {
-  heading: "Visit Our Parbhani Center Clinic",
+  heading: "Visit Our Parbhani Hospital Campus",
   address:
     "Swastik Chamber, Near Niraj Hotel, Gavhane Chowk, Parbhani, Maharashtra 431401",
   phone: "02452-222350",

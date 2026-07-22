@@ -13,7 +13,7 @@ export function VisitLocationSection() {
               <div className="relative">
                 <h2 className="max-w-lg text-2xl font-bold leading-tight text-slate-900 sm:text-3xl">
                   Visit Our{" "}
-                  <span className="text-teal-800">Parbhani Center Clinic</span>
+                  <span className="text-teal-800">Parbhani Hospital Campus</span>
                 </h2>
 
                 <div className="mt-8 space-y-5">
