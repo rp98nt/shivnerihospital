@@ -38,7 +38,7 @@ export function HomeHero() {
                   <ShieldIcon className="h-4 w-4 shrink-0 text-lime-300" />
                   Same-Day Doctor Appointments | 24/7 Patient Support
                 </div>
-                <div className="grid w-full grid-cols-2 gap-3 sm:gap-4">
+                <div className="grid w-full grid-cols-3 gap-2 sm:gap-3">
                   <FeatureCard
                     icon={<DoctorIcon />}
                     label="Expert Team of Doctors"
@@ -46,6 +46,10 @@ export function HomeHero() {
                   <FeatureCard
                     icon={<FacilityIcon />}
                     label="Latest Medical Facilities"
+                  />
+                  <FeatureCard
+                    icon={<AmbulanceIcon />}
+                    label="Request an Ambulance"
                   />
                 </div>
               </div>
@@ -156,6 +160,21 @@ function FacilityIcon() {
       <path d="M8 4h8v16H8z" />
       <path d="M12 8v4M10 10h4" />
       <path d="M4 10h4v10H4zM16 10h4v10h-4z" />
+    </svg>
+  );
+}
+
+function AmbulanceIcon() {
+  return (
+    <svg className="h-5 w-5 sm:h-6 sm:w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
+      <path d="M10 10H6V6h4v4z" />
+      <path d="M3 12v4a1 1 0 0 0 1 1h1" />
+      <path d="M14 19H9" />
+      <path d="M16 17h2a1 1 0 0 0 1-1v-4.5L16 7H4a1 1 0 0 0-1 1v4" />
+      <circle cx="7" cy="19" r="2" />
+      <circle cx="17" cy="19" r="2" />
+      <path d="M10 9v6" />
+      <path d="M8 11h4" />
     </svg>
   );
 }
