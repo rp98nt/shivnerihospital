@@ -60,7 +60,7 @@ export function SiteHeader() {
 
       <div className="border-b border-slate-200 bg-white px-4 sm:px-6">
         <nav
-          className="mx-auto flex max-w-6xl divide-x divide-slate-200"
+          className="mx-auto flex max-w-6xl"
           aria-label="Main"
         >
           {LOWER_NAV_ITEMS.map((label) => (
