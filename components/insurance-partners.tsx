@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 type IconVariant = "shield" | "accreditation";
 
 type InsurancePartner = {
@@ -8,15 +10,44 @@ type InsurancePartner = {
   accent: string;
   iconBg: string;
   icon: IconVariant;
+  logo?: string;
 };
 
 const PARTNERS: InsurancePartner[] = [
   { name: "Aditya Birla", abbr: "AB", accent: "text-red-700", iconBg: "bg-red-50 ring-red-200", icon: "shield" },
-  { name: "ICICI Lombard", abbr: "IL", accent: "text-orange-700", iconBg: "bg-orange-50 ring-orange-200", icon: "shield" },
+  {
+    name: "ICICI Lombard",
+    abbr: "IL",
+    accent: "text-orange-700",
+    iconBg: "bg-orange-50 ring-orange-200",
+    icon: "shield",
+    logo: "/insurance-partners/icici-lombard.png",
+  },
   { name: "Star Health Insurance", abbr: "SH", accent: "text-blue-700", iconBg: "bg-blue-50 ring-blue-200", icon: "shield" },
-  { name: "HDFC Ergo", abbr: "HE", accent: "text-sky-800", iconBg: "bg-sky-50 ring-sky-200", icon: "shield" },
-  { name: "Bajaj Allianz", abbr: "BA", accent: "text-indigo-800", iconBg: "bg-indigo-50 ring-indigo-200", icon: "shield" },
-  { name: "Care Health", abbr: "CH", accent: "text-emerald-700", iconBg: "bg-emerald-50 ring-emerald-200", icon: "shield" },
+  {
+    name: "HDFC Ergo",
+    abbr: "HE",
+    accent: "text-sky-800",
+    iconBg: "bg-sky-50 ring-sky-200",
+    icon: "shield",
+    logo: "/insurance-partners/hdfc-ergo.png",
+  },
+  {
+    name: "Bajaj Allianz",
+    abbr: "BA",
+    accent: "text-indigo-800",
+    iconBg: "bg-indigo-50 ring-indigo-200",
+    icon: "shield",
+    logo: "/insurance-partners/bajaj-allianz.png",
+  },
+  {
+    name: "Care Health",
+    abbr: "CH",
+    accent: "text-emerald-700",
+    iconBg: "bg-emerald-50 ring-emerald-200",
+    icon: "shield",
+    logo: "/insurance-partners/care-health.png",
+  },
   { name: "Indus Ind", abbr: "II", accent: "text-rose-800", iconBg: "bg-rose-50 ring-rose-200", icon: "shield" },
   { name: "Niva Bupa", abbr: "NB", accent: "text-teal-700", iconBg: "bg-teal-50 ring-teal-200", icon: "shield" },
   { name: "Tata AIG", abbr: "TA", accent: "text-blue-800", iconBg: "bg-blue-50 ring-blue-200", icon: "shield" },
@@ -56,9 +87,19 @@ function InsurancePartnerCard({ partner }: { partner: InsurancePartner }) {
   return (
     <article className="group flex h-40 w-44 shrink-0 flex-col items-center justify-center rounded-xl border border-slate-100 bg-white px-4 py-5 shadow-md transition duration-300 hover:-translate-y-1.5 hover:shadow-xl sm:h-44 sm:w-48">
       <div
-        className={`flex h-14 w-14 items-center justify-center rounded-full ring-2 ${partner.iconBg}`}
+        className={`flex h-14 w-14 items-center justify-center overflow-hidden rounded-full ${
+          partner.logo ? "bg-white ring-2 ring-slate-100" : `ring-2 ${partner.iconBg}`
+        }`}
       >
-        {partner.icon === "accreditation" ? (
+        {partner.logo ? (
+          <Image
+            src={partner.logo}
+            alt=""
+            width={56}
+            height={56}
+            className="h-11 w-11 object-contain p-1"
+          />
+        ) : partner.icon === "accreditation" ? (
           <AccreditationIcon className={`h-7 w-7 ${partner.accent}`} />
         ) : (
           <InsuranceShieldIcon className={`h-7 w-7 ${partner.accent}`} />
