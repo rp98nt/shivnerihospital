@@ -91,6 +91,34 @@ body {
   animation-play-state: paused;
 }
 
+@keyframes doctors-carousel-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.doctors-carousel-mask {
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 6%,
+    black 94%,
+    transparent
+  );
+}
+
+.doctors-carousel-track {
+  animation: doctors-carousel-scroll 60s linear infinite;
+}
+
+.doctors-carousel-track:hover {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html.app-ready .app-shell-content {
     animation: none;
@@ -104,6 +132,18 @@ body {
   }
 
   .insurance-carousel-mask {
+    mask-image: none;
+    overflow: visible;
+  }
+
+  .doctors-carousel-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .doctors-carousel-mask {
     mask-image: none;
     overflow: visible;
   }
