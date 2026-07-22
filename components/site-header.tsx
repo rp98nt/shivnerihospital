@@ -45,7 +45,7 @@ export function SiteHeader() {
             <MobileNav />
           </div>
 
-          <div className="mt-3 lg:mt-0 lg:shrink-0">
+          <div className="mt-3 flex justify-end lg:mt-0 lg:shrink-0">
             <TopBarContactGroup />
           </div>
         </div>
@@ -64,7 +64,7 @@ export function SiteHeader() {
 
 function TopBarContactGroup() {
   return (
-    <div className="flex items-stretch gap-1 rounded-2xl border border-slate-100 bg-slate-50 p-2 lg:gap-4 lg:px-4 lg:py-2.5">
+    <div className="inline-flex max-w-full items-stretch gap-1 overflow-x-auto rounded-2xl border border-slate-100 bg-slate-50 p-2 lg:gap-4 lg:overflow-visible lg:px-4 lg:py-2.5">
       <TopBarPhoneContact
         icon={<EmergencyIcon className="h-4 w-4 text-red-600" />}
         title="For Emergency"
@@ -102,12 +102,12 @@ function TopBarPhoneContact({
   return (
     <a
       href={`tel:${phoneTel}`}
-      className="flex min-w-0 flex-1 items-center gap-2 rounded-xl px-1 py-1 transition-opacity hover:opacity-80"
+      className="flex shrink-0 items-center gap-2 rounded-xl px-1 py-1 transition-opacity hover:opacity-80"
     >
       <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white shadow-sm">
         {icon}
       </span>
-      <span className="min-w-0 text-[11px] font-medium leading-snug text-slate-700 sm:text-sm">
+      <span className="whitespace-nowrap text-[11px] font-medium leading-none text-slate-700 sm:text-sm">
         {title}{" "}
         <span className={`text-slate-600 transition-colors ${phoneClassName}`}>
           {phone}
