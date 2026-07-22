@@ -119,39 +119,41 @@ function MobileContactChip({
 
 function MobileEmergencyChip() {
   return (
-    <div className="flex flex-col items-center rounded-xl border border-slate-100 bg-slate-50 px-2 py-2.5 text-center">
-      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-sm">
+    <div className="flex items-center gap-2 rounded-xl border border-slate-100 bg-slate-50 px-3 py-2.5">
+      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white shadow-sm">
         <EmergencyIcon className="h-4 w-4 text-red-600" />
       </span>
-      <span className="mt-1.5 text-[11px] font-semibold leading-tight text-slate-800">
-        Emergency
-      </span>
-      <span className="mt-1 flex flex-col text-[10px] leading-tight text-slate-500">
-        <a
-          href={`tel:${EMERGENCY_MOBILE_TEL}`}
-          className="transition-colors hover:text-red-600"
-        >
-          {EMERGENCY_MOBILE}
-        </a>
-        <a
-          href={`tel:${EMERGENCY_LANDLINE_TEL}`}
-          className="transition-colors hover:text-red-600"
-        >
-          {EMERGENCY_LANDLINE}
-        </a>
-      </span>
+      <div className="flex min-w-0 items-center gap-2">
+        <span className="shrink-0 text-[11px] font-semibold leading-tight text-slate-800">
+          For Emergency
+        </span>
+        <span className="flex flex-col text-[10px] leading-tight text-slate-500">
+          <a
+            href={`tel:${EMERGENCY_MOBILE_TEL}`}
+            className="transition-colors hover:text-red-600"
+          >
+            {EMERGENCY_MOBILE}
+          </a>
+          <a
+            href={`tel:${EMERGENCY_LANDLINE_TEL}`}
+            className="transition-colors hover:text-red-600"
+          >
+            {EMERGENCY_LANDLINE}
+          </a>
+        </span>
+      </div>
     </div>
   );
 }
 
 function TopBarEmergencyContact() {
   return (
-    <div className="flex items-start gap-2 text-sm">
+    <div className="flex items-center gap-2 text-sm">
       <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100">
         <EmergencyIcon className="h-4 w-4 text-red-600" />
       </span>
-      <div className="flex flex-wrap items-start gap-x-0.5 font-medium text-slate-700">
-        <span>For Emergency (</span>
+      <div className="flex items-center gap-2 font-medium text-slate-700">
+        <span className="shrink-0">For Emergency</span>
         <span className="flex flex-col leading-snug">
           <a
             href={`tel:${EMERGENCY_MOBILE_TEL}`}
@@ -166,7 +168,6 @@ function TopBarEmergencyContact() {
             {EMERGENCY_LANDLINE}
           </a>
         </span>
-        <span>)</span>
       </div>
     </div>
   );
