@@ -127,7 +127,7 @@ function MobileEmergencyChip() {
         <span className="shrink-0 text-[11px] font-semibold leading-tight text-slate-800">
           For Emergency
         </span>
-        <span className="flex flex-col text-[10px] leading-tight text-slate-500">
+        <span className="flex flex-col leading-snug">
           <a
             href={`tel:${EMERGENCY_MOBILE_TEL}`}
             className="transition-colors hover:text-red-600"
@@ -136,7 +136,7 @@ function MobileEmergencyChip() {
           </a>
           <a
             href={`tel:${EMERGENCY_LANDLINE_TEL}`}
-            className="transition-colors hover:text-red-600"
+            className="pl-4 transition-colors hover:text-red-600 sm:pl-5"
           >
             {EMERGENCY_LANDLINE}
           </a>
@@ -163,7 +163,7 @@ function TopBarEmergencyContact() {
           </a>
           <a
             href={`tel:${EMERGENCY_LANDLINE_TEL}`}
-            className="transition-colors hover:text-red-600"
+            className="pl-4 transition-colors hover:text-red-600 sm:pl-5"
           >
             {EMERGENCY_LANDLINE}
           </a>
