@@ -11,6 +11,7 @@ type InsurancePartner = {
   iconBg: string;
   icon: IconVariant;
   logo?: string;
+  logoSize?: "standard" | "large";
 };
 
 const PARTNERS: InsurancePartner[] = [
@@ -22,6 +23,7 @@ const PARTNERS: InsurancePartner[] = [
     iconBg: "bg-orange-50 ring-orange-200",
     icon: "shield",
     logo: "/insurance-partners/icici-lombard.png",
+    logoSize: "large",
   },
   { name: "Star Health Insurance", abbr: "SH", accent: "text-blue-700", iconBg: "bg-blue-50 ring-blue-200", icon: "shield" },
   {
@@ -39,6 +41,7 @@ const PARTNERS: InsurancePartner[] = [
     iconBg: "bg-indigo-50 ring-indigo-200",
     icon: "shield",
     logo: "/insurance-partners/bajaj-allianz.png",
+    logoSize: "large",
   },
   {
     name: "Care Health",
@@ -47,6 +50,7 @@ const PARTNERS: InsurancePartner[] = [
     iconBg: "bg-emerald-50 ring-emerald-200",
     icon: "shield",
     logo: "/insurance-partners/care-health.png",
+    logoSize: "large",
   },
   { name: "Indus Ind", abbr: "II", accent: "text-rose-800", iconBg: "bg-rose-50 ring-rose-200", icon: "shield" },
   { name: "Niva Bupa", abbr: "NB", accent: "text-teal-700", iconBg: "bg-teal-50 ring-teal-200", icon: "shield" },
@@ -84,16 +88,26 @@ export function InsurancePartners() {
 }
 
 function InsurancePartnerCard({ partner }: { partner: InsurancePartner }) {
+  const isLargeLogo = partner.logoSize === "large";
+
   return (
     <article className="group flex h-44 w-48 shrink-0 flex-col items-center justify-center rounded-xl border border-slate-100 bg-white px-3 py-4 shadow-md transition duration-300 hover:-translate-y-1.5 hover:shadow-xl sm:h-48 sm:w-52 sm:px-4 sm:py-5">
-      <div className="flex h-24 w-full items-center justify-center sm:h-28">
+      <div
+        className={`flex w-full items-center justify-center ${
+          isLargeLogo ? "h-28 sm:h-32" : "h-24 sm:h-28"
+        }`}
+      >
         {partner.logo ? (
           <Image
             src={partner.logo}
             alt=""
-            width={192}
-            height={112}
-            className="h-20 w-full max-w-[11rem] object-contain sm:h-24 sm:max-w-[12rem]"
+            width={208}
+            height={128}
+            className={
+              isLargeLogo
+                ? "h-24 w-full max-w-[12.5rem] object-contain sm:h-28 sm:max-w-[13.5rem]"
+                : "h-20 w-full max-w-[11rem] object-contain sm:h-24 sm:max-w-[12rem]"
+            }
           />
         ) : partner.icon === "accreditation" ? (
           <AccreditationIcon className={`h-12 w-12 sm:h-14 sm:w-14 ${partner.accent}`} />
@@ -106,7 +120,11 @@ function InsurancePartnerCard({ partner }: { partner: InsurancePartner }) {
           {partner.abbr}
         </p>
       ) : null}
-      <p className="mt-1 px-1 text-center text-sm font-semibold leading-snug text-slate-800">
+      <p
+        className={`mt-1 px-1 text-center font-semibold leading-snug text-slate-800 ${
+          partner.logo ? "text-xs sm:text-sm" : "text-sm"
+        }`}
+      >
         {partner.name}
       </p>
     </article>
