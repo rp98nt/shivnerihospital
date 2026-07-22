@@ -198,6 +198,7 @@ function TopBarContact({
 function NavDropdown({ label, items }: { label: string; items: NavEntry[] }) {
   const isMultiColumn =
     label === "Specialities" || label === "Super Specialities";
+  const alignWithTab = label === "About us";
 
   return (
     <div className="group relative min-w-0 flex-1">
@@ -212,8 +213,12 @@ function NavDropdown({ label, items }: { label: string; items: NavEntry[] }) {
       </button>
 
       <div
-        className={`pointer-events-none absolute left-1/2 top-full z-50 -translate-x-1/2 overflow-visible rounded-b-lg border border-slate-200 bg-white py-1 text-slate-700 opacity-0 shadow-lg transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100 ${
-          isMultiColumn ? "min-w-[28rem]" : "min-w-[17rem]"
+        className={`pointer-events-none absolute top-full z-50 overflow-visible rounded-b-lg border border-slate-200 bg-white py-1 text-slate-700 opacity-0 shadow-lg transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100 ${
+          alignWithTab
+            ? "left-0 w-full"
+            : `left-1/2 -translate-x-1/2 ${
+                isMultiColumn ? "min-w-[28rem]" : "min-w-[17rem]"
+              }`
         }`}
       >
         <ul className={isMultiColumn ? "grid grid-cols-2" : undefined}>
