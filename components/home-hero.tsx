@@ -1,5 +1,6 @@
 "use client";
 
+import { HomePartnerCarousels } from "@/components/home-partner-carousels";
 import { InsurancePartners } from "@/components/insurance-partners";
 import { OurDoctors } from "@/components/our-doctors";
 import { OurSpecialties } from "@/components/our-specialties";
@@ -115,6 +116,7 @@ export function HomeHero() {
       </section>
 
       <InsurancePartners />
+      <HomePartnerCarousels />
       <OurSpecialties />
       <OurDoctors />
     </>

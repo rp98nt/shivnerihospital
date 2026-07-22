@@ -63,7 +63,7 @@ body {
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
 
-@keyframes insurance-carousel-scroll {
+@keyframes partner-carousel-scroll-rtl {
   from {
     transform: translateX(0);
   }
@@ -72,7 +72,16 @@ body {
   }
 }
 
-.insurance-carousel-mask {
+@keyframes partner-carousel-scroll-ltr {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.partner-carousel-mask {
   overflow-x: hidden;
   overflow-y: visible;
   padding-top: 0.75rem;
@@ -86,15 +95,23 @@ body {
   );
 }
 
-.insurance-carousel-track {
-  animation: insurance-carousel-scroll 45s linear infinite;
+.partner-carousel-track {
+  animation: partner-carousel-scroll-rtl 45s linear infinite;
 }
 
-.insurance-carousel-track:hover {
+.partner-carousel-track--rtl {
+  animation-name: partner-carousel-scroll-rtl;
+}
+
+.partner-carousel-track--ltr {
+  animation-name: partner-carousel-scroll-ltr;
+}
+
+.partner-carousel-track:hover {
   animation-play-state: paused;
 }
 
-.insurance-partner-card {
+.partner-carousel-card {
   position: relative;
   z-index: 0;
   flex-shrink: 0;
@@ -109,7 +126,7 @@ body {
     box-shadow 0.45s ease-in-out;
 }
 
-.insurance-partner-card:hover {
+.partner-carousel-card:hover {
   z-index: 10;
   transform: translateY(-0.625rem) scale(1.06);
   box-shadow:
@@ -118,7 +135,7 @@ body {
 }
 
 @media (min-width: 640px) {
-  .insurance-partner-card {
+  .partner-carousel-card {
     width: 15.4rem;
     height: 7.2rem;
   }
@@ -157,23 +174,23 @@ body {
     animation: none;
   }
 
-  .insurance-carousel-track {
+  .partner-carousel-track {
     animation: none;
     flex-wrap: wrap;
     width: 100%;
     justify-content: center;
   }
 
-  .insurance-carousel-mask {
+  .partner-carousel-mask {
     mask-image: none;
     overflow: visible;
   }
 
-  .insurance-partner-card {
+  .partner-carousel-card {
     transition: none;
   }
 
-  .insurance-partner-card:hover {
+  .partner-carousel-card:hover {
     transform: none;
     box-shadow:
       0 1px 3px rgb(15 23 42 / 0.08),
