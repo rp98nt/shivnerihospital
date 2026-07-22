@@ -33,7 +33,7 @@ export function InsurancePartners() {
           Insurance <span className="text-teal-800">Partners</span>
         </h2>
 
-        <div className="insurance-carousel-mask relative mt-8 sm:mt-10">
+        <div className="insurance-carousel-mask relative mt-8 py-3 sm:mt-10 sm:py-4">
           <div className="insurance-carousel-track flex w-max gap-4 sm:gap-5">
             {carouselItems.map((partner, index) => (
               <InsurancePartnerCard
@@ -50,7 +50,7 @@ export function InsurancePartners() {
 
 function InsurancePartnerCard({ partner }: { partner: InsurancePartner }) {
   return (
-    <article className="insurance-partner-card group flex h-32 w-40 shrink-0 items-center justify-center rounded-xl border border-slate-100 bg-white p-4 shadow-md transition duration-300 hover:-translate-y-1.5 hover:shadow-xl sm:h-36 sm:w-44 sm:p-5">
+    <article className="insurance-partner-card group relative z-0 flex h-[6.4rem] w-56 shrink-0 items-center justify-center rounded-xl border border-slate-100 bg-white px-5 py-3 shadow-md transition-[transform,box-shadow] duration-300 hover:z-10 hover:scale-[1.2] hover:shadow-xl sm:h-[7.2rem] sm:w-[15.4rem] sm:px-6 sm:py-3.5">
       <Image
         src={partner.logo}
         alt={partner.name}
