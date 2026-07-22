@@ -91,6 +91,21 @@ body {
   animation-play-state: paused;
 }
 
+@media (hover: hover) {
+  .insurance-partner-logo {
+    filter: grayscale(100%);
+    opacity: 0.6;
+    transition:
+      filter 0.35s ease,
+      opacity 0.35s ease;
+  }
+
+  .insurance-partner-card:hover .insurance-partner-logo {
+    filter: grayscale(0%);
+    opacity: 1;
+  }
+}
+
 @keyframes doctors-carousel-scroll {
   from {
     transform: translateX(0);
@@ -134,6 +149,11 @@ body {
   .insurance-carousel-mask {
     mask-image: none;
     overflow: visible;
+  }
+
+  .insurance-partner-logo {
+    filter: none;
+    opacity: 1;
   }
 
   .doctors-carousel-track {

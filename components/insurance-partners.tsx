@@ -50,13 +50,13 @@ export function InsurancePartners() {
 
 function InsurancePartnerCard({ partner }: { partner: InsurancePartner }) {
   return (
-    <article className="group flex h-32 w-40 shrink-0 items-center justify-center rounded-xl border border-slate-100 bg-white p-4 shadow-md transition duration-300 hover:-translate-y-1.5 hover:shadow-xl sm:h-36 sm:w-44 sm:p-5">
+    <article className="insurance-partner-card group flex h-32 w-40 shrink-0 items-center justify-center rounded-xl border border-slate-100 bg-white p-4 shadow-md transition duration-300 hover:-translate-y-1.5 hover:shadow-xl sm:h-36 sm:w-44 sm:p-5">
       <Image
         src={partner.logo}
         alt={partner.name}
         width={208}
         height={128}
-        className="h-full w-full object-contain"
+        className="insurance-partner-logo h-full w-full object-contain"
       />
     </article>
   );
