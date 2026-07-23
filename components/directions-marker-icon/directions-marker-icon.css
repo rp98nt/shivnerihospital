@@ -2,8 +2,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.225rem;
-  height: 1.225rem;
+  width: 0.6125rem;
+  height: 0.6125rem;
   flex-shrink: 0;
   overflow: visible;
 }
@@ -14,7 +14,7 @@
   width: 0;
   height: 0;
   overflow: visible;
-  transform: scale(0.49);
+  transform: scale(0.245);
   transform-origin: center center;
 }
 
