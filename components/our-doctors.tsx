@@ -129,17 +129,15 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
         <p className="mt-2 line-clamp-2 text-[11px] leading-relaxed text-slate-600 sm:text-xs">
           {doctor.qualifications}
         </p>
-
-        <div className="mt-auto pt-2">
-          <div className="h-px w-full bg-slate-200">
-            <div className="h-px w-1/4 bg-teal-600" />
-          </div>
-          <p className="mt-2 flex items-center gap-1.5 text-[11px] text-slate-500">
-            <LocationIcon className="h-3.5 w-3.5 shrink-0 text-teal-700" />
-            Shivneri Hospital
-          </p>
-        </div>
       </div>
+
+      <button
+        type="button"
+        className="flex w-full items-center justify-center gap-2 bg-amber-400 py-3.5 text-sm font-semibold text-slate-900 transition hover:bg-amber-300"
+      >
+        Book Appointment
+        <ArrowUpRightIcon className="h-4 w-4" />
+      </button>
     </article>
   );
 }
@@ -197,6 +195,22 @@ function StarIcon({ className }: { className?: string }) {
   );
 }
 
+function ArrowUpRightIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      aria-hidden
+    >
+      <path d="M7 17 17 7" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M9 7h8v8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 function ShareIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -211,22 +225,6 @@ function ShareIcon({ className }: { className?: string }) {
       <circle cx="6" cy="12" r="3" />
       <circle cx="18" cy="19" r="3" />
       <path d="m8.59 13.51 6.83 3.98M15.41 6.51l-6.82 3.98" />
-    </svg>
-  );
-}
-
-function LocationIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      aria-hidden
-    >
-      <circle cx="12" cy="12" r="8" />
-      <circle cx="12" cy="12" r="2.5" fill="currentColor" stroke="none" />
     </svg>
   );
 }
