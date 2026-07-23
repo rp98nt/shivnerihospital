@@ -206,11 +206,14 @@ body {
 
 .doctors-scroll-arrow {
   cursor: pointer;
-  transform: rotate(0deg);
+}
+
+.doctors-scroll-arrow--right {
+  transform: rotate(-90deg);
 }
 
 .doctors-scroll-arrow--left {
-  transform: rotate(180deg);
+  transform: rotate(90deg);
 }
 
 .doctors-scroll-arrow span {
