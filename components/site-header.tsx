@@ -99,10 +99,8 @@ function TopBarDirectionsContact() {
       className="flex shrink-0 items-center gap-2.5 rounded-xl py-1 pl-0.5 pr-1 transition-opacity hover:opacity-80"
     >
       <span className="directions-marker-icon shrink-0" aria-hidden>
-        <span className="directions-marker-icon__stage">
-          <span className="directions-marker-icon__beacon" />
-          <span className="directions-marker-icon__pin" />
-        </span>
+        <div className="directions-marker-icon__marker" />
+        <span className="directions-marker-icon__beacon" />
       </span>
       <span className="whitespace-nowrap text-[11px] font-medium leading-none text-slate-700 sm:text-sm">
         Get{" "}
