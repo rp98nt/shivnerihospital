@@ -267,37 +267,10 @@ body {
 
 .directions-marker-icon {
   position: relative;
-  display: flex;
+  display: block;
   height: 1.75rem;
   width: 1.75rem;
-  align-items: center;
-  justify-content: center;
   overflow: visible;
-}
-
-.directions-marker-icon__pin {
-  position: relative;
-  z-index: 1;
-  height: 1.125rem;
-  width: 1.125rem;
-  transform: perspective(40px) rotateX(20deg) rotateZ(-45deg);
-  transform-origin: 50% 50%;
-  border-radius: 50% 50% 50% 0;
-  background: #ed1f34;
-  box-shadow: -1px 1px 3px rgb(0 0 0 / 35%);
-}
-
-.directions-marker-icon__pin::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  height: 0.4375rem;
-  width: 0.4375rem;
-  transform: translate(-35%, -60%);
-  border-radius: 50%;
-  background: #ffffff;
-  box-shadow: inset -1px 1px 2px hsl(0deg 0% 0% / 40%);
 }
 
 .directions-marker-icon__beacon {
@@ -310,6 +283,32 @@ body {
   border-radius: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
+}
+
+.directions-marker-icon__pin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  height: 1.125rem;
+  width: 1.125rem;
+  transform-origin: 100% 100%;
+  transform: translate(-100%, -100%) perspective(40px) rotateX(20deg) rotateZ(-45deg);
+  border-radius: 50% 50% 50% 0;
+  background: #ed1f34;
+  box-shadow: -1px 1px 3px rgb(0 0 0 / 35%);
+}
+
+.directions-marker-icon__pin::after {
+  content: "";
+  position: absolute;
+  top: 18%;
+  left: 18%;
+  height: 0.4375rem;
+  width: 0.4375rem;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: inset -1px 1px 2px hsl(0deg 0% 0% / 40%);
 }
 
 .directions-marker-icon__beacon::before,
