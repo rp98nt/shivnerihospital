@@ -254,11 +254,7 @@ function DoctorsScrollArrow({ direction }: { direction: "left" | "right" }) {
 function DoctorCard({ doctor }: { doctor: Doctor }) {
   return (
     <article
-      className={`flex min-h-[35.625rem] w-[19.5rem] shrink-0 flex-col overflow-hidden rounded-2xl bg-white shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-xl sm:w-[21rem] ${
-        doctor.isGuest
-          ? "ring-2 ring-amber-300 ring-offset-2 ring-offset-slate-50"
-          : "border border-slate-100"
-      }`}
+      className="flex min-h-[35.625rem] w-[19.5rem] shrink-0 flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-xl sm:w-[21rem]"
     >
       <div className="relative min-h-0 flex-[7] bg-linear-to-b from-teal-50 to-slate-100">
         <DoctorPhotoPlaceholder />
@@ -273,10 +269,7 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
       <div className="flex min-h-0 flex-[3] flex-col border-t border-slate-100 px-3 py-3 sm:px-4 sm:py-4">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
-            <h3 className="flex items-start gap-1 text-sm font-bold leading-snug text-slate-900">
-              {doctor.isGuest ? (
-                <StarIcon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-500" />
-              ) : null}
+            <h3 className="text-sm font-bold leading-snug text-slate-900">
               <Link
                 href={getDoctorProfilePath(doctor.slug)}
                 target="_blank"

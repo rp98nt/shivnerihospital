@@ -3,6 +3,7 @@ import {
   APPOINTMENT_PHONE_TEL,
   EMERGENCY_MOBILE,
   EMERGENCY_MOBILE_TEL,
+  VISIT_LOCATION,
 } from "@/lib/hospital-contact";
 import Image from "next/image";
 import Link from "next/link";
@@ -66,8 +67,11 @@ export function SiteHeader() {
 function TopBarContactGroup() {
   return (
     <div className="inline-flex max-w-full items-center gap-4 overflow-x-auto lg:gap-6 lg:overflow-visible">
+      <TopBarDirectionsContact />
+
       <TopBarPhoneContact
         icon={<EmergencyIcon className="h-4 w-4 text-red-600" />}
+        iconRingClassName="border-red-500"
         title="For Emergency"
         phone={EMERGENCY_MOBILE}
         phoneTel={EMERGENCY_MOBILE_TEL}
@@ -76,6 +80,7 @@ function TopBarContactGroup() {
 
       <TopBarPhoneContact
         icon={<AppointmentIcon className="h-4 w-4 text-teal-700" />}
+        iconRingClassName="border-green-600"
         title="For Appointment"
         phone={APPOINTMENT_PHONE}
         phoneTel={APPOINTMENT_PHONE_TEL}
@@ -85,14 +90,37 @@ function TopBarContactGroup() {
   );
 }
 
+function TopBarDirectionsContact() {
+  return (
+    <a
+      href={VISIT_LOCATION.mapsDirectionsUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex shrink-0 items-center gap-2 rounded-xl px-1 py-1 transition-opacity hover:opacity-80"
+    >
+      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-teal-600 bg-white shadow-sm">
+        <DirectionsIcon className="h-4 w-4 text-teal-700" />
+      </span>
+      <span className="whitespace-nowrap text-[11px] font-medium leading-none text-slate-700 sm:text-sm">
+        Get{" "}
+        <span className="text-slate-600 transition-colors hover:text-teal-800">
+          Directions
+        </span>
+      </span>
+    </a>
+  );
+}
+
 function TopBarPhoneContact({
   icon,
+  iconRingClassName,
   title,
   phone,
   phoneTel,
   phoneClassName,
 }: {
   icon: React.ReactNode;
+  iconRingClassName: string;
   title: string;
   phone: string;
   phoneTel: string;
@@ -103,7 +131,9 @@ function TopBarPhoneContact({
       href={`tel:${phoneTel}`}
       className="flex shrink-0 items-center gap-2 rounded-xl px-1 py-1 transition-opacity hover:opacity-80"
     >
-      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white shadow-sm">
+      <span
+        className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm ${iconRingClassName}`}
+      >
         {icon}
       </span>
       <span className="whitespace-nowrap text-[11px] font-medium leading-none text-slate-700 sm:text-sm">
@@ -214,6 +244,21 @@ function ChevronRightIcon({ className }: { className?: string }) {
       aria-hidden
     >
       <path d="m9 18 6-6-6-6" />
+    </svg>
+  );
+}
+
+function DirectionsIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      aria-hidden
+    >
+      <path d="M3 11h3l3-8 4 16 3-8h4" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
