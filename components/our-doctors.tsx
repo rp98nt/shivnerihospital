@@ -7,44 +7,82 @@ import {
   type Doctor,
 } from "@/lib/doctors";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const DOCTORS_CAROUSEL_CYCLE_SECONDS = 60;
+const DOCTORS_CAROUSEL_LOOP_SETS = 3;
 
 export function OurDoctors() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const progressFillRef = useRef<HTMLDivElement>(null);
-  const progressBarRef = useRef<HTMLDivElement>(null);
   const isPausedRef = useRef(false);
-  const carouselDoctors = [...SORTED_DOCTORS, ...SORTED_DOCTORS];
+  const activeIndexRef = useRef(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const carouselDoctors = [
+    ...SORTED_DOCTORS,
+    ...SORTED_DOCTORS,
+    ...SORTED_DOCTORS,
+  ];
 
-  function syncProgress(container: HTMLDivElement) {
-    const halfScroll = container.scrollWidth / 2;
-    const maxScroll = Math.max(halfScroll - container.clientWidth, 1);
-    const progress = Math.min(
-      100,
-      Math.max(0, (container.scrollLeft / maxScroll) * 100),
-    );
+  function getCardStep(container: HTMLDivElement) {
+    const firstCard = container.querySelector("article");
+    const gap = window.matchMedia("(min-width: 640px)").matches ? 20 : 16;
+    return firstCard
+      ? firstCard.clientWidth + gap
+      : container.clientWidth * 0.85;
+  }
 
-    if (progressFillRef.current) {
-      progressFillRef.current.style.width = `${progress}%`;
+  function getSetWidth(container: HTMLDivElement) {
+    return container.scrollWidth / DOCTORS_CAROUSEL_LOOP_SETS;
+  }
+
+  function getLoopPosition(container: HTMLDivElement, setWidth: number) {
+    let position = container.scrollLeft - setWidth;
+
+    while (position < 0) {
+      position += setWidth;
     }
 
-    progressBarRef.current?.setAttribute(
-      "aria-valuenow",
-      String(Math.round(progress)),
-    );
+    while (position >= setWidth) {
+      position -= setWidth;
+    }
+
+    return position;
+  }
+
+  function syncPagination(container: HTMLDivElement) {
+    const setWidth = getSetWidth(container);
+    if (setWidth <= 0) return;
+
+    const step = getCardStep(container);
+    const loopPosition = getLoopPosition(container, setWidth);
+    const nextIndex =
+      Math.round(loopPosition / Math.max(step, 1)) % SORTED_DOCTORS.length;
+
+    if (nextIndex !== activeIndexRef.current) {
+      activeIndexRef.current = nextIndex;
+      setActiveIndex(nextIndex);
+    }
   }
 
   function normalizeScroll(container: HTMLDivElement) {
-    const halfScroll = container.scrollWidth / 2;
-    if (halfScroll <= 0) return;
+    const setWidth = getSetWidth(container);
+    if (setWidth <= 0) return;
 
-    if (container.scrollLeft >= halfScroll) {
-      container.scrollLeft -= halfScroll;
-    } else if (container.scrollLeft < 0) {
-      container.scrollLeft += halfScroll;
+    while (container.scrollLeft >= setWidth * 2) {
+      container.scrollLeft -= setWidth;
     }
+
+    while (container.scrollLeft < setWidth) {
+      container.scrollLeft += setWidth;
+    }
+  }
+
+  function initializeScrollPosition(container: HTMLDivElement) {
+    const setWidth = getSetWidth(container);
+    if (setWidth <= 0) return;
+
+    container.scrollLeft = setWidth;
+    syncPagination(container);
   }
 
   useEffect(() => {
@@ -52,46 +90,48 @@ export function OurDoctors() {
     if (!container) return;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (reducedMotion.matches) {
-      syncProgress(container);
-      return;
-    }
-
     let frameId = 0;
     let lastTime = performance.now();
 
     const getScrollSpeed = () => {
-      const halfScroll = container.scrollWidth / 2;
-      return halfScroll / DOCTORS_CAROUSEL_CYCLE_SECONDS;
+      const setWidth = getSetWidth(container);
+      return setWidth / DOCTORS_CAROUSEL_CYCLE_SECONDS;
     };
 
     const onScroll = () => {
       normalizeScroll(container);
-      syncProgress(container);
+      syncPagination(container);
     };
 
     const tick = (now: number) => {
       const elapsed = (now - lastTime) / 1000;
       lastTime = now;
 
-      if (!isPausedRef.current) {
+      if (!reducedMotion.matches && !isPausedRef.current) {
         container.scrollLeft += getScrollSpeed() * elapsed;
         normalizeScroll(container);
-        syncProgress(container);
+        syncPagination(container);
       }
 
       frameId = requestAnimationFrame(tick);
     };
 
     const resizeObserver = new ResizeObserver(() => {
-      normalizeScroll(container);
-      syncProgress(container);
+      if (container.scrollLeft === 0) {
+        initializeScrollPosition(container);
+      } else {
+        normalizeScroll(container);
+        syncPagination(container);
+      }
     });
 
     resizeObserver.observe(container);
     container.addEventListener("scroll", onScroll, { passive: true });
-    syncProgress(container);
-    frameId = requestAnimationFrame(tick);
+    initializeScrollPosition(container);
+
+    if (!reducedMotion.matches) {
+      frameId = requestAnimationFrame(tick);
+    }
 
     return () => {
       cancelAnimationFrame(frameId);
@@ -104,14 +144,22 @@ export function OurDoctors() {
     const container = scrollRef.current;
     if (!container) return;
 
-    const firstCard = container.querySelector("article");
-    const gap = 20;
-    const scrollAmount = firstCard
-      ? firstCard.clientWidth + gap
-      : container.clientWidth * 0.85;
-
     container.scrollBy({
-      left: direction === "left" ? -scrollAmount : scrollAmount,
+      left: direction === "left" ? -getCardStep(container) : getCardStep(container),
+      behavior: "smooth",
+    });
+  }
+
+  function scrollToDoctor(index: number) {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const setWidth = getSetWidth(container);
+    const step = getCardStep(container);
+    const targetLeft = setWidth + index * step;
+
+    container.scrollTo({
+      left: targetLeft,
       behavior: "smooth",
     });
   }
@@ -159,21 +207,6 @@ export function OurDoctors() {
             </div>
           </div>
 
-          <div
-            ref={progressBarRef}
-            className="doctors-carousel-progress"
-            role="progressbar"
-            aria-valuemin={0}
-            aria-valuemax={100}
-            aria-valuenow={0}
-            aria-label="Doctors carousel progress"
-          >
-            <div
-              ref={progressFillRef}
-              className="doctors-carousel-progress-fill"
-            />
-          </div>
-
           <button
             type="button"
             className="doctors-scroll-control doctors-scroll-control--right"
@@ -182,6 +215,26 @@ export function OurDoctors() {
           >
             <DoctorsScrollArrow direction="right" />
           </button>
+
+          <div
+            className="doctors-carousel-pagination"
+            role="tablist"
+            aria-label="Doctors carousel position"
+          >
+            {SORTED_DOCTORS.map((doctor, index) => (
+              <button
+                key={doctor.slug}
+                type="button"
+                role="tab"
+                aria-selected={index === activeIndex}
+                aria-label={`Show ${doctor.name}`}
+                className={`doctors-carousel-dot${
+                  index === activeIndex ? " is-active" : ""
+                }`}
+                onClick={() => scrollToDoctor(index)}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
