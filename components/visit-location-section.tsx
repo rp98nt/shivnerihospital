@@ -2,50 +2,50 @@ import { VISIT_LOCATION } from "@/lib/hospital-contact";
 
 export function VisitLocationSection() {
   return (
-    <section className="border-t border-slate-200 bg-slate-50 py-10 sm:py-14">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-md">
-          <div className="grid min-h-[360px] grid-cols-1 lg:min-h-[420px] lg:grid-cols-2">
-            <div className="relative flex flex-col justify-center overflow-hidden bg-linear-to-br from-teal-100 via-teal-50 to-emerald-100 px-8 py-10 sm:px-10 sm:py-12 lg:px-12 lg:py-14">
-              <div className="pointer-events-none absolute -right-10 top-0 h-32 w-32 rounded-full bg-teal-300/30 blur-3xl" />
-              <div className="pointer-events-none absolute -bottom-8 left-0 h-24 w-24 rounded-full bg-emerald-300/25 blur-2xl" />
+    <section className="relative overflow-hidden bg-linear-to-br from-teal-800 via-teal-900 to-slate-900 text-white">
+      <div className="pointer-events-none absolute -right-20 top-0 h-64 w-64 rounded-full bg-teal-600/20 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-16 left-1/4 h-48 w-48 rounded-full bg-cyan-500/10 blur-3xl" />
 
-              <div className="relative">
-                <h2 className="max-w-lg text-2xl font-bold leading-tight text-slate-900 sm:text-3xl">
-                  Visit Our{" "}
-                  <span className="text-teal-800">Parbhani Hospital Campus</span>
-                </h2>
+      <div className="relative mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-14 lg:py-16">
+        <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
+          <div>
+            <h2 className="max-w-xl text-2xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-[2.65rem] lg:leading-[1.15]">
+              Visit Our{" "}
+              <span className="text-lime-300">Parbhani Hospital Campus</span>
+            </h2>
 
-                <div className="mt-8 space-y-5">
-                  <div className="flex items-start gap-3">
-                    <LocationPinIcon className="mt-0.5 h-5 w-5 shrink-0 text-teal-800" />
-                    <p className="text-sm leading-relaxed text-slate-700 sm:text-base">
-                      {VISIT_LOCATION.address}
-                    </p>
-                  </div>
+            <div className="mt-6 space-y-5 sm:mt-8">
+              <div className="flex items-start gap-3">
+                <LocationPinIcon className="mt-0.5 h-5 w-5 shrink-0 text-lime-300 sm:h-6 sm:w-6" />
+                <p className="max-w-lg text-sm leading-relaxed text-teal-50/90 sm:text-lg">
+                  {VISIT_LOCATION.address}
+                </p>
+              </div>
 
-                  <div className="flex items-center gap-3">
-                    <PhoneIcon className="h-5 w-5 shrink-0 text-teal-800" />
-                    <a
-                      href={`tel:${VISIT_LOCATION.phoneTel}`}
-                      className="text-sm font-medium text-slate-800 transition hover:text-teal-900 sm:text-base"
-                    >
-                      {VISIT_LOCATION.phone}
-                    </a>
-                  </div>
-                </div>
+              <div className="flex items-center gap-3">
+                <PhoneIcon className="h-5 w-5 shrink-0 text-lime-300 sm:h-6 sm:w-6" />
+                <a
+                  href={`tel:${VISIT_LOCATION.phoneTel}`}
+                  className="text-sm font-medium text-white transition hover:text-lime-200 sm:text-lg"
+                >
+                  {VISIT_LOCATION.phone}
+                </a>
               </div>
             </div>
+          </div>
 
-            <div className="relative min-h-[320px] w-full sm:min-h-[360px] lg:min-h-full">
-              <iframe
-                src={VISIT_LOCATION.mapsEmbedSrc}
-                title={`${VISIT_LOCATION.heading} map`}
-                loading="lazy"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-                className="absolute inset-0 h-full w-full border-0"
-              />
+          <div className="w-full lg:justify-self-end">
+            <div className="overflow-hidden rounded-2xl bg-white shadow-xl">
+              <div className="relative min-h-[320px] w-full sm:min-h-[360px] lg:min-h-[420px]">
+                <iframe
+                  src={VISIT_LOCATION.mapsEmbedSrc}
+                  title={`${VISIT_LOCATION.heading} map`}
+                  loading="lazy"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                  className="absolute inset-0 h-full w-full border-0"
+                />
+              </div>
             </div>
           </div>
         </div>
