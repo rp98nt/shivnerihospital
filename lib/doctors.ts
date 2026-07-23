@@ -85,6 +85,16 @@ export const DOCTORS: Doctor[] = [
   }),
 ];
 
+export function getDoctorSortName(name: string) {
+  return name.replace(/^Dr\.?\s+/i, "").trim();
+}
+
+export const SORTED_DOCTORS = [...DOCTORS].sort((a, b) =>
+  getDoctorSortName(a.name).localeCompare(getDoctorSortName(b.name), "en", {
+    sensitivity: "base",
+  }),
+);
+
 export function getDoctorBySlug(slug: string) {
   return DOCTORS.find((doctor) => doctor.slug === slug);
 }

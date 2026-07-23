@@ -1,6 +1,6 @@
 "use client";
 
-import { DOCTORS } from "@/lib/doctors";
+import { SORTED_DOCTORS } from "@/lib/doctors";
 import Link from "next/link";
 import { FormEvent, useState } from "react";
 
@@ -9,7 +9,7 @@ type AppointmentFormProps = {
 };
 
 export function AppointmentForm({ initialDoctorSlug = "" }: AppointmentFormProps) {
-  const validInitialDoctor = DOCTORS.some(
+  const validInitialDoctor = SORTED_DOCTORS.some(
     (doctor) => doctor.slug === initialDoctorSlug,
   )
     ? initialDoctorSlug
@@ -53,7 +53,7 @@ export function AppointmentForm({ initialDoctorSlug = "" }: AppointmentFormProps
             <option value="" disabled>
               Choose a doctor
             </option>
-            {DOCTORS.map((doctor) => (
+            {SORTED_DOCTORS.map((doctor) => (
               <option key={doctor.slug} value={doctor.slug}>
                 {doctor.name} — {doctor.specialty}
               </option>

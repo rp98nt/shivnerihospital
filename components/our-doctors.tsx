@@ -1,15 +1,32 @@
 "use client";
 
 import {
-  DOCTORS,
+  SORTED_DOCTORS,
   getDoctorAppointmentPath,
   getDoctorProfilePath,
   type Doctor,
 } from "@/lib/doctors";
 import Link from "next/link";
+import { useRef } from "react";
 
 export function OurDoctors() {
-  const carouselItems = [...DOCTORS, ...DOCTORS];
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  function scrollDoctors(direction: "left" | "right") {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const firstCard = container.querySelector("article");
+    const gap = 20;
+    const scrollAmount = firstCard
+      ? firstCard.clientWidth + gap
+      : container.clientWidth * 0.85;
+
+    container.scrollBy({
+      left: direction === "left" ? -scrollAmount : scrollAmount,
+      behavior: "smooth",
+    });
+  }
 
   return (
     <section className="border-b border-slate-200 bg-slate-50 py-10 sm:py-12">
@@ -21,15 +38,52 @@ export function OurDoctors() {
           Meet our experienced consultants and visiting guest faculty.
         </p>
 
-        <div className="doctors-carousel-mask relative mt-8 sm:mt-10">
-          <div className="doctors-carousel-track flex w-max gap-4 sm:gap-5">
-            {carouselItems.map((doctor, index) => (
-              <DoctorCard key={`${doctor.name}-${index}`} doctor={doctor} />
-            ))}
+        <div className="doctors-carousel-shell mt-8 px-8 sm:mt-10 sm:px-10">
+          <button
+            type="button"
+            className="doctors-scroll-control doctors-scroll-control--left"
+            aria-label="Scroll doctors left"
+            onClick={() => scrollDoctors("left")}
+          >
+            <DoctorsScrollArrow direction="left" />
+          </button>
+
+          <div className="doctors-carousel-mask">
+            <div
+              ref={scrollRef}
+              className="doctors-carousel-scroll"
+              tabIndex={0}
+              aria-label="Doctors carousel"
+            >
+              <div className="flex w-max gap-4 sm:gap-5">
+                {SORTED_DOCTORS.map((doctor) => (
+                  <DoctorCard key={doctor.slug} doctor={doctor} />
+                ))}
+              </div>
+            </div>
           </div>
+
+          <button
+            type="button"
+            className="doctors-scroll-control doctors-scroll-control--right"
+            aria-label="Scroll doctors right"
+            onClick={() => scrollDoctors("right")}
+          >
+            <DoctorsScrollArrow direction="right" />
+          </button>
         </div>
       </div>
     </section>
+  );
+}
+
+function DoctorsScrollArrow({ direction }: { direction: "left" | "right" }) {
+  return (
+    <div className={`doctors-scroll-arrow doctors-scroll-arrow--${direction}`}>
+      <span />
+      <span />
+      <span />
+    </div>
   );
 }
 

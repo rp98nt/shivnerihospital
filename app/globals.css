@@ -141,13 +141,22 @@ body {
   }
 }
 
-@keyframes doctors-carousel-scroll {
-  from {
-    transform: translateX(0);
+@keyframes doctors-scroll-arrow-animate {
+  0% {
+    opacity: 0;
+    transform: rotate(45deg) translate(-20px, -20px);
   }
-  to {
-    transform: translateX(-50%);
+  50% {
+    opacity: 1;
   }
+  100% {
+    opacity: 0;
+    transform: rotate(45deg) translate(20px, 20px);
+  }
+}
+
+.doctors-carousel-shell {
+  position: relative;
 }
 
 .doctors-carousel-mask {
@@ -155,18 +164,72 @@ body {
   mask-image: linear-gradient(
     to right,
     transparent,
-    black 6%,
-    black 94%,
+    black 8%,
+    black 92%,
     transparent
   );
 }
 
-.doctors-carousel-track {
-  animation: doctors-carousel-scroll 60s linear infinite;
+.doctors-carousel-scroll {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.doctors-carousel-track:hover {
-  animation-play-state: paused;
+.doctors-carousel-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.doctors-scroll-control {
+  position: absolute;
+  top: 50%;
+  z-index: 20;
+  display: flex;
+  height: 3rem;
+  width: 3rem;
+  transform: translateY(-50%);
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.doctors-scroll-control--left {
+  left: -0.5rem;
+}
+
+.doctors-scroll-control--right {
+  right: -0.5rem;
+}
+
+.doctors-scroll-arrow {
+  cursor: pointer;
+  transform: rotate(0deg);
+}
+
+.doctors-scroll-arrow--left {
+  transform: rotate(180deg);
+}
+
+.doctors-scroll-arrow span {
+  display: block;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin: -0.45rem;
+  transform: rotate(45deg);
+  border-right: 3px solid rgb(15 118 110);
+  border-bottom: 3px solid rgb(15 118 110);
+  animation: doctors-scroll-arrow-animate 2s infinite;
+}
+
+.doctors-scroll-arrow span:nth-child(2) {
+  animation-delay: -0.2s;
+}
+
+.doctors-scroll-arrow span:nth-child(3) {
+  animation-delay: -0.4s;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -197,11 +260,14 @@ body {
       0 4px 12px rgb(15 23 42 / 0.06);
   }
 
-  .doctors-carousel-track {
+  .doctors-carousel-scroll {
+    scroll-behavior: auto;
+  }
+
+  .doctors-scroll-arrow span {
     animation: none;
-    flex-wrap: wrap;
-    width: 100%;
-    justify-content: center;
+    opacity: 1;
+    transform: rotate(45deg);
   }
 
   .doctors-carousel-mask {
