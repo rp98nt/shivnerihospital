@@ -7,10 +7,98 @@ import {
   type Doctor,
 } from "@/lib/doctors";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+
+const DOCTORS_CAROUSEL_CYCLE_SECONDS = 60;
 
 export function OurDoctors() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const progressFillRef = useRef<HTMLDivElement>(null);
+  const progressBarRef = useRef<HTMLDivElement>(null);
+  const isPausedRef = useRef(false);
+  const carouselDoctors = [...SORTED_DOCTORS, ...SORTED_DOCTORS];
+
+  function syncProgress(container: HTMLDivElement) {
+    const halfScroll = container.scrollWidth / 2;
+    const maxScroll = Math.max(halfScroll - container.clientWidth, 1);
+    const progress = Math.min(
+      100,
+      Math.max(0, (container.scrollLeft / maxScroll) * 100),
+    );
+
+    if (progressFillRef.current) {
+      progressFillRef.current.style.width = `${progress}%`;
+    }
+
+    progressBarRef.current?.setAttribute(
+      "aria-valuenow",
+      String(Math.round(progress)),
+    );
+  }
+
+  function normalizeScroll(container: HTMLDivElement) {
+    const halfScroll = container.scrollWidth / 2;
+    if (halfScroll <= 0) return;
+
+    if (container.scrollLeft >= halfScroll) {
+      container.scrollLeft -= halfScroll;
+    } else if (container.scrollLeft < 0) {
+      container.scrollLeft += halfScroll;
+    }
+  }
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (reducedMotion.matches) {
+      syncProgress(container);
+      return;
+    }
+
+    let frameId = 0;
+    let lastTime = performance.now();
+
+    const getScrollSpeed = () => {
+      const halfScroll = container.scrollWidth / 2;
+      return halfScroll / DOCTORS_CAROUSEL_CYCLE_SECONDS;
+    };
+
+    const onScroll = () => {
+      normalizeScroll(container);
+      syncProgress(container);
+    };
+
+    const tick = (now: number) => {
+      const elapsed = (now - lastTime) / 1000;
+      lastTime = now;
+
+      if (!isPausedRef.current) {
+        container.scrollLeft += getScrollSpeed() * elapsed;
+        normalizeScroll(container);
+        syncProgress(container);
+      }
+
+      frameId = requestAnimationFrame(tick);
+    };
+
+    const resizeObserver = new ResizeObserver(() => {
+      normalizeScroll(container);
+      syncProgress(container);
+    });
+
+    resizeObserver.observe(container);
+    container.addEventListener("scroll", onScroll, { passive: true });
+    syncProgress(container);
+    frameId = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      container.removeEventListener("scroll", onScroll);
+      resizeObserver.disconnect();
+    };
+  }, []);
 
   function scrollDoctors(direction: "left" | "right") {
     const container = scrollRef.current;
@@ -38,7 +126,15 @@ export function OurDoctors() {
           Meet our experienced consultants and visiting guest faculty.
         </p>
 
-        <div className="doctors-carousel-shell mt-8 px-8 sm:mt-10 sm:px-10">
+        <div
+          className="doctors-carousel-shell mt-8 px-8 sm:mt-10 sm:px-10"
+          onMouseEnter={() => {
+            isPausedRef.current = true;
+          }}
+          onMouseLeave={() => {
+            isPausedRef.current = false;
+          }}
+        >
           <button
             type="button"
             className="doctors-scroll-control doctors-scroll-control--left"
@@ -56,11 +152,26 @@ export function OurDoctors() {
               aria-label="Doctors carousel"
             >
               <div className="flex w-max gap-4 sm:gap-5">
-                {SORTED_DOCTORS.map((doctor) => (
-                  <DoctorCard key={doctor.slug} doctor={doctor} />
+                {carouselDoctors.map((doctor, index) => (
+                  <DoctorCard key={`${doctor.slug}-${index}`} doctor={doctor} />
                 ))}
               </div>
             </div>
+          </div>
+
+          <div
+            ref={progressBarRef}
+            className="doctors-carousel-progress"
+            role="progressbar"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={0}
+            aria-label="Doctors carousel progress"
+          >
+            <div
+              ref={progressFillRef}
+              className="doctors-carousel-progress-fill"
+            />
           </div>
 
           <button
