@@ -1,0 +1,95 @@
+.directions-marker-icon-shell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.375rem;
+  height: 1.375rem;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.directions-marker-icon {
+  position: relative;
+  font-size: 16px;
+  width: 0;
+  height: 0;
+  overflow: visible;
+  transform: scale(0.5625);
+  transform-origin: center center;
+}
+
+.directions-marker-icon .marker {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  margin: -2.2em 0 0 -1.3em;
+  padding: 0 3px 3px 0;
+  transform: perspective(40px) rotateX(20deg) rotateZ(-45deg);
+  transform-origin: 50% 50%;
+  border-radius: 50% 50% 50% 0;
+  background: #ed1f34;
+  box-shadow: -1px 1px 4px rgb(0 0 0 / 50%);
+}
+
+.directions-marker-icon .marker::after {
+  content: "";
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  margin: 1em 0 0 0.7em;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: inset -2px 2px 4px hsl(0deg 0% 0% / 50%);
+}
+
+.directions-marker-icon .beacon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.directions-marker-icon .beacon::before,
+.directions-marker-icon .beacon::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
+  background-color: transparent;
+  box-shadow: 0 0 0 3px #ed1f34;
+  animation: directions-marker-active 2s infinite linear;
+  content: "";
+}
+
+.directions-marker-icon .beacon::after {
+  animation-delay: 1s;
+}
+
+@keyframes directions-marker-active {
+  0% {
+    opacity: 1;
+    transform: scale(0.1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(2.5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .directions-marker-icon .beacon::before,
+  .directions-marker-icon .beacon::after {
+    animation: none;
+    opacity: 0;
+  }
+}

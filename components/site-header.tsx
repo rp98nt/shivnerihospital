@@ -1,3 +1,4 @@
+import { DirectionsMarkerIcon } from "@/components/directions-marker-icon/directions-marker-icon";
 import {
   APPOINTMENT_PHONE,
   APPOINTMENT_PHONE_TEL,
@@ -98,10 +99,7 @@ function TopBarDirectionsContact() {
       rel="noopener noreferrer"
       className="flex shrink-0 items-center gap-2.5 rounded-xl py-1 pl-0.5 pr-1 transition-opacity hover:opacity-80"
     >
-      <span className="directions-marker-icon shrink-0" aria-hidden>
-        <div className="directions-marker-icon__marker" />
-        <span className="directions-marker-icon__beacon" />
-      </span>
+      <DirectionsMarkerIcon />
       <span className="whitespace-nowrap text-[11px] font-medium leading-none text-slate-700 sm:text-sm">
         Get{" "}
         <span className="text-slate-600 transition-colors hover:text-teal-800">
