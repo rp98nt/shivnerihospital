@@ -1,72 +1,12 @@
 "use client";
 
-type Doctor = {
-  name: string;
-  specialty: string;
-  qualifications: string;
-  isGuest?: boolean;
-};
-
-const DOCTORS: Doctor[] = [
-  {
-    name: "Dr. Sanjay Khillare",
-    specialty: "Medicine",
-    qualifications: "MBBS, FCPS (Medicine)",
-  },
-  {
-    name: "Dr. Govind Pawade Patil",
-    specialty: "Medicine",
-    qualifications: "MBBS, MD (Medicine)",
-  },
-  {
-    name: "Dr. Sanjyot Gajendra Giri",
-    specialty: "Chest Medicine",
-    qualifications: "MBBS, MD (Chest Medicine), MICS, MERS, CCCDM",
-  },
-  {
-    name: "Dr. Rahul Tengase Patil",
-    specialty: "Nephrology",
-    qualifications: "MBBS, MD Medicine, DM Nephrology",
-  },
-  {
-    name: "Dr. Pooja Tengase Khupase",
-    specialty: "Chest Medicine",
-    qualifications: "MBBS, MD (Chest Medicine)",
-  },
-  {
-    name: "Dr. Ninad Suryatale",
-    specialty: "Orthopaedics",
-    qualifications: "MBBS, D.Ortho",
-  },
-  {
-    name: "Dr. Prakash Chavan",
-    specialty: "Oncosurgery",
-    qualifications: "MBBS, FCPS Surgery, FMAS (Laproscopy Oncosurgery)",
-  },
-  {
-    name: "Dr. Kailas Giri",
-    specialty: "Critical Care",
-    qualifications: "MBBS, FCPS (Medicine), IDCCM",
-  },
-  {
-    name: "Dr. Anvesh Sattepar Jain",
-    specialty: "Neuro-Surgery",
-    qualifications: "D.N.B. (Gen. Surgery), D.N.B. (Neuro-Surgery)",
-    isGuest: true,
-  },
-  {
-    name: "Dr. Varsha Sanjay Killare",
-    specialty: "Physiotherapy",
-    qualifications: "B.P.Th., M.P.Th. (Neuro)",
-    isGuest: true,
-  },
-  {
-    name: "Dr. Ashok Bun",
-    specialty: "General Surgery",
-    qualifications: "MBBS, MS",
-    isGuest: true,
-  },
-];
+import {
+  DOCTORS,
+  getDoctorAppointmentPath,
+  getDoctorProfilePath,
+  type Doctor,
+} from "@/lib/doctors";
+import Link from "next/link";
 
 export function OurDoctors() {
   const carouselItems = [...DOCTORS, ...DOCTORS];
@@ -119,7 +59,14 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
               {doctor.isGuest ? (
                 <StarIcon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-500" />
               ) : null}
-              <span>{doctor.name}</span>
+              <Link
+                href={getDoctorProfilePath(doctor.slug)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition hover:text-teal-700"
+              >
+                {doctor.name}
+              </Link>
             </h3>
             <p className="mt-0.5 text-xs text-slate-500">{doctor.specialty}</p>
           </div>
@@ -131,13 +78,13 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
         </p>
       </div>
 
-      <button
-        type="button"
+      <Link
+        href={getDoctorAppointmentPath(doctor.slug)}
         className="flex w-full items-center justify-center gap-2 bg-amber-400 py-3.5 text-sm font-semibold text-slate-900 transition hover:bg-amber-300"
       >
         Book Appointment
         <ArrowUpRightIcon className="h-4 w-4" />
-      </button>
+      </Link>
     </article>
   );
 }
