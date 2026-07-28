@@ -47,33 +47,27 @@ const ICON_PATHS: Record<PersonnelNavIcon, React.ReactNode> = {
       <path d="M3 20c0-3 2.7-5.5 6-5.5M13 20c0-2.2 1.8-4 4-4" />
     </>
   ),
-  departments: (
-    <>
-      <path d="M4 20V8l8-4 8 4v12" />
-      <path d="M9 20v-6h6v6" />
-    </>
-  ),
-  schedule: (
-    <>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 7v5l3 2" />
-    </>
-  ),
-  payment: (
-    <>
-      <rect x="2" y="6" width="20" height="12" rx="2" />
-      <path d="M2 10h20" />
-    </>
-  ),
   inventory: (
     <>
       <path d="M4 7h16v12H4z" />
       <path d="M8 7V5h8v2M8 11h8M8 15h5" />
     </>
   ),
+  reports: (
+    <>
+      <path d="M6 4h12v16H6z" />
+      <path d="M9 8h6M9 12h6M9 16h4" />
+    </>
+  ),
   messages: (
     <>
       <path d="M4 6h16v10H8l-4 4V6z" />
+    </>
+  ),
+  settings: (
+    <>
+      <circle cx="12" cy="12" r="3" />
+      <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
     </>
   ),
 };

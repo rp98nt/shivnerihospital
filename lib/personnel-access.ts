@@ -20,7 +20,9 @@ export const PERSONNEL_PERMISSIONS = [
   "schedule:manage",
   "payment:manage",
   "inventory:manage",
+  "reports:manage",
   "messages:manage",
+  "settings:manage",
   "personnel:manage",
 ] as const;
 
@@ -56,11 +58,10 @@ const ROLE_PERMISSIONS: Record<
     "appointments:manage",
     "doctors:manage",
     "patients:manage",
-    "departments:manage",
-    "schedule:manage",
+    "reports:manage",
   ],
-  finance: ["dashboard:view", "payment:manage"],
-  operations: ["dashboard:view", "inventory:manage", "schedule:manage"],
+  finance: ["dashboard:view", "reports:manage"],
+  operations: ["dashboard:view", "inventory:manage", "reports:manage"],
 };
 
 export function formatPersonnelRoleLabel(role: string): string {
@@ -121,13 +122,12 @@ export function canAccessPersonnelPath(role: PersonnelRole, pathname: string) {
   const routePermissions: Array<[prefix: string, permission: PersonnelPermission]> =
     [
       ["/personnel/appointments", "appointments:manage"],
-      ["/personnel/doctors-schedule", "schedule:manage"],
       ["/personnel/doctors", "doctors:manage"],
       ["/personnel/patients", "patients:manage"],
-      ["/personnel/departments", "departments:manage"],
-      ["/personnel/payment", "payment:manage"],
       ["/personnel/inventory", "inventory:manage"],
+      ["/personnel/reports", "reports:manage"],
       ["/personnel/messages", "messages:manage"],
+      ["/personnel/settings", "settings:manage"],
     ];
 
   const match = routePermissions.find(([prefix]) => pathname.startsWith(prefix));
@@ -148,10 +148,9 @@ export function getPersonnelHomePath(role: PersonnelRole) {
     ["/personnel/patients", "patients:manage"],
     ["/personnel/messages", "messages:manage"],
     ["/personnel/doctors", "doctors:manage"],
-    ["/personnel/departments", "departments:manage"],
-    ["/personnel/doctors-schedule", "schedule:manage"],
-    ["/personnel/payment", "payment:manage"],
     ["/personnel/inventory", "inventory:manage"],
+    ["/personnel/reports", "reports:manage"],
+    ["/personnel/settings", "settings:manage"],
   ];
 
   const match = fallbackRoutes.find(([, permission]) =>

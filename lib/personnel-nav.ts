@@ -14,11 +14,10 @@ export type PersonnelNavIcon =
   | "appointments"
   | "doctors"
   | "patients"
-  | "departments"
-  | "schedule"
-  | "payment"
   | "inventory"
-  | "messages";
+  | "reports"
+  | "messages"
+  | "settings";
 
 export const PERSONNEL_NAV_ITEMS: PersonnelNavItem[] = [
   {
@@ -46,34 +45,27 @@ export const PERSONNEL_NAV_ITEMS: PersonnelNavItem[] = [
     permission: "patients:manage",
   },
   {
-    label: "Departments",
-    href: "/personnel/departments",
-    icon: "departments",
-    permission: "departments:manage",
-  },
-  {
-    label: "Doctor's Schedule",
-    href: "/personnel/doctors-schedule",
-    icon: "schedule",
-    permission: "schedule:manage",
-  },
-  {
-    label: "Payment",
-    href: "/personnel/payment",
-    icon: "payment",
-    permission: "payment:manage",
-  },
-  {
     label: "Inventory",
     href: "/personnel/inventory",
     icon: "inventory",
     permission: "inventory:manage",
   },
   {
+    label: "Reports",
+    href: "/personnel/reports",
+    icon: "reports",
+    permission: "reports:manage",
+  },
+  {
     label: "Messages",
     href: "/personnel/messages",
     icon: "messages",
     permission: "messages:manage",
-    badge: 3,
+  },
+  {
+    label: "Settings",
+    href: "/personnel/settings",
+    icon: "settings",
+    permission: "settings:manage",
   },
 ];
