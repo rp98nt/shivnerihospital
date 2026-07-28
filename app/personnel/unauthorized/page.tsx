@@ -1,7 +1,14 @@
 import Link from "next/link";
 import { PersonnelShell } from "@/components/personnel/personnel-shell";
+import { auth } from "@/lib/auth";
+import { getPersonnelHomePath } from "@/lib/personnel-access";
 
-export default function PersonnelUnauthorizedPage() {
+export default async function PersonnelUnauthorizedPage() {
+  const session = await auth();
+  const homePath = session?.user?.role
+    ? getPersonnelHomePath(session.user.role)
+    : "/personnel/login";
+
   return (
     <PersonnelShell title="Access denied">
       <div className="mx-auto max-w-lg rounded-2xl border border-slate-200 bg-white p-10 text-center">
@@ -11,7 +18,7 @@ export default function PersonnelUnauthorizedPage() {
           Contact a super admin if you need permission for this area.
         </p>
         <Link
-          href="/personnel"
+          href={homePath}
           className="mt-6 inline-flex rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-500"
         >
           Back to dashboard

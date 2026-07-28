@@ -1,16 +1,23 @@
 import { auth } from "@/lib/auth";
-import { canAccessPersonnelPath } from "@/lib/personnel-access";
+import {
+  canAccessPersonnelPath,
+  getPersonnelHomePath,
+} from "@/lib/personnel-access";
 import { NextResponse } from "next/server";
 
 export default auth((request) => {
   const { pathname } = request.nextUrl;
   const isLoginPage = pathname === "/personnel/login";
   const isUnauthorizedPage = pathname === "/personnel/unauthorized";
+  const isPersonnelRoot =
+    pathname === "/personnel" || pathname === "/personnel/";
   const isAuthenticated = !!request.auth?.user;
 
   if (isLoginPage) {
-    if (isAuthenticated) {
-      return NextResponse.redirect(new URL("/personnel", request.url));
+    if (isAuthenticated && request.auth?.user.role) {
+      return NextResponse.redirect(
+        new URL(getPersonnelHomePath(request.auth.user.role), request.url),
+      );
     }
 
     return NextResponse.next();
@@ -22,7 +29,7 @@ export default auth((request) => {
     return NextResponse.redirect(loginUrl);
   }
 
-  if (isUnauthorizedPage) {
+  if (isUnauthorizedPage || isPersonnelRoot) {
     return NextResponse.next();
   }
 

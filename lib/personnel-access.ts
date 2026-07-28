@@ -1,3 +1,5 @@
+export const PERSONNEL_SUPERADMIN_PATH = "/personnel/superadmin";
+
 export const PERSONNEL_ROLES = [
   "super_admin",
   "reception",
@@ -68,8 +70,15 @@ export function roleHasPermission(
 }
 
 export function canAccessPersonnelPath(role: PersonnelRole, pathname: string) {
+  if (
+    pathname === PERSONNEL_SUPERADMIN_PATH ||
+    pathname === `${PERSONNEL_SUPERADMIN_PATH}/`
+  ) {
+    return role === "super_admin";
+  }
+
   if (pathname === "/personnel" || pathname === "/personnel/") {
-    return roleHasPermission(role, "dashboard:view");
+    return true;
   }
 
   const routePermissions: Array<[prefix: string, permission: PersonnelPermission]> =
@@ -90,4 +99,27 @@ export function canAccessPersonnelPath(role: PersonnelRole, pathname: string) {
   }
 
   return roleHasPermission(role, match[1]);
+}
+
+export function getPersonnelHomePath(role: PersonnelRole) {
+  if (role === "super_admin") {
+    return PERSONNEL_SUPERADMIN_PATH;
+  }
+
+  const fallbackRoutes: Array<[prefix: string, permission: PersonnelPermission]> = [
+    ["/personnel/appointments", "appointments:manage"],
+    ["/personnel/patients", "patients:manage"],
+    ["/personnel/messages", "messages:manage"],
+    ["/personnel/doctors", "doctors:manage"],
+    ["/personnel/departments", "departments:manage"],
+    ["/personnel/doctors-schedule", "schedule:manage"],
+    ["/personnel/payment", "payment:manage"],
+    ["/personnel/inventory", "inventory:manage"],
+  ];
+
+  const match = fallbackRoutes.find(([, permission]) =>
+    roleHasPermission(role, permission),
+  );
+
+  return match?.[0] ?? "/personnel/unauthorized";
 }

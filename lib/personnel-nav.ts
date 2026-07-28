@@ -1,4 +1,5 @@
 import type { PersonnelPermission } from "@/lib/personnel-access";
+import { PERSONNEL_SUPERADMIN_PATH } from "@/lib/personnel-access";
 
 export type PersonnelNavItem = {
   label: string;
@@ -22,7 +23,7 @@ export type PersonnelNavIcon =
 export const PERSONNEL_NAV_ITEMS: PersonnelNavItem[] = [
   {
     label: "Dashboard",
-    href: "/personnel",
+    href: PERSONNEL_SUPERADMIN_PATH,
     icon: "dashboard",
     permission: "dashboard:view",
   },

@@ -3,12 +3,14 @@
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useState, type FormEvent } from "react";
+import { PERSONNEL_SUPERADMIN_PATH } from "@/lib/personnel-access";
 
 export function PersonnelLoginForm() {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/personnel";
+  const callbackUrl = searchParams.get("callbackUrl") || PERSONNEL_SUPERADMIN_PATH;
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -55,14 +57,34 @@ export function PersonnelLoginForm() {
       </label>
       <label className="block">
         <span className="mb-1.5 block text-sm font-medium text-slate-700">Password</span>
-        <input
-          name="password"
-          type="password"
-          autoComplete="current-password"
-          required
-          placeholder="Enter password"
-          className="w-full rounded-lg border border-slate-200 px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-        />
+        <div className="relative">
+          <input
+            name="password"
+            type={showPassword ? "text" : "password"}
+            autoComplete="current-password"
+            required
+            placeholder="Enter password"
+            className="w-full rounded-lg border border-slate-200 py-3 pl-4 pr-11 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword((current) => !current)}
+            aria-label={showPassword ? "Hide password" : "Show password"}
+            aria-pressed={showPassword}
+            className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-slate-400 transition hover:text-slate-600"
+          >
+            {showPassword ? (
+              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
+                <path d="M3 3l18 18M10.5 10.7a2.5 2.5 0 0 0 3.5 3.5M7.2 7.2C5.4 8.5 4 10.2 3 12c1.5 2.5 4.5 6 9 6 1.6 0 3-.4 4.2-1M14 9.5c.6-.6.9-1.3.9-2.1a3 3 0 0 0-5.2-2.1" />
+              </svg>
+            ) : (
+              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
+                <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            )}
+          </button>
+        </div>
       </label>
 
       {error ? (
