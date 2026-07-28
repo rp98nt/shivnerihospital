@@ -5,6 +5,7 @@ import {
   uploadPersonnelPhoto,
 } from "@/lib/blob-storage";
 import { getDb } from "@/lib/db";
+import { ensurePersonnelSchema } from "@/lib/db/ensure-schema";
 import { personnelAccounts } from "@/lib/db/schema";
 import { getPersonnelAccountSlug } from "@/lib/personnel-accounts";
 
@@ -68,26 +69,33 @@ export async function getPersonnelPhotoMapBySlug() {
     return new Map<string, string>();
   }
 
-  const accounts = await db
-    .select({
-      username: personnelAccounts.username,
-      photoUrl: personnelAccounts.photoUrl,
-    })
-    .from(personnelAccounts)
-    .where(eq(personnelAccounts.role, "doctor"));
+  try {
+    await ensurePersonnelSchema();
 
-  const photoMap = new Map<string, string>();
+    const accounts = await db
+      .select({
+        username: personnelAccounts.username,
+        photoUrl: personnelAccounts.photoUrl,
+      })
+      .from(personnelAccounts)
+      .where(eq(personnelAccounts.role, "doctor"));
 
-  for (const account of accounts) {
-    if (!account.photoUrl) {
-      continue;
+    const photoMap = new Map<string, string>();
+
+    for (const account of accounts) {
+      if (!account.photoUrl) {
+        continue;
+      }
+
+      photoMap.set(
+        account.username.replace(/@shivnerihospital\.com$/i, ""),
+        account.photoUrl,
+      );
     }
 
-    photoMap.set(
-      account.username.replace(/@shivnerihospital\.com$/i, ""),
-      account.photoUrl,
-    );
+    return photoMap;
+  } catch (error) {
+    console.error("Failed to load personnel photo map:", error);
+    return new Map<string, string>();
   }
-
-  return photoMap;
 }
