@@ -1,10 +1,13 @@
-import { PersonnelPlaceholder } from "@/components/personnel/personnel-placeholder";
+import { PersonnelDoctorsGrid } from "@/components/personnel/personnel-doctors-grid";
+import { PersonnelShell } from "@/components/personnel/personnel-shell";
+import { getPersonnelAccountsByRole } from "@/lib/personnel-accounts";
 
-export default function PersonnelDoctorsPage() {
+export default async function PersonnelDoctorsPage() {
+  const doctors = await getPersonnelAccountsByRole("doctor");
+
   return (
-    <PersonnelPlaceholder
-      title="Doctors"
-      description="Maintain doctor profiles, specialties, and availability."
-    />
+    <PersonnelShell title="Doctors">
+      <PersonnelDoctorsGrid doctors={doctors} />
+    </PersonnelShell>
   );
 }
