@@ -1,9 +1,9 @@
 const KPI_STATS = [
-  { label: "Patients", value: "0", tone: "bg-blue-50 text-blue-600" },
-  { label: "Staff Members", value: "0", tone: "bg-violet-50 text-violet-600" },
-  { label: "Vehicles", value: "0", tone: "bg-orange-50 text-orange-600" },
-  { label: "Appointment", value: "0", tone: "bg-emerald-50 text-emerald-600" },
-  { label: "Operations", value: "0", tone: "bg-rose-50 text-rose-600" },
+  { label: "Patients", value: "0" },
+  { label: "Staff Members", value: "0" },
+  { label: "Vehicles", value: "0" },
+  { label: "Appointment", value: "0" },
+  { label: "Operations", value: "0" },
 ] as const;
 
 export function PersonnelDashboard() {
@@ -18,16 +18,9 @@ export function PersonnelDashboard() {
             key={stat.label}
             className="rounded-2xl border border-slate-100 bg-white p-4 shadow-sm"
           >
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <p className="text-xs font-medium text-slate-500">{stat.label}</p>
-                <p className="mt-2 text-2xl font-bold text-slate-900">{stat.value}</p>
-              </div>
-              <span
-                className={`flex h-10 w-10 items-center justify-center rounded-xl ${stat.tone}`}
-              >
-                <span className="h-2.5 w-2.5 rounded-full bg-current" />
-              </span>
+            <div>
+              <p className="text-xs font-medium text-slate-500">{stat.label}</p>
+              <p className="mt-2 text-2xl font-bold text-slate-900">{stat.value}</p>
             </div>
           </article>
         ))}
