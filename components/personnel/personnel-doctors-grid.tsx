@@ -1,12 +1,57 @@
+"use client";
+
 import { getDoctorBySlug } from "@/lib/doctors";
 import type { PersonnelAccount } from "@/lib/db/schema";
 import { getPersonnelAccountSlug } from "@/lib/personnel-accounts";
+import { useMemo, useState } from "react";
 
 type PersonnelDoctorsGridProps = {
   doctors: PersonnelAccount[];
 };
 
+type StatusFilter = "all" | "available" | "unavailable";
+
 export function PersonnelDoctorsGrid({ doctors }: PersonnelDoctorsGridProps) {
+  const [department, setDepartment] = useState("all");
+  const [status, setStatus] = useState<StatusFilter>("all");
+
+  const departments = useMemo(() => {
+    const values = new Set(
+      doctors
+        .map((doctor) => doctor.specialty?.trim())
+        .filter((value): value is string => Boolean(value)),
+    );
+
+    return Array.from(values).sort((a, b) => a.localeCompare(b));
+  }, [doctors]);
+
+  const doctorCards = useMemo(
+    () =>
+      doctors.map((doctor) => {
+        const slug = getPersonnelAccountSlug(doctor);
+        const profile = getDoctorBySlug(slug);
+
+        return {
+          doctor,
+          slug,
+          profile,
+          available: getDoctorAvailability(slug, profile?.isGuest),
+        };
+      }),
+    [doctors],
+  );
+
+  const filteredDoctors = doctorCards.filter(({ doctor, available }) => {
+    const matchesDepartment =
+      department === "all" || doctor.specialty === department;
+    const matchesStatus =
+      status === "all" ||
+      (status === "available" && available) ||
+      (status === "unavailable" && !available);
+
+    return matchesDepartment && matchesStatus;
+  });
+
   if (doctors.length === 0) {
     return (
       <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center">
@@ -19,49 +64,129 @@ export function PersonnelDoctorsGrid({ doctors }: PersonnelDoctorsGridProps) {
   }
 
   return (
-    <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {doctors.map((doctor) => {
-        const slug = getPersonnelAccountSlug(doctor);
-        const profile = getDoctorBySlug(slug);
+    <div className="space-y-5">
+      <div className="flex flex-wrap items-center gap-3">
+        <FilterSelect
+          label="Department"
+          value={department}
+          onChange={setDepartment}
+          options={[
+            { value: "all", label: "All Departments" },
+            ...departments.map((value) => ({ value, label: value })),
+          ]}
+        />
+        <FilterSelect
+          label="Status"
+          value={status}
+          onChange={(value) => setStatus(value as StatusFilter)}
+          options={[
+            { value: "all", label: "All Status" },
+            { value: "available", label: "Available" },
+            { value: "unavailable", label: "Unavailable" },
+          ]}
+        />
 
-        return (
-          <article
-            key={doctor.id}
-            className="flex items-center gap-2.5 rounded-xl border border-slate-200 bg-white p-2 shadow-sm transition hover:border-slate-300 hover:shadow"
-          >
-            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-linear-to-b from-teal-50 to-slate-100">
-              <PersonnelDoctorPhotoPlaceholder />
-              {profile?.isGuest ? (
-                <span className="absolute bottom-0 left-0 right-0 bg-amber-400 py-px text-center text-[7px] font-bold uppercase tracking-wide text-amber-950">
-                  Guest
+        <button
+          type="button"
+          className="ml-auto inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-500"
+        >
+          <span aria-hidden>+</span>
+          Add Doctor
+        </button>
+      </div>
+
+      {filteredDoctors.length === 0 ? (
+        <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center">
+          <p className="text-sm text-slate-500">No doctors match the selected filters.</p>
+        </div>
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {filteredDoctors.map(({ doctor, available }) => (
+            <article
+              key={doctor.id}
+              className="flex min-h-[17.5rem] flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+            >
+              <div className="relative min-h-0 flex-[7] bg-linear-to-b from-slate-100 to-slate-200/80">
+                <PersonnelDoctorPhotoPlaceholder />
+                <span
+                  className={`absolute right-3 top-3 rounded-full px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm ${
+                    available ? "bg-emerald-500" : "bg-rose-500"
+                  }`}
+                >
+                  {available ? "Available" : "Unavailable"}
                 </span>
-              ) : null}
-            </div>
+              </div>
 
-            <div className="min-w-0 flex-1 py-0.5">
-              <h2 className="truncate text-sm font-semibold leading-tight text-slate-900">
-                {doctor.name}
-              </h2>
-              <p className="mt-0.5 truncate text-xs text-slate-500">
-                {doctor.specialty ?? "Specialty not set"}
-              </p>
-            </div>
-          </article>
-        );
-      })}
+              <div className="flex min-h-0 flex-[3] flex-col items-center justify-center border-t border-slate-100 px-4 py-3 text-center">
+                <h2 className="text-sm font-bold leading-snug text-slate-900">
+                  {doctor.name}
+                </h2>
+                <p className="mt-1 text-xs text-slate-500">
+                  {doctor.specialty ?? "Specialty not set"}
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
 
+function FilterSelect({
+  label,
+  value,
+  onChange,
+  options,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: Array<{ value: string; label: string }>;
+}) {
+  return (
+    <label className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-600 shadow-sm">
+      <span className="font-medium text-slate-700">{label}</span>
+      <select
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        className="bg-transparent pr-1 text-sm text-slate-700 outline-none"
+      >
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+}
+
+function getDoctorAvailability(slug: string, isGuest?: boolean) {
+  if (isGuest) {
+    return false;
+  }
+
+  const score = slug.split("").reduce((total, char) => total + char.charCodeAt(0), 0);
+  return score % 4 !== 0;
+}
+
 function PersonnelDoctorPhotoPlaceholder() {
   return (
-    <div className="flex h-full w-full items-center justify-center text-teal-700/60">
-      <svg className="h-7 w-7" viewBox="0 0 64 64" fill="none" aria-hidden>
+    <div className="flex h-full w-full flex-col items-center justify-center gap-2 p-4 text-slate-500/70">
+      <svg className="h-24 w-24" viewBox="0 0 64 64" fill="none" aria-hidden>
         <circle cx="32" cy="22" r="10" fill="currentColor" opacity="0.25" />
         <path
           d="M14 54c2.5-10 8.5-14 18-14s15.5 4 18 14"
           fill="currentColor"
           opacity="0.2"
+        />
+        <path
+          d="M20 58h24"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          opacity="0.35"
         />
         <rect
           x="18"
