@@ -24,8 +24,8 @@ export function HomeHero() {
         <div className="pointer-events-none absolute -bottom-16 left-1/4 h-48 w-48 rounded-full bg-cyan-500/10 blur-3xl" />
 
         <div className="home-hero-viewport__inner relative mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
-          <div className="grid items-start gap-8 lg:grid-cols-[1fr_380px] lg:gap-12">
-            <div>
+          <div className="grid items-start gap-8 lg:grid-cols-[1fr_380px] lg:items-stretch lg:gap-12">
+            <div className="flex flex-col">
               <h1 className="max-w-xl text-4xl font-semibold leading-tight tracking-tight sm:text-6xl lg:text-[3.65rem] lg:leading-[1.15]">
                 Your health is in{" "}
                 <span className="text-lime-300">safe hands</span> at Shivneri
@@ -63,16 +63,16 @@ export function HomeHero() {
               </div>
             </div>
 
-            <div className="w-full lg:justify-self-end">
+            <div className="flex w-full lg:h-full lg:justify-self-end">
               <form
                 onSubmit={handleSubmit}
-                className="rounded-2xl bg-white p-6 text-slate-800 shadow-xl sm:p-7"
+                className="flex w-full flex-col rounded-2xl bg-white p-6 text-slate-800 shadow-xl sm:p-7 lg:h-full"
               >
                 <h2 className="text-center text-lg font-semibold text-slate-900">
                   Book the Next Available Slot
                 </h2>
 
-                <div className="mt-5 space-y-3">
+                <div className="mt-5 flex flex-1 flex-col justify-between gap-3 lg:mt-6">
                   <input
                     type="text"
                     name="name"
