@@ -3,7 +3,11 @@
 import { PartnerCarouselsGroup } from "@/components/partner-carousels-group";
 import { OurDoctors } from "@/components/our-doctors";
 import { OurSpecialties } from "@/components/our-specialties";
+import { SORTED_DOCTORS } from "@/lib/doctors";
 import { FormEvent, useState, type ReactNode } from "react";
+
+const heroBookingFieldClassName =
+  "w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-base outline-none transition focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20";
 
 export function HomeHero() {
   const [otpSent, setOtpSent] = useState(false);
@@ -68,29 +72,42 @@ export function HomeHero() {
                 onSubmit={handleSubmit}
                 className="flex w-full flex-col rounded-2xl bg-white p-6 text-slate-800 shadow-xl sm:p-7 lg:h-full"
               >
-                <h2 className="text-center text-lg font-semibold text-slate-900">
+                <h2 className="text-center text-xl font-semibold text-slate-900">
                   Book the Next Available Slot
                 </h2>
 
                 <div className="mt-5 flex flex-1 flex-col justify-between gap-3 lg:mt-6">
+                  <select
+                    name="doctor"
+                    defaultValue=""
+                    aria-label="Select doctor"
+                    className={`${heroBookingFieldClassName} text-slate-700`}
+                  >
+                    <option value="">Select doctor</option>
+                    {SORTED_DOCTORS.map((doctor) => (
+                      <option key={doctor.slug} value={doctor.slug}>
+                        {doctor.name} — {doctor.specialty}
+                      </option>
+                    ))}
+                  </select>
                   <input
                     type="text"
                     name="name"
                     placeholder="Enter your name"
-                    className="w-full rounded-lg border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20"
+                    className={heroBookingFieldClassName}
                     required
                   />
                   <input
                     type="tel"
                     name="phone"
                     placeholder="Phone Number"
-                    className="w-full rounded-lg border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20"
+                    className={heroBookingFieldClassName}
                     required
                   />
                   <button
                     type="button"
                     onClick={handleSendOtp}
-                    className="w-full rounded-lg bg-teal-700 py-3 text-sm font-semibold text-white transition hover:bg-teal-600"
+                    className="w-full rounded-lg bg-teal-700 py-3 text-base font-semibold text-white transition hover:bg-teal-600"
                   >
                     Send OTP
                   </button>
@@ -98,12 +115,12 @@ export function HomeHero() {
                     type="text"
                     name="otp"
                     placeholder="Enter OTP"
-                    className="w-full rounded-lg border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20"
+                    className={heroBookingFieldClassName}
                     disabled={!otpSent}
                   />
                   <button
                     type="submit"
-                    className="w-full rounded-lg bg-amber-400 py-3.5 text-sm font-semibold text-slate-900 transition hover:bg-amber-300"
+                    className="w-full rounded-lg bg-amber-400 py-3.5 text-base font-semibold text-slate-900 transition hover:bg-amber-300"
                   >
                     Submit Now
                   </button>
