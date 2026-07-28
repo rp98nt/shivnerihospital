@@ -56,6 +56,22 @@ const ROLE_PERMISSIONS: Record<
   operations: ["dashboard:view", "inventory:manage", "schedule:manage"],
 };
 
+export function formatPersonnelRoleLabel(role: string): string {
+  const normalized = role.trim().toLowerCase().replace(/-/g, "_");
+
+  if (normalized === "superadmin") {
+    return "Super Admin";
+  }
+
+  if (PERSONNEL_ROLES.includes(normalized as PersonnelRole)) {
+    return PERSONNEL_ROLE_LABELS[normalized as PersonnelRole];
+  }
+
+  return role
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (character) => character.toUpperCase());
+}
+
 export function normalizePersonnelRole(role: string): PersonnelRole | null {
   const normalized = role.trim().toLowerCase().replace(/-/g, "_");
 

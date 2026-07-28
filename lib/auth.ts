@@ -44,6 +44,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             name: account.name,
             username: account.username,
             role: account.accessRole,
+            accountRole: account.role,
           };
         } catch (error) {
           console.error("Personnel authorize failed:", error);
@@ -57,6 +58,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (user) {
         token.username = user.username;
         token.role = user.role;
+        token.accountRole = user.accountRole;
       }
 
       return token;
@@ -65,6 +67,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (session.user) {
         session.user.username = token.username as string;
         session.user.role = token.role as typeof session.user.role;
+        session.user.accountRole = token.accountRole as string;
       }
 
       return session;

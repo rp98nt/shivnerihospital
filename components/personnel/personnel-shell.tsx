@@ -19,6 +19,7 @@ export async function PersonnelShell({ title, children }: PersonnelShellProps) {
           <PersonnelHeader
             title={title}
             displayName={user.name ?? user.username}
+            accountRole={user.accountRole ?? user.role}
           />
         ) : null}
         <main className="flex-1 overflow-auto p-4 sm:p-6">{children}</main>
