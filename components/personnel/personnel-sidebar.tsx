@@ -8,6 +8,7 @@ import {
   roleHasPermission,
 } from "@/lib/personnel-access";
 import { PERSONNEL_NAV_ITEMS } from "@/lib/personnel-nav";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -27,18 +28,25 @@ export function PersonnelSidebar({ role }: PersonnelSidebarProps) {
   });
 
   return (
-    <aside className="flex h-full w-64 shrink-0 flex-col border-r border-slate-200 bg-white px-4 py-6">
-      <Link href={homePath} className="flex items-center gap-2 px-3">
-        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white">
-          <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-            <path d="M12 6v12M6 12h12" strokeLinecap="round" />
-            <circle cx="12" cy="12" r="9" />
-          </svg>
+    <aside className="flex h-full w-64 shrink-0 flex-col bg-linear-to-b from-teal-800 via-teal-900 to-slate-900 px-4 py-6 text-white shadow-[inset_-1px_0_0_rgba(255,255,255,0.08)]">
+      <Link
+        href={homePath}
+        className="flex min-w-0 items-center gap-2.5 rounded-xl px-2 py-2 transition hover:bg-white/10"
+      >
+        <Image
+          src="/shivneri-logo.png"
+          alt=""
+          width={36}
+          height={36}
+          className="h-9 w-9 shrink-0 object-contain brightness-0 invert"
+          priority
+        />
+        <span className="truncate text-[15px] font-bold leading-tight tracking-tight text-white">
+          Shivneri Hospital
         </span>
-        <span className="text-lg font-bold text-slate-900">Shivneri Personnel</span>
       </Link>
 
-      <nav className="mt-8 flex-1 space-y-1" aria-label="Personnel navigation">
+      <nav className="mt-6 flex-1 space-y-1" aria-label="Personnel navigation">
         {navItems.map((item) => {
           const isActive =
             item.href === PERSONNEL_SUPERADMIN_PATH
@@ -51,14 +59,14 @@ export function PersonnelSidebar({ role }: PersonnelSidebarProps) {
               href={item.href}
               className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition ${
                 isActive
-                  ? "bg-blue-50 text-blue-700"
-                  : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                  ? "bg-white/15 text-white shadow-sm ring-1 ring-white/20"
+                  : "text-teal-50/90 hover:bg-white/10 hover:text-white"
               }`}
             >
               <PersonnelNavIconGlyph icon={item.icon} />
               <span className="flex-1">{item.label}</span>
               {item.badge ? (
-                <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-blue-600 px-1.5 text-[10px] font-bold text-white">
+                <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-lime-300 px-1.5 text-[10px] font-bold text-teal-950">
                   {item.badge}
                 </span>
               ) : null}
@@ -67,11 +75,11 @@ export function PersonnelSidebar({ role }: PersonnelSidebarProps) {
         })}
       </nav>
 
-      <div className="mt-6 rounded-2xl bg-linear-to-br from-blue-600 to-indigo-700 p-4 text-white shadow-lg">
-        <p className="text-sm font-semibold leading-snug">
+      <div className="mt-6 rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm">
+        <p className="text-sm font-semibold leading-snug text-white">
           Streamline hospital operations from one dashboard
         </p>
-        <p className="mt-2 text-xs text-blue-100">
+        <p className="mt-2 text-xs text-teal-100/90">
           Appointments, doctors, and analytics in one place.
         </p>
       </div>

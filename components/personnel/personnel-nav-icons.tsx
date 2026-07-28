@@ -7,7 +7,7 @@ export function PersonnelNavIconGlyph({
 }) {
   return (
     <svg
-      className="h-5 w-5 shrink-0"
+      className="h-5 w-5 shrink-0 text-current"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
