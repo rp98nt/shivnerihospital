@@ -14,6 +14,7 @@ const credentialsSchema = z.object({
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   trustHost: true,
+  secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
   },
@@ -27,28 +28,33 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        const parsed = credentialsSchema.safeParse(credentials);
-        if (!parsed.success) {
+        try {
+          const parsed = credentialsSchema.safeParse(credentials);
+          if (!parsed.success) {
+            return null;
+          }
+
+          await ensureBootstrapSuperAdmin();
+
+          const user = await verifyPersonnelCredentials(
+            parsed.data.username,
+            parsed.data.password,
+          );
+
+          if (!user) {
+            return null;
+          }
+
+          return {
+            id: user.id,
+            name: user.displayName,
+            username: user.username,
+            role: user.role as PersonnelRole,
+          };
+        } catch (error) {
+          console.error("Personnel authorize failed:", error);
           return null;
         }
-
-        await ensureBootstrapSuperAdmin();
-
-        const user = await verifyPersonnelCredentials(
-          parsed.data.username,
-          parsed.data.password,
-        );
-
-        if (!user) {
-          return null;
-        }
-
-        return {
-          id: user.id,
-          name: user.displayName,
-          username: user.username,
-          role: user.role as PersonnelRole,
-        };
       },
     }),
   ],

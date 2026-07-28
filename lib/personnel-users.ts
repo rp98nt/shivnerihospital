@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import { eq } from "drizzle-orm";
+import { ensurePersonnelSchema } from "@/lib/db/ensure-schema";
 import { getDb } from "@/lib/db";
 import { personnelUsers } from "@/lib/db/schema";
 import type { PersonnelRole } from "@/lib/personnel-access";
@@ -10,13 +11,18 @@ export async function findPersonnelUserByUsername(username: string) {
     return null;
   }
 
-  const [user] = await db
-    .select()
-    .from(personnelUsers)
-    .where(eq(personnelUsers.username, username.toLowerCase().trim()))
-    .limit(1);
+  try {
+    const [user] = await db
+      .select()
+      .from(personnelUsers)
+      .where(eq(personnelUsers.username, username.toLowerCase().trim()))
+      .limit(1);
 
-  return user ?? null;
+    return user ?? null;
+  } catch (error) {
+    console.error("Failed to find personnel user:", error);
+    return null;
+  }
 }
 
 export async function verifyPersonnelCredentials(
@@ -47,21 +53,28 @@ export async function ensureBootstrapSuperAdmin() {
     return null;
   }
 
-  const existing = await findPersonnelUserByUsername(username);
-  if (existing) {
-    return existing;
+  try {
+    await ensurePersonnelSchema();
+
+    const existing = await findPersonnelUserByUsername(username);
+    if (existing) {
+      return existing;
+    }
+
+    const passwordHash = await bcrypt.hash(password, 12);
+    const [created] = await db
+      .insert(personnelUsers)
+      .values({
+        username,
+        passwordHash,
+        displayName,
+        role: "super_admin" satisfies PersonnelRole,
+      })
+      .returning();
+
+    return created ?? null;
+  } catch (error) {
+    console.error("Failed to bootstrap super admin:", error);
+    return null;
   }
-
-  const passwordHash = await bcrypt.hash(password, 12);
-  const [created] = await db
-    .insert(personnelUsers)
-    .values({
-      username,
-      passwordHash,
-      displayName,
-      role: "super_admin" satisfies PersonnelRole,
-    })
-    .returning();
-
-  return created ?? null;
 }
