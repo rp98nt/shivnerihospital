@@ -15,6 +15,13 @@
       "when": 1753683600000,
       "tag": "0001_personnel_accounts",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1753687200000,
+      "tag": "0002_personnel_doctor_accounts",
+      "breakpoints": true
     }
   ]
 }

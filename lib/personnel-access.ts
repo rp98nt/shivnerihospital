@@ -2,6 +2,7 @@ export const PERSONNEL_SUPERADMIN_PATH = "/personnel/superadmin";
 
 export const PERSONNEL_ROLES = [
   "super_admin",
+  "doctor",
   "reception",
   "clinical_lead",
   "finance",
@@ -27,6 +28,7 @@ export type PersonnelPermission = (typeof PERSONNEL_PERMISSIONS)[number];
 
 export const PERSONNEL_ROLE_LABELS: Record<PersonnelRole, string> = {
   super_admin: "Super Admin",
+  doctor: "Doctor",
   reception: "Reception",
   clinical_lead: "Clinical Lead",
   finance: "Finance",
@@ -38,6 +40,11 @@ const ROLE_PERMISSIONS: Record<
   PersonnelPermission[] | "all"
 > = {
   super_admin: "all",
+  doctor: [
+    "appointments:manage",
+    "patients:manage",
+    "schedule:manage",
+  ],
   reception: [
     "dashboard:view",
     "appointments:manage",

@@ -1,6 +1,6 @@
 import { sql } from "drizzle-orm";
 import { getDb } from "@/lib/db";
-import { DEFAULT_SUPER_ADMIN_ACCOUNT } from "@/lib/personnel-seed";
+import { PERSONNEL_SEED_ACCOUNTS } from "@/lib/personnel-seed";
 
 export async function ensurePersonnelSchema() {
   const db = getDb();
@@ -14,6 +14,7 @@ export async function ensurePersonnelSchema() {
         "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
         "name" text NOT NULL,
         "role" text NOT NULL,
+        "specialty" text,
         "username" text NOT NULL,
         "password_hash" text NOT NULL,
         "is_active" boolean DEFAULT true NOT NULL,
@@ -24,17 +25,31 @@ export async function ensurePersonnelSchema() {
     `);
 
     await db.execute(sql`
-      INSERT INTO "personnel_accounts" ("name", "role", "username", "password_hash")
-      SELECT
-        ${DEFAULT_SUPER_ADMIN_ACCOUNT.name},
-        ${DEFAULT_SUPER_ADMIN_ACCOUNT.role},
-        ${DEFAULT_SUPER_ADMIN_ACCOUNT.username},
-        ${DEFAULT_SUPER_ADMIN_ACCOUNT.passwordHash}
-      WHERE NOT EXISTS (
-        SELECT 1 FROM "personnel_accounts"
-        WHERE "username" = ${DEFAULT_SUPER_ADMIN_ACCOUNT.username}
-      );
+      ALTER TABLE "personnel_accounts"
+      ADD COLUMN IF NOT EXISTS "specialty" text;
     `);
+
+    for (const account of PERSONNEL_SEED_ACCOUNTS) {
+      await db.execute(sql`
+        INSERT INTO "personnel_accounts" (
+          "name",
+          "role",
+          "specialty",
+          "username",
+          "password_hash"
+        )
+        SELECT
+          ${account.name},
+          ${account.role},
+          ${account.specialty},
+          ${account.username},
+          ${account.passwordHash}
+        WHERE NOT EXISTS (
+          SELECT 1 FROM "personnel_accounts"
+          WHERE "username" = ${account.username}
+        );
+      `);
+    }
 
     return true;
   } catch (error) {
