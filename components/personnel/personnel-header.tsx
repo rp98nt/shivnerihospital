@@ -44,7 +44,7 @@ export function PersonnelHeader({
           </svg>
           <input
             type="search"
-            placeholder="Search here..."
+            placeholder="Search patients, appointments, invoices..."
             className="w-56 rounded-xl border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-sm outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100 lg:w-72"
           />
         </label>
