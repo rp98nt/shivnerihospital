@@ -26,7 +26,7 @@ export function HomeHero() {
         <div className="home-hero-viewport__inner relative mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
           <div className="grid items-start gap-8 lg:grid-cols-[1fr_380px] lg:gap-12">
             <div>
-              <h1 className="max-w-xl text-2xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-[2.65rem] lg:leading-[1.15]">
+              <h1 className="max-w-xl text-4xl font-semibold leading-tight tracking-tight sm:text-6xl lg:text-[3.65rem] lg:leading-[1.15]">
                 Your health is in{" "}
                 <span className="text-lime-300">safe hands</span> at Shivneri
                 Hospital
