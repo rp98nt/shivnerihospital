@@ -19,11 +19,11 @@ export function HomeHero() {
 
   return (
     <>
-      <section className="relative overflow-hidden bg-linear-to-br from-teal-800 via-teal-900 to-slate-900 text-white">
+      <section className="home-hero-viewport relative overflow-hidden bg-linear-to-br from-teal-800 via-teal-900 to-slate-900 text-white">
         <div className="pointer-events-none absolute -right-20 top-0 h-64 w-64 rounded-full bg-teal-600/20 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-16 left-1/4 h-48 w-48 rounded-full bg-cyan-500/10 blur-3xl" />
 
-        <div className="relative mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-14 lg:py-16">
+        <div className="home-hero-viewport__inner relative mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
           <div className="grid items-start gap-8 lg:grid-cols-[1fr_380px] lg:gap-12">
             <div>
               <h1 className="max-w-xl text-2xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-[2.65rem] lg:leading-[1.15]">

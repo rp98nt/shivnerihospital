@@ -20,7 +20,7 @@ import {
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 overflow-visible shadow-sm">
+    <header id="site-header" className="sticky top-0 z-50 overflow-visible shadow-sm">
       <div className="border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-6xl px-4 py-3 lg:flex lg:items-center lg:justify-between lg:px-6 lg:py-2.5">
           <div className="flex items-center justify-between gap-3 lg:flex-initial lg:justify-start">
