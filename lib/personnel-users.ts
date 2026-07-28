@@ -2,25 +2,33 @@ import bcrypt from "bcryptjs";
 import { eq } from "drizzle-orm";
 import { ensurePersonnelSchema } from "@/lib/db/ensure-schema";
 import { getDb } from "@/lib/db";
-import { personnelUsers } from "@/lib/db/schema";
-import type { PersonnelRole } from "@/lib/personnel-access";
+import { personnelAccounts, type PersonnelAccount } from "@/lib/db/schema";
+import { normalizePersonnelRole, type PersonnelRole } from "@/lib/personnel-access";
 
-export async function findPersonnelUserByUsername(username: string) {
+export type VerifiedPersonnelAccount = PersonnelAccount & {
+  accessRole: PersonnelRole;
+};
+
+export async function ensurePersonnelAccounts() {
+  return ensurePersonnelSchema();
+}
+
+export async function findPersonnelAccountByUsername(username: string) {
   const db = getDb();
   if (!db) {
     return null;
   }
 
   try {
-    const [user] = await db
+    const [account] = await db
       .select()
-      .from(personnelUsers)
-      .where(eq(personnelUsers.username, username.toLowerCase().trim()))
+      .from(personnelAccounts)
+      .where(eq(personnelAccounts.username, username.toLowerCase().trim()))
       .limit(1);
 
-    return user ?? null;
+    return account ?? null;
   } catch (error) {
-    console.error("Failed to find personnel user:", error);
+    console.error("Failed to find personnel account:", error);
     return null;
   }
 }
@@ -28,53 +36,26 @@ export async function findPersonnelUserByUsername(username: string) {
 export async function verifyPersonnelCredentials(
   username: string,
   password: string,
-) {
-  const user = await findPersonnelUserByUsername(username);
-  if (!user || !user.isActive) {
+): Promise<VerifiedPersonnelAccount | null> {
+  await ensurePersonnelAccounts();
+
+  const account = await findPersonnelAccountByUsername(username);
+  if (!account || !account.isActive) {
     return null;
   }
 
-  const passwordMatches = await bcrypt.compare(password, user.passwordHash);
+  const accessRole = normalizePersonnelRole(account.role);
+  if (!accessRole) {
+    return null;
+  }
+
+  const passwordMatches = await bcrypt.compare(password, account.passwordHash);
   if (!passwordMatches) {
     return null;
   }
 
-  return user;
-}
-
-export async function ensureBootstrapSuperAdmin() {
-  const db = getDb();
-  const username = process.env.PERSONNEL_SUPER_ADMIN_USERNAME?.trim().toLowerCase();
-  const password = process.env.PERSONNEL_SUPER_ADMIN_PASSWORD;
-  const displayName =
-    process.env.PERSONNEL_SUPER_ADMIN_DISPLAY_NAME?.trim() || "Super Admin";
-
-  if (!db || !username || !password) {
-    return null;
-  }
-
-  try {
-    await ensurePersonnelSchema();
-
-    const existing = await findPersonnelUserByUsername(username);
-    if (existing) {
-      return existing;
-    }
-
-    const passwordHash = await bcrypt.hash(password, 12);
-    const [created] = await db
-      .insert(personnelUsers)
-      .values({
-        username,
-        passwordHash,
-        displayName,
-        role: "super_admin" satisfies PersonnelRole,
-      })
-      .returning();
-
-    return created ?? null;
-  } catch (error) {
-    console.error("Failed to bootstrap super admin:", error);
-    return null;
-  }
+  return {
+    ...account,
+    accessRole,
+  };
 }

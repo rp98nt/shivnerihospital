@@ -1,24 +1,17 @@
 import {
   boolean,
-  pgEnum,
   pgTable,
   text,
   timestamp,
   uuid,
 } from "drizzle-orm/pg-core";
-import { PERSONNEL_ROLES } from "@/lib/personnel-access";
 
-export const personnelRoleEnum = pgEnum(
-  "personnel_role",
-  PERSONNEL_ROLES,
-);
-
-export const personnelUsers = pgTable("personnel_users", {
+export const personnelAccounts = pgTable("personnel_accounts", {
   id: uuid("id").defaultRandom().primaryKey(),
+  name: text("name").notNull(),
+  role: text("role").notNull(),
   username: text("username").notNull().unique(),
   passwordHash: text("password_hash").notNull(),
-  displayName: text("display_name").notNull(),
-  role: personnelRoleEnum("role").notNull(),
   isActive: boolean("is_active").notNull().default(true),
   createdAt: timestamp("created_at", { withTimezone: true })
     .defaultNow()
@@ -28,4 +21,4 @@ export const personnelUsers = pgTable("personnel_users", {
     .notNull(),
 });
 
-export type PersonnelUser = typeof personnelUsers.$inferSelect;
+export type PersonnelAccount = typeof personnelAccounts.$inferSelect;

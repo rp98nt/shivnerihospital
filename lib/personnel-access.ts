@@ -56,6 +56,20 @@ const ROLE_PERMISSIONS: Record<
   operations: ["dashboard:view", "inventory:manage", "schedule:manage"],
 };
 
+export function normalizePersonnelRole(role: string): PersonnelRole | null {
+  const normalized = role.trim().toLowerCase().replace(/-/g, "_");
+
+  if (normalized === "superadmin") {
+    return "super_admin";
+  }
+
+  if (PERSONNEL_ROLES.includes(normalized as PersonnelRole)) {
+    return normalized as PersonnelRole;
+  }
+
+  return null;
+}
+
 export function getPermissionsForRole(role: PersonnelRole): PersonnelPermission[] {
   const permissions = ROLE_PERMISSIONS[role];
   return permissions === "all" ? [...PERSONNEL_PERMISSIONS] : permissions;

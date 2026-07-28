@@ -1,11 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
-import type { PersonnelRole } from "@/lib/personnel-access";
-import {
-  ensureBootstrapSuperAdmin,
-  verifyPersonnelCredentials,
-} from "@/lib/personnel-users";
+import { verifyPersonnelCredentials } from "@/lib/personnel-users";
 
 const credentialsSchema = z.object({
   username: z.string().min(1),
@@ -34,22 +30,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             return null;
           }
 
-          await ensureBootstrapSuperAdmin();
-
-          const user = await verifyPersonnelCredentials(
+          const account = await verifyPersonnelCredentials(
             parsed.data.username,
             parsed.data.password,
           );
 
-          if (!user) {
+          if (!account) {
             return null;
           }
 
           return {
-            id: user.id,
-            name: user.displayName,
-            username: user.username,
-            role: user.role as PersonnelRole,
+            id: account.id,
+            name: account.name,
+            username: account.username,
+            role: account.accessRole,
           };
         } catch (error) {
           console.error("Personnel authorize failed:", error);
@@ -70,7 +64,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     session({ session, token }) {
       if (session.user) {
         session.user.username = token.username as string;
-        session.user.role = token.role as PersonnelRole;
+        session.user.role = token.role as typeof session.user.role;
       }
 
       return session;
