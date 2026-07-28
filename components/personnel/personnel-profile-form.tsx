@@ -66,8 +66,8 @@ export function PersonnelProfileForm({ account }: PersonnelProfileFormProps) {
         </div>
 
         {isDoctor ? (
-          <div className="relative mb-6 h-56 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
-            <PersonnelDoctorPhoto doctor={account} canUpload />
+          <div className="relative mx-auto mb-6 aspect-[4/5] w-full max-w-[12rem] overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 sm:max-w-[14rem]">
+            <PersonnelDoctorPhoto doctor={account} canUpload layout="profile" />
           </div>
         ) : null}
 

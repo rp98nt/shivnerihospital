@@ -8,11 +8,13 @@ import { useRef, useState } from "react";
 type PersonnelDoctorPhotoProps = {
   doctor: PersonnelAccount;
   canUpload?: boolean;
+  layout?: "card" | "profile";
 };
 
 export function PersonnelDoctorPhoto({
   doctor,
   canUpload = false,
+  layout = "card",
 }: PersonnelDoctorPhotoProps) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -52,6 +54,11 @@ export function PersonnelDoctorPhoto({
     }
   }
 
+  const imageClassName =
+    layout === "profile"
+      ? "object-contain object-center p-1"
+      : "object-cover object-[center_22%]";
+
   return (
     <div className="relative h-full w-full">
       {doctor.photoUrl ? (
@@ -59,8 +66,12 @@ export function PersonnelDoctorPhoto({
           src={doctor.photoUrl}
           alt={doctor.name}
           fill
-          className="object-cover object-top"
-          sizes="(max-width: 768px) 100vw, 33vw"
+          className={imageClassName}
+          sizes={
+            layout === "profile"
+              ? "(max-width: 640px) 12rem, 14rem"
+              : "(max-width: 768px) 100vw, 33vw"
+          }
         />
       ) : (
         <PersonnelDoctorPhotoPlaceholder />
