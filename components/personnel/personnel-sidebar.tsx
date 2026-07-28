@@ -28,17 +28,17 @@ export function PersonnelSidebar({ role }: PersonnelSidebarProps) {
   });
 
   return (
-    <aside className="flex h-full w-64 shrink-0 flex-col bg-linear-to-b from-teal-800 via-teal-900 to-slate-900 px-4 py-6 text-white shadow-[inset_-1px_0_0_rgba(255,255,255,0.08)]">
+    <aside className="flex min-h-dvh w-64 shrink-0 flex-col self-stretch bg-linear-to-b from-teal-800 via-teal-900 to-slate-900 px-4 py-6 text-white shadow-[inset_-1px_0_0_rgba(255,255,255,0.08)]">
       <Link
         href={homePath}
         className="flex min-w-0 items-center gap-2.5 rounded-xl px-2 py-2 transition hover:bg-white/10"
       >
         <Image
-          src="/shivneri-logo.png"
-          alt=""
+          src="/shivneri-hospital-logo.png"
+          alt="Shivneri Hospital"
           width={36}
           height={36}
-          className="h-9 w-9 shrink-0 object-contain brightness-0 invert"
+          className="h-9 w-9 shrink-0 object-contain"
           priority
         />
         <span className="truncate text-[15px] font-bold leading-tight tracking-tight text-white">
