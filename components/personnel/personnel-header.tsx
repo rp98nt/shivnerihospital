@@ -1,7 +1,6 @@
 "use client";
 
-import { formatPersonnelRoleLabel } from "@/lib/personnel-access";
-import { signOut } from "next-auth/react";
+import { PersonnelUserMenu } from "@/components/personnel/personnel-user-menu";
 
 type PersonnelHeaderProps = {
   title: string;
@@ -14,13 +13,6 @@ export function PersonnelHeader({
   displayName,
   accountRole,
 }: PersonnelHeaderProps) {
-  const initials = displayName
-    .split(/\s+/)
-    .map((part) => part[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-
   return (
     <header className="flex flex-wrap items-center gap-4 border-b border-slate-200 bg-white px-6 py-4">
       <h1 className="text-xl font-semibold text-slate-900">{title}</h1>
@@ -46,24 +38,10 @@ export function PersonnelHeader({
           />
         </label>
 
-        <div className="flex items-center gap-3 rounded-xl border border-slate-200 px-3 py-1.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 text-sm font-semibold text-blue-700">
-            {initials}
-          </div>
-          <div className="hidden sm:block">
-            <p className="text-sm font-semibold text-slate-900">{displayName}</p>
-            <p className="text-xs text-slate-500">
-              {formatPersonnelRoleLabel(accountRole)}
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={() => signOut({ callbackUrl: "/personnel/login" })}
-            className="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
-          >
-            Sign out
-          </button>
-        </div>
+        <PersonnelUserMenu
+          displayName={displayName}
+          accountRole={accountRole}
+        />
       </div>
     </header>
   );

@@ -119,6 +119,10 @@ export function canAccessPersonnelPath(role: PersonnelRole, pathname: string) {
     return true;
   }
 
+  if (pathname.startsWith("/personnel/profile")) {
+    return true;
+  }
+
   const routePermissions: Array<[prefix: string, permission: PersonnelPermission]> =
     [
       ["/personnel/appointments", "appointments:manage"],

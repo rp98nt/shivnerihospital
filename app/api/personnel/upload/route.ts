@@ -5,7 +5,7 @@ import { uploadPersonnelAccountPhoto } from "@/lib/personnel-photos";
 export async function POST(request: Request) {
   const session = await auth();
 
-  if (!session?.user || session.user.role !== "super_admin") {
+  if (!session?.user?.id) {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -23,6 +23,17 @@ export async function POST(request: Request) {
 
     if (!accountId) {
       return Response.json({ error: "Missing accountId." }, { status: 400 });
+    }
+
+    const isSelfUpload = accountId === session.user.id;
+    const isSuperAdmin = session.user.role === "super_admin";
+
+    if (isSelfUpload && session.user.accountRole !== "doctor") {
+      return Response.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    if (!isSelfUpload && !isSuperAdmin) {
+      return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     if (!(file instanceof File)) {
