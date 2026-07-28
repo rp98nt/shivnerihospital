@@ -1,21 +1,15 @@
 "use client";
 
-import type { PersonnelRole } from "@/lib/personnel-access";
-import { PERSONNEL_ROLE_LABELS } from "@/lib/personnel-access";
 import { signOut } from "next-auth/react";
 
 type PersonnelHeaderProps = {
   title: string;
   displayName: string;
-  username: string;
-  role: PersonnelRole;
 };
 
 export function PersonnelHeader({
   title,
   displayName,
-  username,
-  role,
 }: PersonnelHeaderProps) {
   const initials = displayName
     .split(/\s+/)
@@ -55,9 +49,6 @@ export function PersonnelHeader({
           </div>
           <div className="hidden sm:block">
             <p className="text-sm font-semibold text-slate-900">{displayName}</p>
-            <p className="text-xs text-slate-500">
-              {PERSONNEL_ROLE_LABELS[role]} · @{username}
-            </p>
           </div>
           <button
             type="button"
