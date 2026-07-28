@@ -84,7 +84,7 @@ export function PersonnelDashboard() {
 
   return (
     <div className="space-y-6">
-      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         {KPI_STATS.map((stat) => (
           <article
             key={stat.label}
@@ -105,7 +105,7 @@ export function PersonnelDashboard() {
         ))}
       </section>
 
-      <section className="grid gap-6 xl:grid-cols-[1.4fr_0.9fr_0.8fr]">
+      <section className="grid gap-6 lg:grid-cols-2">
         <DashboardCard title="Total Trends" action="Last week">
           <div className="mt-4 flex flex-wrap gap-4 text-xs text-slate-500">
             <LegendDot color="#3b82f6" label="Male" />
