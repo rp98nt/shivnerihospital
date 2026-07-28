@@ -22,6 +22,13 @@
       "when": 1753687200000,
       "tag": "0002_personnel_doctor_accounts",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1753690800000,
+      "tag": "0003_personnel_photo_url",
+      "breakpoints": true
     }
   ]
 }

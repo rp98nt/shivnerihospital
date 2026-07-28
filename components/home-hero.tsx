@@ -9,7 +9,11 @@ import { FormEvent, useState, type ReactNode } from "react";
 const heroBookingFieldClassName =
   "w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-base outline-none transition focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20";
 
-export function HomeHero() {
+export function HomeHero({
+  doctorsSection,
+}: {
+  doctorsSection?: ReactNode;
+}) {
   const [otpSent, setOtpSent] = useState(false);
 
   function handleSendOtp(e: FormEvent) {
@@ -133,7 +137,7 @@ export function HomeHero() {
 
       <PartnerCarouselsGroup />
       <OurSpecialties />
-      <OurDoctors />
+      {doctorsSection ?? <OurDoctors />}
     </>
   );
 }

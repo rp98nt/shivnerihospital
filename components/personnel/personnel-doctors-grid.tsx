@@ -1,5 +1,6 @@
 "use client";
 
+import { PersonnelDoctorPhoto } from "@/components/personnel/personnel-doctor-photo";
 import { getDoctorBySlug } from "@/lib/doctors";
 import type { PersonnelAccount } from "@/lib/db/schema";
 import { getPersonnelAccountSlug } from "@/lib/personnel-accounts";
@@ -7,11 +8,15 @@ import { useMemo, useState } from "react";
 
 type PersonnelDoctorsGridProps = {
   doctors: PersonnelAccount[];
+  canUploadPhotos?: boolean;
 };
 
 type StatusFilter = "all" | "available" | "unavailable";
 
-export function PersonnelDoctorsGrid({ doctors }: PersonnelDoctorsGridProps) {
+export function PersonnelDoctorsGrid({
+  doctors,
+  canUploadPhotos = false,
+}: PersonnelDoctorsGridProps) {
   const [department, setDepartment] = useState("all");
   const [status, setStatus] = useState<StatusFilter>("all");
 
@@ -107,7 +112,7 @@ export function PersonnelDoctorsGrid({ doctors }: PersonnelDoctorsGridProps) {
               className="flex min-h-[17.5rem] flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
             >
               <div className="relative min-h-0 flex-[7] bg-linear-to-b from-slate-100 to-slate-200/80">
-                <PersonnelDoctorPhotoPlaceholder />
+                <PersonnelDoctorPhoto doctor={doctor} canUpload={canUploadPhotos} />
                 <span
                   className={`absolute right-3 top-3 rounded-full px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm ${
                     available ? "bg-emerald-500" : "bg-rose-500"
@@ -164,36 +169,4 @@ function FilterSelect({
 
 function getDoctorAvailability(_slug: string, _isGuest?: boolean) {
   return false;
-}
-
-function PersonnelDoctorPhotoPlaceholder() {
-  return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-2 p-4 text-slate-500/70">
-      <svg className="h-24 w-24" viewBox="0 0 64 64" fill="none" aria-hidden>
-        <circle cx="32" cy="22" r="10" fill="currentColor" opacity="0.25" />
-        <path
-          d="M14 54c2.5-10 8.5-14 18-14s15.5 4 18 14"
-          fill="currentColor"
-          opacity="0.2"
-        />
-        <path
-          d="M20 58h24"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          opacity="0.35"
-        />
-        <rect
-          x="18"
-          y="34"
-          width="28"
-          height="18"
-          rx="4"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          opacity="0.35"
-        />
-      </svg>
-    </div>
-  );
 }

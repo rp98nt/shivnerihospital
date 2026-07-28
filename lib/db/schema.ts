@@ -11,6 +11,7 @@ export const personnelAccounts = pgTable("personnel_accounts", {
   name: text("name").notNull(),
   role: text("role").notNull(),
   specialty: text("specialty"),
+  photoUrl: text("photo_url"),
   username: text("username").notNull().unique(),
   passwordHash: text("password_hash").notNull(),
   isActive: boolean("is_active").notNull().default(true),

@@ -6,13 +6,18 @@ import {
   getDoctorProfilePath,
   type Doctor,
 } from "@/lib/doctors";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 const DOCTORS_CAROUSEL_CYCLE_SECONDS = 60;
 const DOCTORS_CAROUSEL_LOOP_SETS = 3;
 
-export function OurDoctors() {
+export function OurDoctors({
+  photoUrls = {},
+}: {
+  photoUrls?: Record<string, string>;
+}) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const isPausedRef = useRef(false);
   const activeIndexRef = useRef(0);
@@ -201,7 +206,11 @@ export function OurDoctors() {
             >
               <div className="flex w-max gap-4 sm:gap-5">
                 {carouselDoctors.map((doctor, index) => (
-                  <DoctorCard key={`${doctor.slug}-${index}`} doctor={doctor} />
+                  <DoctorCard
+                    key={`${doctor.slug}-${index}`}
+                    doctor={doctor}
+                    photoUrl={photoUrls[doctor.slug]}
+                  />
                 ))}
               </div>
             </div>
@@ -251,13 +260,29 @@ function DoctorsScrollArrow({ direction }: { direction: "left" | "right" }) {
   );
 }
 
-function DoctorCard({ doctor }: { doctor: Doctor }) {
+function DoctorCard({
+  doctor,
+  photoUrl,
+}: {
+  doctor: Doctor;
+  photoUrl?: string;
+}) {
   return (
     <article
       className="flex min-h-[35.625rem] w-[19.5rem] shrink-0 flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-xl sm:w-[21rem]"
     >
       <div className="relative min-h-0 flex-[7] bg-linear-to-b from-teal-50 to-slate-100">
-        <DoctorPhotoPlaceholder />
+        {photoUrl ? (
+          <Image
+            src={photoUrl}
+            alt={doctor.name}
+            fill
+            className="object-cover object-top"
+            sizes="(max-width: 640px) 80vw, 21rem"
+          />
+        ) : (
+          <DoctorPhotoPlaceholder />
+        )}
         {doctor.isGuest ? (
           <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-amber-400 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-amber-950 shadow-sm">
             <StarIcon className="h-3 w-3" />
