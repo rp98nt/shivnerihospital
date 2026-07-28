@@ -162,13 +162,8 @@ function FilterSelect({
   );
 }
 
-function getDoctorAvailability(slug: string, isGuest?: boolean) {
-  if (isGuest) {
-    return false;
-  }
-
-  const score = slug.split("").reduce((total, char) => total + char.charCodeAt(0), 0);
-  return score % 4 !== 0;
+function getDoctorAvailability(_slug: string, _isGuest?: boolean) {
+  return false;
 }
 
 function PersonnelDoctorPhotoPlaceholder() {
