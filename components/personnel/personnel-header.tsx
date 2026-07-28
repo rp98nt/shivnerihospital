@@ -6,12 +6,14 @@ type PersonnelHeaderProps = {
   title: string;
   displayName: string;
   accountRole: string;
+  photoUrl?: string | null;
 };
 
 export function PersonnelHeader({
   title,
   displayName,
   accountRole,
+  photoUrl,
 }: PersonnelHeaderProps) {
   return (
     <header className="flex flex-wrap items-center gap-4 border-b border-slate-200 bg-white px-6 py-4">
@@ -41,6 +43,7 @@ export function PersonnelHeader({
         <PersonnelUserMenu
           displayName={displayName}
           accountRole={accountRole}
+          photoUrl={photoUrl}
         />
       </div>
     </header>

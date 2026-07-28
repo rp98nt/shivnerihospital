@@ -6,6 +6,7 @@ import {
   getDoctorProfilePath,
   type Doctor,
 } from "@/lib/doctors";
+import { DoctorAvatar } from "@/components/doctor-avatar";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -281,7 +282,14 @@ function DoctorCard({
             sizes="(max-width: 640px) 80vw, 21rem"
           />
         ) : (
-          <DoctorPhotoPlaceholder />
+          <div className="flex h-full w-full items-center justify-center">
+            <DoctorAvatar
+              name={doctor.name}
+              photoUrl={null}
+              size="lg"
+              tone="teal"
+            />
+          </div>
         )}
         {doctor.isGuest ? (
           <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-amber-400 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-amber-950 shadow-sm">
@@ -293,18 +301,26 @@ function DoctorCard({
 
       <div className="flex min-h-0 flex-[3] flex-col border-t border-slate-100 px-3 py-3 sm:px-4 sm:py-4">
         <div className="flex items-start justify-between gap-2">
-          <div className="min-w-0">
-            <h3 className="text-sm font-bold leading-snug text-slate-900">
-              <Link
-                href={getDoctorProfilePath(doctor.slug)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition hover:text-teal-700"
-              >
-                {doctor.name}
-              </Link>
-            </h3>
-            <p className="mt-0.5 text-xs text-slate-500">{doctor.specialty}</p>
+          <div className="flex min-w-0 items-start gap-2.5">
+            <DoctorAvatar
+              name={doctor.name}
+              photoUrl={photoUrl}
+              size="sm"
+              tone="teal"
+            />
+            <div className="min-w-0">
+              <h3 className="text-sm font-bold leading-snug text-slate-900">
+                <Link
+                  href={getDoctorProfilePath(doctor.slug)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition hover:text-teal-700"
+                >
+                  {doctor.name}
+                </Link>
+              </h3>
+              <p className="mt-0.5 text-xs text-slate-500">{doctor.specialty}</p>
+            </div>
           </div>
           <ShareIcon className="h-4 w-4 shrink-0 text-slate-400" />
         </div>
@@ -322,46 +338,6 @@ function DoctorCard({
         <ArrowUpRightIcon className="h-4 w-4" />
       </Link>
     </article>
-  );
-}
-
-function DoctorPhotoPlaceholder() {
-  return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-2 p-3 text-teal-700/70">
-      <svg
-        className="h-24 w-24 sm:h-28 sm:w-28"
-        viewBox="0 0 64 64"
-        fill="none"
-        aria-hidden
-      >
-        <circle cx="32" cy="22" r="10" fill="currentColor" opacity="0.25" />
-        <path
-          d="M14 54c2.5-10 8.5-14 18-14s15.5 4 18 14"
-          fill="currentColor"
-          opacity="0.2"
-        />
-        <path
-          d="M20 58h24"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          opacity="0.35"
-        />
-        <rect
-          x="18"
-          y="34"
-          width="28"
-          height="18"
-          rx="4"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          opacity="0.35"
-        />
-      </svg>
-      <span className="text-[10px] font-medium uppercase tracking-wide">
-        Photo soon
-      </span>
-    </div>
   );
 }
 

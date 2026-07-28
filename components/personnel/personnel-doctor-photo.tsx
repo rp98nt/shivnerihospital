@@ -1,5 +1,6 @@
 "use client";
 
+import { DoctorAvatar } from "@/components/doctor-avatar";
 import type { PersonnelAccount } from "@/lib/db/schema";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -74,7 +75,14 @@ export function PersonnelDoctorPhoto({
           }
         />
       ) : (
-        <PersonnelDoctorPhotoPlaceholder />
+        <div className="flex h-full w-full items-center justify-center bg-slate-50">
+          <DoctorAvatar
+            name={doctor.name}
+            photoUrl={null}
+            size="lg"
+            tone="blue"
+          />
+        </div>
       )}
 
       {canUpload ? (
@@ -108,31 +116,6 @@ export function PersonnelDoctorPhoto({
           {error}
         </p>
       ) : null}
-    </div>
-  );
-}
-
-function PersonnelDoctorPhotoPlaceholder() {
-  return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-2 p-4 text-slate-500/70">
-      <svg className="h-24 w-24" viewBox="0 0 64 64" fill="none" aria-hidden>
-        <circle cx="32" cy="22" r="10" fill="currentColor" opacity="0.25" />
-        <path
-          d="M14 54c2.5-10 8.5-14 18-14s15.5 4 18 14"
-          fill="currentColor"
-          opacity="0.2"
-        />
-        <rect
-          x="18"
-          y="34"
-          width="28"
-          height="18"
-          rx="4"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          opacity="0.35"
-        />
-      </svg>
     </div>
   );
 }

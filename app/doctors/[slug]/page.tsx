@@ -1,9 +1,11 @@
 import { SiteHeader } from "@/components/site-header";
+import { DoctorAvatar } from "@/components/doctor-avatar";
 import {
   DOCTORS,
   getDoctorAppointmentPath,
   getDoctorBySlug,
 } from "@/lib/doctors";
+import { getPersonnelPhotoMapBySlug } from "@/lib/personnel-photos";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -40,6 +42,9 @@ export default async function DoctorPage({ params }: DoctorPageProps) {
     notFound();
   }
 
+  const photoMap = await getPersonnelPhotoMapBySlug();
+  const photoUrl = photoMap.get(slug);
+
   return (
     <div className="flex flex-1 flex-col">
       <SiteHeader />
@@ -55,11 +60,13 @@ export default async function DoctorPage({ params }: DoctorPageProps) {
 
             <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-md">
               <div className="bg-linear-to-b from-teal-50 to-slate-100 px-6 py-10 sm:px-8 sm:py-12">
-                <div className="mx-auto flex h-32 w-32 items-center justify-center rounded-full bg-teal-100 text-teal-700">
-                  <span className="text-4xl font-semibold">
-                    {doctor.name.replace(/^Dr\.?\s+/i, "").charAt(0)}
-                  </span>
-                </div>
+                <DoctorAvatar
+                  name={doctor.name}
+                  photoUrl={photoUrl}
+                  size="lg"
+                  tone="teal"
+                  className="mx-auto"
+                />
               </div>
 
               <div className="px-6 py-6 sm:px-8 sm:py-8">

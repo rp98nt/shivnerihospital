@@ -1,5 +1,6 @@
 "use client";
 
+import { DoctorAvatar } from "@/components/doctor-avatar";
 import { formatPersonnelRoleLabel } from "@/lib/personnel-access";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
@@ -8,21 +9,16 @@ import { useEffect, useRef, useState } from "react";
 type PersonnelUserMenuProps = {
   displayName: string;
   accountRole: string;
+  photoUrl?: string | null;
 };
 
 export function PersonnelUserMenu({
   displayName,
   accountRole,
+  photoUrl,
 }: PersonnelUserMenuProps) {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-
-  const initials = displayName
-    .split(/\s+/)
-    .map((part) => part[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
 
   useEffect(() => {
     if (!open) {
@@ -59,9 +55,11 @@ export function PersonnelUserMenu({
         onClick={() => setOpen((current) => !current)}
         className="flex items-center gap-3 rounded-xl border border-slate-200 px-3 py-1.5 transition hover:bg-slate-50"
       >
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 text-sm font-semibold text-blue-700">
-          {initials}
-        </div>
+        <DoctorAvatar
+          name={displayName}
+          photoUrl={photoUrl}
+          size="sm"
+        />
         <div className="hidden text-left sm:block">
           <p className="text-sm font-semibold text-slate-900">{displayName}</p>
           <p className="text-xs text-slate-500">

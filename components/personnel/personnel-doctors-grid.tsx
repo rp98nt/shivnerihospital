@@ -1,5 +1,6 @@
 "use client";
 
+import { DoctorAvatar } from "@/components/doctor-avatar";
 import { PersonnelDoctorPhoto } from "@/components/personnel/personnel-doctor-photo";
 import { getDoctorBySlug } from "@/lib/doctors";
 import type { PersonnelAccount } from "@/lib/db/schema";
@@ -122,13 +123,22 @@ export function PersonnelDoctorsGrid({
                 </span>
               </div>
 
-              <div className="flex min-h-0 flex-[3] flex-col items-center justify-center border-t border-slate-100 px-4 py-3 text-center">
-                <h2 className="text-sm font-bold leading-snug text-slate-900">
-                  {doctor.name}
-                </h2>
-                <p className="mt-1 text-xs text-slate-500">
-                  {doctor.specialty ?? "Specialty not set"}
-                </p>
+              <div className="flex min-h-0 flex-[3] flex-col items-center justify-center border-t border-slate-100 px-4 py-3">
+                <div className="flex items-center gap-2.5">
+                  <DoctorAvatar
+                    name={doctor.name}
+                    photoUrl={doctor.photoUrl}
+                    size="sm"
+                  />
+                  <div className="min-w-0 text-left">
+                    <h2 className="text-sm font-bold leading-snug text-slate-900">
+                      {doctor.name}
+                    </h2>
+                    <p className="mt-1 text-xs text-slate-500">
+                      {doctor.specialty ?? "Specialty not set"}
+                    </p>
+                  </div>
+                </div>
               </div>
             </article>
           ))}

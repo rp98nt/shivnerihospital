@@ -1,6 +1,7 @@
 import { PersonnelHeader } from "@/components/personnel/personnel-header";
 import { PersonnelSidebar } from "@/components/personnel/personnel-sidebar";
 import { auth } from "@/lib/auth";
+import { getPersonnelAccountById } from "@/lib/personnel-accounts";
 
 type PersonnelShellProps = {
   title: string;
@@ -10,6 +11,7 @@ type PersonnelShellProps = {
 export async function PersonnelShell({ title, children }: PersonnelShellProps) {
   const session = await auth();
   const user = session?.user;
+  const account = user?.id ? await getPersonnelAccountById(user.id) : null;
 
   return (
     <div className="min-h-dvh bg-slate-200/40">
@@ -21,6 +23,7 @@ export async function PersonnelShell({ title, children }: PersonnelShellProps) {
               title={title}
               displayName={user.name ?? user.username}
               accountRole={user.accountRole ?? user.role}
+              photoUrl={account?.photoUrl}
             />
           ) : null}
           <main className="flex-1 overflow-auto px-4 py-4 sm:px-6 sm:py-6">
