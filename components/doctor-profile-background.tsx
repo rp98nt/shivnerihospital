@@ -60,7 +60,7 @@ export function DoctorProfileBackground({ doctor }: DoctorProfileBackgroundProps
           })}
         </div>
 
-        <div className="mx-auto mt-10 max-w-4xl lg:mt-12">
+        <div className="mx-auto mt-10 max-w-3xl lg:mt-12">
           <div className="relative">
             <div
               className="absolute bottom-6 left-6 top-6 w-px bg-slate-200"
@@ -75,7 +75,7 @@ export function DoctorProfileBackground({ doctor }: DoctorProfileBackgroundProps
                       <TimelineIcon icon={entry.icon} className="h-5 w-5" />
                     </div>
 
-                    <article className="min-w-0 flex-1 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+                    <article className="w-full min-w-0 flex-1 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
                       <p className="text-xs font-bold uppercase tracking-[0.16em] text-teal-700">
                         {entry.period}
                       </p>
