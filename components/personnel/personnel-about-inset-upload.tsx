@@ -1,20 +1,31 @@
 "use client";
 
+import { DoctorAboutInsetOverlay } from "@/components/doctor-about-inset-overlay";
+import { DoctorAvatar } from "@/components/doctor-avatar";
+import type { AboutInsetPosition } from "@/lib/about-inset-position";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 
 type PersonnelAboutInsetUploadProps = {
   accountId: string;
+  doctorName: string;
+  photoUrl?: string | null;
   aboutInsetUrl?: string | null;
   showAboutInset?: boolean;
+  insetPosition: AboutInsetPosition;
+  onInsetPositionChange: (position: AboutInsetPosition) => void;
   disabled?: boolean;
 };
 
 export function PersonnelAboutInsetUpload({
   accountId,
+  doctorName,
+  photoUrl,
   aboutInsetUrl,
   showAboutInset = true,
+  insetPosition,
+  onInsetPositionChange,
   disabled = false,
 }: PersonnelAboutInsetUploadProps) {
   const router = useRouter();
@@ -91,25 +102,38 @@ export function PersonnelAboutInsetUpload({
 
   return (
     <div className="space-y-3">
-      <div className="relative mx-auto aspect-[4/5] w-full max-w-[14rem] overflow-visible rounded-2xl bg-slate-100 shadow-sm">
+      <div className="relative mx-auto aspect-[4/5] w-full max-w-[14rem] overflow-hidden rounded-2xl bg-slate-100 shadow-sm">
         <div className="relative h-full w-full overflow-hidden rounded-2xl border border-slate-200 bg-linear-to-b from-teal-50 to-slate-100">
-          <div className="flex h-full items-center justify-center px-6 text-center text-xs text-slate-500">
-            Portrait photo appears here on the public page
-          </div>
-        </div>
-
-        {aboutInsetUrl && showAboutInset !== false ? (
-          <div className="absolute bottom-[14%] -right-3 z-10 w-[58%] overflow-hidden rounded-xl border-2 border-amber-200 bg-white shadow-lg">
+          {photoUrl ? (
             <Image
-              src={aboutInsetUrl}
+              src={photoUrl}
+              alt={doctorName}
+              fill
+              className="object-cover object-[center_22%]"
+              sizes="14rem"
+            />
+          ) : (
+            <div className="flex h-full items-center justify-center px-6 text-center text-xs text-slate-500">
+              <DoctorAvatar
+                name={doctorName}
+                photoUrl={null}
+                size="lg"
+                tone="teal"
+              />
+            </div>
+          )}
+
+          {aboutInsetUrl && showAboutInset !== false ? (
+            <DoctorAboutInsetOverlay
+              aboutInsetUrl={aboutInsetUrl}
               alt="About section inset preview"
-              width={640}
-              height={480}
-              className="aspect-[4/3] h-auto w-full object-cover object-center"
+              position={insetPosition}
+              draggable={!disabled}
+              onPositionChange={onInsetPositionChange}
               sizes="8rem"
             />
-          </div>
-        ) : null}
+          ) : null}
+        </div>
       </div>
 
       <input
@@ -154,8 +178,8 @@ export function PersonnelAboutInsetUpload({
       </div>
 
       <p className="text-xs leading-relaxed text-slate-500">
-        Stored in your doctor media folder on blob storage. This smaller photo
-        overlays the portrait in the About section on your public profile page.
+        Drag the overlay anywhere on the portrait, then save your profile page
+        settings. Photos are stored in your doctor media folder on blob storage.
       </p>
 
       {error ? (

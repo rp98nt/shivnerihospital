@@ -8,11 +8,17 @@ import type { Doctor } from "@/lib/doctors";
 import { getDb } from "@/lib/db";
 import { ensurePersonnelSchema } from "@/lib/db/ensure-schema";
 import { personnelAccounts } from "@/lib/db/schema";
+import {
+  DEFAULT_ABOUT_INSET_POSITION,
+  normalizeAboutInsetPosition,
+} from "@/lib/about-inset-position";
 import { getPersonnelAccountSlug } from "@/lib/personnel-accounts";
 
 export type DoctorProfileSettings = {
   aboutInsetUrl?: string | null;
   showAboutInset?: boolean;
+  aboutInsetX?: number;
+  aboutInsetY?: number;
   expertiseTags?: string[];
   languages?: string;
   availability?: string;
@@ -20,6 +26,8 @@ export type DoctorProfileSettings = {
 
 export type ResolvedDoctorProfileSettings = {
   aboutInsetUrl?: string;
+  aboutInsetX: number;
+  aboutInsetY: number;
   expertiseTags: string[];
   languages: string;
   availability: string;
@@ -44,6 +52,10 @@ export function parseDoctorProfileSettings(
       typeof record.showAboutInset === "boolean"
         ? record.showAboutInset
         : undefined,
+    aboutInsetX:
+      typeof record.aboutInsetX === "number" ? record.aboutInsetX : undefined,
+    aboutInsetY:
+      typeof record.aboutInsetY === "number" ? record.aboutInsetY : undefined,
     expertiseTags: Array.isArray(record.expertiseTags)
       ? record.expertiseTags
           .filter((tag): tag is string => typeof tag === "string")
@@ -81,8 +93,15 @@ export function resolvePublicProfileSettings(
       ? settings.aboutInsetUrl
       : undefined;
 
+  const insetPosition = normalizeAboutInsetPosition({
+    x: settings?.aboutInsetX,
+    y: settings?.aboutInsetY,
+  });
+
   return {
     aboutInsetUrl,
+    aboutInsetX: insetPosition.x,
+    aboutInsetY: insetPosition.y,
     expertiseTags: settings?.expertiseTags?.length
       ? settings.expertiseTags
       : getDefaultExpertiseTags(doctor),
@@ -200,6 +219,8 @@ export async function uploadDoctorAboutInset(accountId: string, file: File) {
   return updateDoctorProfileSettings(accountId, {
     aboutInsetUrl: blob.url,
     showAboutInset: true,
+    aboutInsetX: DEFAULT_ABOUT_INSET_POSITION.x,
+    aboutInsetY: DEFAULT_ABOUT_INSET_POSITION.y,
   });
 }
 

@@ -1,4 +1,5 @@
 import { DoctorAvatar } from "@/components/doctor-avatar";
+import { DoctorAboutInsetOverlay } from "@/components/doctor-about-inset-overlay";
 import type { ResolvedDoctorProfileSettings } from "@/lib/doctor-profile-settings";
 import {
   getDoctorAppointmentPath,
@@ -46,6 +47,8 @@ export function DoctorProfileAbout({
                 doctor={doctor}
                 photoUrl={photoUrl}
                 aboutInsetUrl={aboutInsetUrl}
+                aboutInsetX={profileDisplay?.aboutInsetX}
+                aboutInsetY={profileDisplay?.aboutInsetY}
               />
             </div>
           </div>
@@ -144,15 +147,19 @@ function DoctorAboutVisuals({
   doctor,
   photoUrl,
   aboutInsetUrl,
+  aboutInsetX,
+  aboutInsetY,
 }: {
   doctor: Doctor;
   photoUrl?: string;
   aboutInsetUrl?: string;
+  aboutInsetX?: number;
+  aboutInsetY?: number;
 }) {
   return (
     <div
       className={`relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none ${
-        aboutInsetUrl ? "overflow-visible pr-8 sm:pr-12 lg:pr-16" : ""
+        aboutInsetUrl ? "overflow-visible" : ""
       }`}
     >
       <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-linear-to-b from-teal-50 to-slate-100 shadow-lg">
@@ -175,21 +182,16 @@ function DoctorAboutVisuals({
             />
           </div>
         )}
-      </div>
 
-      {aboutInsetUrl ? (
-        <div className="absolute bottom-[14%] -right-3 z-30 w-[58%] max-w-[17rem] overflow-hidden rounded-2xl border-[3px] border-amber-200 bg-white shadow-2xl sm:bottom-[16%] sm:-right-5 lg:-right-10">
-          <Image
-            src={aboutInsetUrl}
+        {aboutInsetUrl ? (
+          <DoctorAboutInsetOverlay
+            aboutInsetUrl={aboutInsetUrl}
             alt={`${doctor.name} in surgery`}
-            width={640}
-            height={480}
-            className="aspect-[4/3] h-auto w-full object-cover object-[center_35%]"
-            sizes="(max-width: 1024px) 45vw, 17rem"
+            position={{ x: aboutInsetX, y: aboutInsetY }}
             priority
           />
-        </div>
-      ) : null}
+        ) : null}
+      </div>
     </div>
   );
 }

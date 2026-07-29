@@ -3,6 +3,10 @@
 import { PersonnelAboutInsetUpload } from "@/components/personnel/personnel-about-inset-upload";
 import { getDoctorBySlug } from "@/lib/doctors";
 import {
+  normalizeAboutInsetPosition,
+  type AboutInsetPosition,
+} from "@/lib/about-inset-position";
+import {
   DEFAULT_PROFILE_AVAILABILITY,
   DEFAULT_PROFILE_LANGUAGES,
   getDefaultExpertiseTags,
@@ -50,6 +54,12 @@ export function PersonnelPublicProfileEditor({
   const [availability, setAvailability] = useState(
     profileSettings.availability ?? DEFAULT_PROFILE_AVAILABILITY,
   );
+  const [insetPosition, setInsetPosition] = useState<AboutInsetPosition>(
+    normalizeAboutInsetPosition({
+      x: profileSettings.aboutInsetX,
+      y: profileSettings.aboutInsetY,
+    }),
+  );
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -75,6 +85,8 @@ export function PersonnelPublicProfileEditor({
           accountId: account.id,
           profileSettings: {
             showAboutInset,
+            aboutInsetX: insetPosition.x,
+            aboutInsetY: insetPosition.y,
             expertiseTags: expertiseTags
               .split(",")
               .map((tag) => tag.trim())
@@ -138,8 +150,12 @@ export function PersonnelPublicProfileEditor({
         <div className="grid gap-8 lg:grid-cols-[12rem_1fr]">
           <PersonnelAboutInsetUpload
             accountId={account.id}
+            doctorName={account.name}
+            photoUrl={account.photoUrl}
             aboutInsetUrl={profileSettings.aboutInsetUrl}
             showAboutInset={showAboutInset}
+            insetPosition={insetPosition}
+            onInsetPositionChange={setInsetPosition}
             disabled={!canEdit}
           />
 
@@ -158,7 +174,7 @@ export function PersonnelPublicProfileEditor({
                 </span>
                 <span className="mt-1 block text-slate-500">
                   Displays the uploaded inset image over your portrait in the
-                  About section.
+                  About section. Drag it in the preview to choose placement.
                 </span>
               </span>
             </label>
