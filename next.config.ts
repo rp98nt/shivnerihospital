@@ -27,6 +27,16 @@ const nextConfig: NextConfig = {
         destination: "/personnel/login",
         permanent: false,
       },
+      {
+        source: "/doctors",
+        destination: "/team-of-doctors",
+        permanent: true,
+      },
+      {
+        source: "/doctors/:slug",
+        destination: "/team-of-doctors/:slug",
+        permanent: true,
+      },
     ];
   },
 };

@@ -19,10 +19,10 @@ export function DoctorProfileHero({
     <section className="overflow-hidden bg-white">
       <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:py-16">
         <Link
-          href="/"
+          href="/team-of-doctors"
           className="inline-flex text-sm font-medium text-teal-700 transition hover:text-teal-800"
         >
-          ← Back to home
+          ← Back to Team of Doctors
         </Link>
 
         <div className="mt-8 grid items-center gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-12">

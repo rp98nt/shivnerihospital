@@ -35,7 +35,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function DoctorPage({ params }: DoctorPageProps) {
+export default async function TeamDoctorProfilePage({ params }: DoctorPageProps) {
   const { slug } = await params;
   const doctor = getDoctorBySlug(slug);
 

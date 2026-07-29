@@ -100,7 +100,7 @@ export function getDoctorBySlug(slug: string) {
 }
 
 export function getDoctorProfilePath(slug: string) {
-  return `/doctors/${slug}`;
+  return `/team-of-doctors/${slug}`;
 }
 
 export function getDoctorAppointmentPath(slug: string) {
