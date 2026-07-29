@@ -104,6 +104,43 @@ function buildWorkExperience(doctor: Doctor): BackgroundEntry[] {
     ];
   }
 
+  if (doctor.slug === "ninad-suryatale") {
+    return [
+      {
+        period: "2021 - Present",
+        title: "Private Practice",
+        organization: "Shivneri Hospital, Parbhani, Maharashtra",
+        description:
+          "Delivering evidence-based orthopaedics care, mentoring clinical teams, and supporting patient outcomes across outpatient and inpatient services.",
+        icon: "building",
+      },
+      {
+        period: "2019 - 2020",
+        title: "Senior Orthopaedics Specialist",
+        organization: "Jupiter Hospital, Pune",
+        description:
+          "Managed complex orthopaedics cases, improved clinical workflows, and supported departmental quality and patient-safety initiatives.",
+        icon: "user",
+      },
+      {
+        period: "2017 - 2019",
+        title: "Senior Resident",
+        organization: "Pravara, Maharastra",
+        description:
+          "Completed structured senior resident training with increasing responsibility for patient workups, procedures, and multidisciplinary case discussions.",
+        icon: "hospital",
+      },
+      {
+        period: "2015 - 2017",
+        title: "Junior Residency",
+        organization: "Accredited Medical Institution, India",
+        description:
+          "Foundation years in orthopaedics with supervised clinical practice before advancing to senior residency roles.",
+        icon: "clinical",
+      },
+    ];
+  }
+
   const entries: BackgroundEntry[] = [
     {
       period: "2018 — Present",
