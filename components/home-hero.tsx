@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { PartnerCarouselsGroup } from "@/components/partner-carousels-group";
 import { OurDoctors } from "@/components/our-doctors";
 import { OurSpecialties } from "@/components/our-specialties";
@@ -58,6 +59,7 @@ export function HomeHero({
                   <FeatureCard
                     icon={<DoctorIcon />}
                     label="Expert Team of Doctors"
+                    href="/team-of-doctors"
                   />
                   <FeatureCard
                     icon={<FacilityIcon />}
@@ -145,20 +147,38 @@ export function HomeHero({
 function FeatureCard({
   icon,
   label,
+  href,
 }: {
   icon: ReactNode;
   label: string;
+  href?: string;
 }) {
-  return (
-    <div className="flex w-full min-w-0 flex-row items-center gap-3 rounded-xl bg-white px-4 py-3.5 text-left shadow-md sm:h-28 sm:flex-col sm:justify-center sm:px-2 sm:py-0 sm:text-center lg:h-32">
+  const className =
+    "flex w-full min-w-0 flex-row items-center gap-3 rounded-xl bg-white px-4 py-3.5 text-left shadow-md transition sm:h-28 sm:flex-col sm:justify-center sm:px-2 sm:py-0 sm:text-center lg:h-32";
+
+  const content = (
+    <>
       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-teal-50 text-teal-700 sm:h-10 sm:w-10">
         {icon}
       </div>
       <p className="min-w-0 text-sm font-medium leading-snug text-slate-700 sm:mt-1.5 sm:px-1 sm:text-xs lg:text-sm">
         {label}
       </p>
-    </div>
+    </>
   );
+
+  if (href) {
+    return (
+      <Link
+        href={href}
+        className={`${className} hover:-translate-y-0.5 hover:bg-teal-50 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-300/80`}
+      >
+        {content}
+      </Link>
+    );
+  }
+
+  return <div className={className}>{content}</div>;
 }
 
 function ShieldIcon({ className }: { className?: string }) {
