@@ -21,12 +21,20 @@ export function DoctorProfileAbout({
   return (
     <section className="border-t border-slate-200 bg-[#faf9f6] py-12 sm:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="grid items-start gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
-          <DoctorAboutVisuals
-            doctor={doctor}
-            photoUrl={photoUrl}
-            roleLabel={roleLabel}
-          />
+        <div className="grid items-start gap-10 overflow-visible lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
+          <div
+            className={
+              doctor.aboutInsetImage
+                ? "relative z-20 overflow-visible"
+                : undefined
+            }
+          >
+            <DoctorAboutVisuals
+              doctor={doctor}
+              photoUrl={photoUrl}
+              roleLabel={roleLabel}
+            />
+          </div>
 
           <div className="min-w-0">
             <span className="inline-flex items-center gap-2 rounded-full border border-teal-200 bg-teal-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-teal-800">
@@ -130,7 +138,11 @@ function DoctorAboutVisuals({
   const insetImage = doctor.aboutInsetImage;
 
   return (
-    <div className="relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none">
+    <div
+      className={`relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none ${
+        insetImage ? "overflow-visible pr-8 sm:pr-12 lg:pr-16" : ""
+      }`}
+    >
       <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-linear-to-b from-teal-50 to-slate-100 shadow-lg">
         {photoUrl ? (
           <Image
@@ -177,16 +189,16 @@ function DoctorAboutVisuals({
           </div>
         </>
       ) : (
-        <div className="absolute bottom-[16%] right-3 z-10 w-[56%] overflow-hidden rounded-2xl border-2 border-amber-200 bg-white shadow-xl sm:bottom-[18%] sm:right-4">
-          <div className="relative aspect-[4/3]">
-            <Image
-              src={insetImage}
-              alt={`${doctor.name} in surgery`}
-              fill
-              className="object-cover object-center"
-              sizes="(max-width: 1024px) 45vw, 16rem"
-            />
-          </div>
+        <div className="absolute bottom-[14%] -right-3 z-30 w-[58%] max-w-[17rem] overflow-hidden rounded-2xl border-[3px] border-amber-200 bg-white shadow-2xl sm:bottom-[16%] sm:-right-5 lg:-right-10">
+          <Image
+            src={insetImage}
+            alt={`${doctor.name} in surgery`}
+            width={640}
+            height={480}
+            className="aspect-[4/3] h-auto w-full object-cover object-[center_35%]"
+            sizes="(max-width: 1024px) 45vw, 17rem"
+            priority
+          />
         </div>
       )}
     </div>
