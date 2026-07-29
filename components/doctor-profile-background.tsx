@@ -9,7 +9,7 @@ import {
   type BackgroundEntryIcon,
   type BackgroundTab,
 } from "@/lib/doctor-background";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type DoctorProfileBackgroundProps = {
   doctor: Doctor;
@@ -69,7 +69,9 @@ export function DoctorProfileBackground({ doctor }: DoctorProfileBackgroundProps
 
             <ul className="space-y-8">
               {entries.map((entry) => (
-                <li key={`${activeTab}-${entry.title}-${entry.period}`}>
+                <TimelineRevealItem
+                  key={`${activeTab}-${entry.title}-${entry.period}`}
+                >
                   <div className="relative flex gap-5 sm:gap-6">
                     <div className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-teal-700 bg-white text-teal-700 shadow-sm">
                       <TimelineIcon icon={entry.icon} className="h-5 w-5" />
@@ -93,13 +95,63 @@ export function DoctorProfileBackground({ doctor }: DoctorProfileBackgroundProps
                       </p>
                     </article>
                   </div>
-                </li>
+                </TimelineRevealItem>
               ))}
             </ul>
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function TimelineRevealItem({ children }: { children: React.ReactNode }) {
+  const itemRef = useRef<HTMLLIElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const node = itemRef.current;
+    if (!node) {
+      return;
+    }
+
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (reducedMotion) {
+      setIsVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.2 },
+    );
+
+    observer.observe(node);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <li
+      ref={itemRef}
+      className={`transform transition-all duration-700 ease-out motion-reduce:transform-none motion-reduce:opacity-100 motion-reduce:transition-none ${
+        isVisible
+          ? "translate-y-0 opacity-100"
+          : "translate-y-12 opacity-0"
+      }`}
+    >
+      {children}
+    </li>
   );
 }
 
