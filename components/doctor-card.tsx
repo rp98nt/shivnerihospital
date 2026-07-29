@@ -60,26 +60,18 @@ export function DoctorCard({
 
       <div className="flex min-h-0 flex-[3] flex-col border-t border-slate-100 px-3 py-3 sm:px-4 sm:py-4">
         <div className="flex items-start justify-between gap-2">
-          <div className="flex min-w-0 items-start gap-2.5">
-            <DoctorAvatar
-              name={doctor.name}
-              photoUrl={photoUrl}
-              size="sm"
-              tone="teal"
-            />
-            <div className="min-w-0">
-              <h3 className="text-sm font-bold leading-snug text-slate-900">
-                <Link
-                  href={getDoctorProfilePath(doctor.slug)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition hover:text-teal-700"
-                >
-                  {doctor.name}
-                </Link>
-              </h3>
-              <p className="mt-0.5 text-xs text-slate-500">{doctor.specialty}</p>
-            </div>
+          <div className="min-w-0">
+            <h3 className="text-sm font-bold leading-snug text-slate-900">
+              <Link
+                href={getDoctorProfilePath(doctor.slug)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition hover:text-teal-700"
+              >
+                {doctor.name}
+              </Link>
+            </h3>
+            <p className="mt-0.5 text-xs text-slate-500">{doctor.specialty}</p>
           </div>
           <ShareIcon className="h-4 w-4 shrink-0 text-slate-400" />
         </div>
