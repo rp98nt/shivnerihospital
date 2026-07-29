@@ -41,11 +41,13 @@ export function DoctorProfileAbout({
               </span>
               <div className="mt-5" />
             </div>
-            <DoctorAboutVisuals
-              doctor={doctor}
-              photoUrl={photoUrl}
-              aboutInsetUrl={aboutInsetUrl}
-            />
+            <div className="lg:mt-4">
+              <DoctorAboutVisuals
+                doctor={doctor}
+                photoUrl={photoUrl}
+                aboutInsetUrl={aboutInsetUrl}
+              />
+            </div>
           </div>
 
           <div className="min-w-0">
