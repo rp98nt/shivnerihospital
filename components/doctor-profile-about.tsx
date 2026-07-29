@@ -57,7 +57,7 @@ export function DoctorProfileAbout({
               />
             </div>
 
-            <div className="mt-6 flex flex-wrap justify-center gap-3 lg:mt-auto lg:pt-8">
+            <div className="mx-auto mt-6 flex w-full max-w-md flex-wrap justify-start gap-3 lg:mx-0 lg:max-w-none lg:mt-auto lg:pt-8">
               <Link
                 href={getDoctorAppointmentPath(doctor.slug)}
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-teal-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-teal-600"
