@@ -66,11 +66,22 @@ export function DoctorProfileAbout({
               <AboutDetail label="Specialty" value={doctor.specialty} />
               <AboutDetail label="Hospital" value="Shivneri Hospital" />
               <AboutDetail label="Location" value="Parbhani, Maharashtra" />
-              <AboutDetail label="Qualifications" value={doctor.qualifications} />
+              <div>
+                <AboutDetail
+                  label="Languages"
+                  value="English, Hindi, Marathi"
+                />
+                <AboutDetail
+                  label="Role"
+                  value={roleLabel}
+                  highlight={!doctor.isGuest}
+                  className="mt-5"
+                />
+              </div>
               <AboutDetail
-                label="Role"
-                value={roleLabel}
-                highlight={!doctor.isGuest}
+                label="Availability"
+                value="Mon - Sat"
+                highlight
               />
             </dl>
 
@@ -168,13 +179,15 @@ function AboutDetail({
   label,
   value,
   highlight = false,
+  className = "",
 }: {
   label: string;
   value: string;
   highlight?: boolean;
+  className?: string;
 }) {
   return (
-    <div>
+    <div className={className}>
       <dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">
         {label}
       </dt>
