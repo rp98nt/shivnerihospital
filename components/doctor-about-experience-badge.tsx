@@ -124,12 +124,14 @@ export function DoctorAboutExperienceBadge({
           width: `${widthPercent}%`,
         }}
       >
-        <p className="text-xl font-bold leading-none sm:text-2xl">{value}</p>
-        <p className="mt-1 px-1 text-[7px] font-semibold uppercase leading-tight tracking-[0.12em] text-teal-100 sm:text-[8px]">
+        <p className="text-2xl font-bold leading-none sm:text-3xl lg:text-4xl">
+          {value}
+        </p>
+        <p className="mt-1.5 px-1 text-[9px] font-semibold uppercase leading-tight tracking-[0.14em] text-teal-100 sm:text-[10px] lg:text-[11px] lg:tracking-[0.16em]">
           {label}
         </p>
         {draggable ? (
-          <span className="pointer-events-none mt-1 text-[7px] font-medium text-teal-200/90">
+          <span className="pointer-events-none mt-1 text-[8px] font-medium text-teal-200/90">
             Drag
           </span>
         ) : null}
