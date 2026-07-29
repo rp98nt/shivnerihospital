@@ -1,8 +1,5 @@
 import { DoctorAvatar } from "@/components/doctor-avatar";
-import {
-  getDoctorAppointmentPath,
-  type Doctor,
-} from "@/lib/doctors";
+import type { Doctor } from "@/lib/doctors";
 import Image from "next/image";
 import Link from "next/link";
 
