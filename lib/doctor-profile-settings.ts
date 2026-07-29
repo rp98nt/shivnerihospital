@@ -20,6 +20,9 @@ export type DoctorProfileSettings = {
   showAboutInset?: boolean;
   aboutInsetX?: number;
   aboutInsetY?: number;
+  showExperienceBadge?: boolean;
+  experienceBadgeValue?: string;
+  experienceBadgeLabel?: string;
   expertiseTags?: string[];
   languages?: string;
   availability?: string;
@@ -30,6 +33,10 @@ export type ResolvedDoctorProfileSettings = {
   aboutInsetUrl?: string;
   aboutInsetX: number;
   aboutInsetY: number;
+  experienceBadge?: {
+    value: string;
+    label: string;
+  };
   expertiseTags: string[];
   languages: string;
   availability: string;
@@ -37,6 +44,7 @@ export type ResolvedDoctorProfileSettings = {
 
 export const DEFAULT_PROFILE_LANGUAGES = "English, Hindi, Marathi";
 export const DEFAULT_PROFILE_AVAILABILITY = "Mon - Sat";
+export const DEFAULT_EXPERIENCE_BADGE_LABEL = "Years Of Experience";
 
 export function parseDoctorProfileSettings(
   value: unknown,
@@ -62,6 +70,18 @@ export function parseDoctorProfileSettings(
       typeof record.aboutInsetX === "number" ? record.aboutInsetX : undefined,
     aboutInsetY:
       typeof record.aboutInsetY === "number" ? record.aboutInsetY : undefined,
+    showExperienceBadge:
+      typeof record.showExperienceBadge === "boolean"
+        ? record.showExperienceBadge
+        : undefined,
+    experienceBadgeValue:
+      typeof record.experienceBadgeValue === "string"
+        ? record.experienceBadgeValue
+        : undefined,
+    experienceBadgeLabel:
+      typeof record.experienceBadgeLabel === "string"
+        ? record.experienceBadgeLabel
+        : undefined,
     expertiseTags: Array.isArray(record.expertiseTags)
       ? record.expertiseTags
           .filter((tag): tag is string => typeof tag === "string")
@@ -104,11 +124,21 @@ export function resolvePublicProfileSettings(
     y: settings?.aboutInsetY,
   });
 
+  const experienceValue = settings?.experienceBadgeValue?.trim();
+  const experienceLabel =
+    settings?.experienceBadgeLabel?.trim() || DEFAULT_EXPERIENCE_BADGE_LABEL;
+  const showExperienceBadge =
+    settings?.showExperienceBadge !== false &&
+    Boolean(experienceValue);
+
   return {
     aboutBackgroundUrl: settings?.aboutBackgroundUrl ?? undefined,
     aboutInsetUrl,
     aboutInsetX: insetPosition.x,
     aboutInsetY: insetPosition.y,
+    experienceBadge: showExperienceBadge
+      ? { value: experienceValue!, label: experienceLabel }
+      : undefined,
     expertiseTags: settings?.expertiseTags?.length
       ? settings.expertiseTags
       : getDefaultExpertiseTags(doctor),

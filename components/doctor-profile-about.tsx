@@ -1,4 +1,5 @@
 import { DoctorAvatar } from "@/components/doctor-avatar";
+import { DoctorAboutExperienceBadge } from "@/components/doctor-about-experience-badge";
 import { DoctorAboutInsetOverlay } from "@/components/doctor-about-inset-overlay";
 import type { ResolvedDoctorProfileSettings } from "@/lib/doctor-profile-settings";
 import {
@@ -32,7 +33,9 @@ export function DoctorProfileAbout({
         <div className="grid items-start gap-10 overflow-visible lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
           <div
             className={
-              aboutInsetUrl ? "relative z-20 overflow-visible" : undefined
+              aboutInsetUrl || profileDisplay?.experienceBadge
+                ? "relative z-20 overflow-visible"
+                : undefined
             }
           >
             <div className="hidden lg:block" aria-hidden>
@@ -50,6 +53,7 @@ export function DoctorProfileAbout({
                 aboutInsetUrl={aboutInsetUrl}
                 aboutInsetX={profileDisplay?.aboutInsetX}
                 aboutInsetY={profileDisplay?.aboutInsetY}
+                experienceBadge={profileDisplay?.experienceBadge}
               />
             </div>
           </div>
@@ -151,6 +155,7 @@ function DoctorAboutVisuals({
   aboutInsetUrl,
   aboutInsetX,
   aboutInsetY,
+  experienceBadge,
 }: {
   doctor: Doctor;
   photoUrl?: string;
@@ -158,13 +163,15 @@ function DoctorAboutVisuals({
   aboutInsetUrl?: string;
   aboutInsetX?: number;
   aboutInsetY?: number;
+  experienceBadge?: { value: string; label: string };
 }) {
   const backgroundUrl = aboutBackgroundUrl ?? photoUrl;
+  const hasOverflowContent = Boolean(aboutInsetUrl || experienceBadge);
 
   return (
     <div
       className={`relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none ${
-        aboutInsetUrl ? "overflow-visible pr-6 sm:pr-10 lg:pr-14" : ""
+        hasOverflowContent ? "overflow-visible pr-6 sm:pr-10 lg:pr-14" : ""
       }`}
     >
       <div className="relative aspect-[4/5] overflow-visible">
@@ -189,6 +196,13 @@ function DoctorAboutVisuals({
             </div>
           )}
         </div>
+
+        {experienceBadge ? (
+          <DoctorAboutExperienceBadge
+            value={experienceBadge.value}
+            label={experienceBadge.label}
+          />
+        ) : null}
 
         {aboutInsetUrl ? (
           <DoctorAboutInsetOverlay

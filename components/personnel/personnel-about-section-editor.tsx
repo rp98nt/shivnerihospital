@@ -1,5 +1,6 @@
 "use client";
 
+import { DoctorAboutExperienceBadge } from "@/components/doctor-about-experience-badge";
 import { DoctorAboutInsetOverlay } from "@/components/doctor-about-inset-overlay";
 import { DoctorAvatar } from "@/components/doctor-avatar";
 import type { AboutInsetPosition } from "@/lib/about-inset-position";
@@ -18,6 +19,9 @@ type PersonnelAboutSectionEditorProps = {
   showAboutInset?: boolean;
   insetPosition: AboutInsetPosition;
   onInsetPositionChange: (position: AboutInsetPosition) => void;
+  showExperienceBadge?: boolean;
+  experienceBadgeValue?: string;
+  experienceBadgeLabel?: string;
   disabled?: boolean;
 };
 
@@ -30,6 +34,9 @@ export function PersonnelAboutSectionEditor({
   showAboutInset = true,
   insetPosition,
   onInsetPositionChange,
+  showExperienceBadge = true,
+  experienceBadgeValue = "",
+  experienceBadgeLabel = "Years Of Experience",
   disabled = false,
 }: PersonnelAboutSectionEditorProps) {
   const router = useRouter();
@@ -105,6 +112,13 @@ export function PersonnelAboutSectionEditor({
   }
 
   const isBusy = uploadingType !== null || removingType !== null;
+  const previewExperienceBadge =
+    showExperienceBadge && experienceBadgeValue.trim()
+      ? {
+          value: experienceBadgeValue.trim(),
+          label: experienceBadgeLabel.trim() || "Years Of Experience",
+        }
+      : undefined;
 
   return (
     <div className="space-y-5">
@@ -133,6 +147,14 @@ export function PersonnelAboutSectionEditor({
               </div>
             )}
           </div>
+
+          {previewExperienceBadge ? (
+            <DoctorAboutExperienceBadge
+              value={previewExperienceBadge.value}
+              label={previewExperienceBadge.label}
+              className="right-1 top-2 px-3 py-2.5 sm:right-2 sm:top-3 sm:px-3.5 sm:py-3"
+            />
+          ) : null}
 
           {aboutInsetUrl && showAboutInset !== false ? (
             <DoctorAboutInsetOverlay

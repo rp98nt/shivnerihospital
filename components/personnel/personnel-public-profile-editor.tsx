@@ -7,6 +7,7 @@ import {
   type AboutInsetPosition,
 } from "@/lib/about-inset-position";
 import {
+  DEFAULT_EXPERIENCE_BADGE_LABEL,
   DEFAULT_PROFILE_AVAILABILITY,
   DEFAULT_PROFILE_LANGUAGES,
   getDefaultExpertiseTags,
@@ -60,6 +61,16 @@ export function PersonnelPublicProfileEditor({
       y: profileSettings.aboutInsetY,
     }),
   );
+  const [showExperienceBadge, setShowExperienceBadge] = useState(
+    profileSettings.showExperienceBadge ??
+      Boolean(profileSettings.experienceBadgeValue),
+  );
+  const [experienceBadgeValue, setExperienceBadgeValue] = useState(
+    profileSettings.experienceBadgeValue ?? "",
+  );
+  const [experienceBadgeLabel, setExperienceBadgeLabel] = useState(
+    profileSettings.experienceBadgeLabel ?? DEFAULT_EXPERIENCE_BADGE_LABEL,
+  );
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -87,6 +98,9 @@ export function PersonnelPublicProfileEditor({
             showAboutInset,
             aboutInsetX: insetPosition.x,
             aboutInsetY: insetPosition.y,
+            showExperienceBadge,
+            experienceBadgeValue: experienceBadgeValue.trim(),
+            experienceBadgeLabel: experienceBadgeLabel.trim(),
             expertiseTags: expertiseTags
               .split(",")
               .map((tag) => tag.trim())
@@ -132,9 +146,8 @@ export function PersonnelPublicProfileEditor({
             Public profile page
           </h2>
           <p className="mt-1 text-sm text-slate-500">
-            Control the About section images separately from your main profile
-            photo. Upload a background, an overlay, and drag the overlay to
-            position it.
+            Control the About section images and experience badge separately
+            from your main profile photo.
           </p>
           {staticDoctor ? (
             <Link
@@ -157,6 +170,9 @@ export function PersonnelPublicProfileEditor({
             showAboutInset={showAboutInset}
             insetPosition={insetPosition}
             onInsetPositionChange={setInsetPosition}
+            showExperienceBadge={showExperienceBadge}
+            experienceBadgeValue={experienceBadgeValue}
+            experienceBadgeLabel={experienceBadgeLabel}
             disabled={!canEdit}
           />
 
@@ -179,6 +195,71 @@ export function PersonnelPublicProfileEditor({
                 </span>
               </span>
             </label>
+
+            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+              <label className="flex items-start gap-3">
+                <input
+                  type="checkbox"
+                  checked={showExperienceBadge}
+                  disabled={!canEdit || !experienceBadgeValue.trim()}
+                  onChange={(event) =>
+                    setShowExperienceBadge(event.target.checked)
+                  }
+                  className="mt-1 h-4 w-4 rounded border-slate-300 text-teal-700 focus:ring-teal-500"
+                />
+                <span className="text-sm text-slate-700">
+                  <span className="font-medium text-slate-900">
+                    Show experience badge
+                  </span>
+                  <span className="mt-1 block text-slate-500">
+                    Teal badge on the About photo, like &ldquo;15 Years Of
+                    Experience&rdquo;.
+                  </span>
+                </span>
+              </label>
+
+              <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label
+                    htmlFor="experienceBadgeValue"
+                    className="mb-1.5 block text-sm font-medium text-slate-700"
+                  >
+                    Badge number
+                  </label>
+                  <input
+                    id="experienceBadgeValue"
+                    type="text"
+                    value={experienceBadgeValue}
+                    disabled={!canEdit}
+                    onChange={(event) =>
+                      setExperienceBadgeValue(event.target.value)
+                    }
+                    placeholder="15"
+                    className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 outline-none transition focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 disabled:bg-slate-100"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="experienceBadgeLabel"
+                    className="mb-1.5 block text-sm font-medium text-slate-700"
+                  >
+                    Badge label
+                  </label>
+                  <input
+                    id="experienceBadgeLabel"
+                    type="text"
+                    value={experienceBadgeLabel}
+                    disabled={!canEdit}
+                    onChange={(event) =>
+                      setExperienceBadgeLabel(event.target.value)
+                    }
+                    placeholder="Years Of Experience"
+                    className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 outline-none transition focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 disabled:bg-slate-100"
+                  />
+                </div>
+              </div>
+            </div>
 
             <div>
               <label
