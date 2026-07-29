@@ -16,7 +16,7 @@ export function DoctorProfileAbout({
   photoUrl,
 }: DoctorProfileAboutProps) {
   const expertiseTags = getExpertiseTags(doctor);
-  const roleLabel = doctor.isGuest ? "Guest Faculty" : "Consultant";
+  const roleLabel = doctor.isGuest ? "Guest Faculty" : "Consultant Surgeon";
 
   return (
     <section className="border-t border-slate-200 bg-[#faf9f6] py-12 sm:py-16">
