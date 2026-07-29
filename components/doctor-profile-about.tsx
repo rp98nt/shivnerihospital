@@ -35,7 +35,7 @@ export function DoctorProfileAbout({
   }`;
 
   return (
-    <section className="border-t border-slate-200 bg-[#faf9f6] py-12 sm:py-16">
+    <section className="bg-[#faf9f6] py-12 sm:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid items-stretch gap-10 overflow-visible lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
           <ScrollReveal
