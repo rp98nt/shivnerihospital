@@ -1,4 +1,5 @@
 import { DoctorAvatar } from "@/components/doctor-avatar";
+import { DoctorShareButton } from "@/components/doctor-share-button";
 import {
   getDoctorAppointmentPath,
   getDoctorProfilePath,
@@ -73,7 +74,10 @@ export function DoctorCard({
             </h3>
             <p className="mt-0.5 text-xs text-slate-500">{doctor.specialty}</p>
           </div>
-          <ShareIcon className="h-4 w-4 shrink-0 text-slate-400" />
+          <DoctorShareButton
+            doctorName={doctor.name}
+            profilePath={getDoctorProfilePath(doctor.slug)}
+          />
         </div>
 
         <p className="mt-2 line-clamp-2 text-[11px] leading-relaxed text-slate-600 sm:text-xs">
@@ -129,24 +133,6 @@ function ArrowUpRightIcon({ className }: { className?: string }) {
     >
       <path d="M7 17 17 7" strokeLinecap="round" strokeLinejoin="round" />
       <path d="M9 7h8v8" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function ShareIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      aria-hidden
-    >
-      <circle cx="18" cy="5" r="3" />
-      <circle cx="6" cy="12" r="3" />
-      <circle cx="18" cy="19" r="3" />
-      <path d="m8.59 13.51 6.83 3.98M15.41 6.51l-6.82 3.98" />
     </svg>
   );
 }
