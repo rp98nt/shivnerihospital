@@ -279,6 +279,24 @@ body {
   animation-delay: -0.4s;
 }
 
+@keyframes doctor-learn-more-pulse {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  50% {
+    transform: scale3d(1.04, 1.04, 1.04);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.doctor-learn-more-pulse {
+  animation: doctor-learn-more-pulse 2s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html.app-ready .app-shell-content {
     animation: none;
@@ -324,5 +342,9 @@ body {
   .doctors-carousel-mask {
     mask-image: none;
     overflow: visible;
+  }
+
+  .doctor-learn-more-pulse {
+    animation: none;
   }
 }

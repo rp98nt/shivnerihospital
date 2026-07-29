@@ -81,13 +81,25 @@ export function DoctorCard({
         </p>
       </div>
 
-      <Link
-        href={getDoctorAppointmentPath(doctor.slug)}
-        className="flex w-full items-center justify-center gap-2 bg-amber-400 py-3.5 text-sm font-semibold text-slate-900 transition hover:bg-amber-300"
-      >
-        Book Appointment
-        <ArrowUpRightIcon className="h-4 w-4" />
-      </Link>
+      {layout === "grid" ? (
+        <div className="px-3 pb-3 sm:px-4 sm:pb-4">
+          <Link
+            href={getDoctorProfilePath(doctor.slug)}
+            className="doctor-learn-more-pulse flex w-full items-center justify-center gap-2 rounded-xl border-2 border-teal-700 bg-white py-3.5 text-sm font-semibold text-teal-800 transition hover:bg-teal-50"
+          >
+            Learn More
+            <ArrowUpRightIcon className="h-4 w-4" />
+          </Link>
+        </div>
+      ) : (
+        <Link
+          href={getDoctorAppointmentPath(doctor.slug)}
+          className="flex w-full items-center justify-center gap-2 bg-amber-400 py-3.5 text-sm font-semibold text-slate-900 transition hover:bg-amber-300"
+        >
+          Book Appointment
+          <ArrowUpRightIcon className="h-4 w-4" />
+        </Link>
+      )}
     </article>
   );
 }
