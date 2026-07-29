@@ -26,6 +26,12 @@ export function DoctorProfileAbout({
     profileDisplay?.languages ?? "English, Hindi, Marathi";
   const availability = profileDisplay?.availability ?? "Mon - Sat";
   const roleLabel = doctor.isGuest ? "Guest Faculty" : "Consultant Surgeon";
+  const hasOverflowContent = Boolean(
+    aboutInsetUrl || profileDisplay?.experienceBadge,
+  );
+  const visualsFrameClass = `relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none${
+    hasOverflowContent ? " overflow-visible pr-6 sm:pr-10 lg:pr-14" : ""
+  }`;
 
   return (
     <section className="border-t border-slate-200 bg-[#faf9f6] py-12 sm:py-16">
@@ -45,32 +51,36 @@ export function DoctorProfileAbout({
               </span>
               <div className="mt-5" />
             </div>
-            <div className="lg:mt-4">
-              <DoctorAboutVisuals
-                doctor={doctor}
-                photoUrl={photoUrl}
-                aboutBackgroundUrl={profileDisplay?.aboutBackgroundUrl}
-                aboutInsetUrl={aboutInsetUrl}
-                aboutInsetX={profileDisplay?.aboutInsetX}
-                aboutInsetY={profileDisplay?.aboutInsetY}
-                experienceBadge={profileDisplay?.experienceBadge}
-              />
-            </div>
+            <div className="flex min-h-0 flex-col lg:mt-4 lg:flex-1">
+              <div className={visualsFrameClass}>
+                <DoctorAboutVisuals
+                  doctor={doctor}
+                  photoUrl={photoUrl}
+                  aboutBackgroundUrl={profileDisplay?.aboutBackgroundUrl}
+                  aboutInsetUrl={aboutInsetUrl}
+                  aboutInsetX={profileDisplay?.aboutInsetX}
+                  aboutInsetY={profileDisplay?.aboutInsetY}
+                  experienceBadge={profileDisplay?.experienceBadge}
+                />
+              </div>
 
-            <div className="mx-auto mt-6 flex w-full max-w-md flex-wrap justify-start gap-3 lg:mx-0 lg:max-w-none lg:mt-auto lg:pt-8">
-              <Link
-                href={getDoctorAppointmentPath(doctor.slug)}
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-teal-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-teal-600"
+              <div
+                className={`${visualsFrameClass} mt-6 flex gap-4 lg:mt-auto lg:pt-8`}
               >
-                <CalendarIcon className="h-4 w-4" />
-                Book Appointment
-              </Link>
-              <Link
-                href="/team-of-doctors"
-                className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-teal-700 bg-white px-6 py-3 text-sm font-semibold text-teal-800 transition hover:bg-teal-50"
-              >
-                View All Doctors
-              </Link>
+                <Link
+                  href={getDoctorAppointmentPath(doctor.slug)}
+                  className="inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-lg bg-teal-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-teal-600 sm:px-5"
+                >
+                  <CalendarIcon className="h-4 w-4 shrink-0" />
+                  Book Appointment
+                </Link>
+                <Link
+                  href="/team-of-doctors"
+                  className="inline-flex min-w-0 flex-1 items-center justify-center rounded-lg border-2 border-teal-700 bg-white px-4 py-3 text-sm font-semibold text-teal-800 transition hover:bg-teal-50 sm:px-5"
+                >
+                  View All Doctors
+                </Link>
+              </div>
             </div>
           </div>
 
@@ -166,54 +176,47 @@ function DoctorAboutVisuals({
   experienceBadge?: { value: string; label: string; x: number; y: number };
 }) {
   const backgroundUrl = aboutBackgroundUrl ?? photoUrl;
-  const hasOverflowContent = Boolean(aboutInsetUrl || experienceBadge);
 
   return (
-    <div
-      className={`relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none ${
-        hasOverflowContent ? "overflow-visible pr-6 sm:pr-10 lg:pr-14" : ""
-      }`}
-    >
-      <div className="relative aspect-[4/5] overflow-visible">
-        <div className="absolute inset-0 overflow-hidden rounded-2xl bg-linear-to-b from-teal-50 to-slate-100 shadow-lg">
-          {backgroundUrl ? (
-            <Image
-              src={backgroundUrl}
-              alt={doctor.name}
-              fill
-              className="object-cover object-[center_22%]"
-              sizes="(max-width: 1024px) 100vw, 28rem"
+    <div className="relative aspect-[4/5] overflow-visible">
+      <div className="absolute inset-0 overflow-hidden rounded-2xl bg-linear-to-b from-teal-50 to-slate-100 shadow-lg">
+        {backgroundUrl ? (
+          <Image
+            src={backgroundUrl}
+            alt={doctor.name}
+            fill
+            className="object-cover object-[center_22%]"
+            sizes="(max-width: 1024px) 100vw, 28rem"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center">
+            <DoctorAvatar
+              name={doctor.name}
+              photoUrl={null}
+              size="lg"
+              tone="teal"
+              className="!h-40 !w-40 text-5xl"
             />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center">
-              <DoctorAvatar
-                name={doctor.name}
-                photoUrl={null}
-                size="lg"
-                tone="teal"
-                className="!h-40 !w-40 text-5xl"
-              />
-            </div>
-          )}
-        </div>
-
-        {experienceBadge ? (
-          <DoctorAboutExperienceBadge
-            value={experienceBadge.value}
-            label={experienceBadge.label}
-            position={{ x: experienceBadge.x, y: experienceBadge.y }}
-          />
-        ) : null}
-
-        {aboutInsetUrl ? (
-          <DoctorAboutInsetOverlay
-            aboutInsetUrl={aboutInsetUrl}
-            alt={`${doctor.name} in surgery`}
-            position={{ x: aboutInsetX, y: aboutInsetY }}
-            priority
-          />
-        ) : null}
+          </div>
+        )}
       </div>
+
+      {experienceBadge ? (
+        <DoctorAboutExperienceBadge
+          value={experienceBadge.value}
+          label={experienceBadge.label}
+          position={{ x: experienceBadge.x, y: experienceBadge.y }}
+        />
+      ) : null}
+
+      {aboutInsetUrl ? (
+        <DoctorAboutInsetOverlay
+          aboutInsetUrl={aboutInsetUrl}
+          alt={`${doctor.name} in surgery`}
+          position={{ x: aboutInsetX, y: aboutInsetY }}
+          priority
+        />
+      ) : null}
     </div>
   );
 }
