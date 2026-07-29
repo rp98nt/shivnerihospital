@@ -6,6 +6,7 @@ import {
   getDoctorAppointmentPath,
   type Doctor,
 } from "@/lib/doctors";
+import { ScrollReveal } from "@/components/scroll-reveal";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -37,7 +38,8 @@ export function DoctorProfileAbout({
     <section className="border-t border-slate-200 bg-[#faf9f6] py-12 sm:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid items-stretch gap-10 overflow-visible lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
-          <div
+          <ScrollReveal
+            direction="left"
             className={`flex flex-col ${
               aboutInsetUrl || profileDisplay?.experienceBadge
                 ? "relative z-20 overflow-visible"
@@ -82,9 +84,9 @@ export function DoctorProfileAbout({
                 </Link>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
-          <div className="flex min-w-0 flex-col">
+          <ScrollReveal direction="right" className="flex min-w-0 flex-col">
             <span className="inline-flex w-fit items-center gap-2 rounded-full border border-teal-200 bg-teal-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-teal-800">
               <span className="h-1.5 w-1.5 rounded-full bg-teal-600" />
               About Me
@@ -151,7 +153,7 @@ export function DoctorProfileAbout({
                 </span>
               ))}
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

@@ -9,7 +9,8 @@ import {
   type BackgroundEntryIcon,
   type BackgroundTab,
 } from "@/lib/doctor-background";
-import { useEffect, useRef, useState } from "react";
+import { ScrollReveal } from "@/components/scroll-reveal";
+import { useState } from "react";
 
 type DoctorProfileBackgroundProps = {
   doctor: Doctor;
@@ -69,8 +70,10 @@ export function DoctorProfileBackground({ doctor }: DoctorProfileBackgroundProps
 
             <ul className="space-y-8">
               {entries.map((entry) => (
-                <TimelineRevealItem
+                <ScrollReveal
                   key={`${activeTab}-${entry.title}-${entry.period}`}
+                  as="li"
+                  direction="up"
                 >
                   <div className="relative flex gap-5 sm:gap-6">
                     <div className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-teal-700 bg-white text-teal-700 shadow-sm">
@@ -95,63 +98,13 @@ export function DoctorProfileBackground({ doctor }: DoctorProfileBackgroundProps
                       </p>
                     </article>
                   </div>
-                </TimelineRevealItem>
+                </ScrollReveal>
               ))}
             </ul>
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function TimelineRevealItem({ children }: { children: React.ReactNode }) {
-  const itemRef = useRef<HTMLLIElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const node = itemRef.current;
-    if (!node) {
-      return;
-    }
-
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    if (reducedMotion) {
-      setIsVisible(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.3 },
-    );
-
-    observer.observe(node);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
-  return (
-    <li
-      ref={itemRef}
-      className={`transform transition-all duration-700 ease-out motion-reduce:transform-none motion-reduce:opacity-100 motion-reduce:transition-none ${
-        isVisible
-          ? "translate-y-0 opacity-100"
-          : "translate-y-12 opacity-0"
-      }`}
-    >
-      {children}
-    </li>
   );
 }
 
