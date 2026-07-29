@@ -30,13 +30,13 @@ export function DoctorProfileAbout({
   return (
     <section className="border-t border-slate-200 bg-[#faf9f6] py-12 sm:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="grid items-start gap-10 overflow-visible lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
+        <div className="grid items-stretch gap-10 overflow-visible lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
           <div
-            className={
+            className={`flex flex-col ${
               aboutInsetUrl || profileDisplay?.experienceBadge
                 ? "relative z-20 overflow-visible"
-                : undefined
-            }
+                : ""
+            }`}
           >
             <div className="hidden lg:block" aria-hidden>
               <span className="invisible inline-flex items-center gap-2 rounded-full border border-teal-200 bg-teal-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-teal-800">
@@ -56,9 +56,25 @@ export function DoctorProfileAbout({
                 experienceBadge={profileDisplay?.experienceBadge}
               />
             </div>
+
+            <div className="mt-6 flex flex-wrap justify-center gap-3 lg:mt-auto lg:pt-8">
+              <Link
+                href={getDoctorAppointmentPath(doctor.slug)}
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-teal-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-teal-600"
+              >
+                <CalendarIcon className="h-4 w-4" />
+                Book Appointment
+              </Link>
+              <Link
+                href="/team-of-doctors"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-teal-700 bg-white px-6 py-3 text-sm font-semibold text-teal-800 transition hover:bg-teal-50"
+              >
+                View All Doctors
+              </Link>
+            </div>
           </div>
 
-          <div className="min-w-0">
+          <div className="flex min-w-0 flex-col">
             <span className="inline-flex items-center gap-2 rounded-full border border-teal-200 bg-teal-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-teal-800">
               <span className="h-1.5 w-1.5 rounded-full bg-teal-600" />
               About Me
@@ -115,7 +131,7 @@ export function DoctorProfileAbout({
               />
             </dl>
 
-            <div className="mt-6 flex flex-wrap gap-2.5">
+            <div className="mt-6 flex flex-wrap gap-2.5 lg:mt-auto lg:pt-8">
               {expertiseTags.map((tag) => (
                 <span
                   key={tag}
@@ -124,22 +140,6 @@ export function DoctorProfileAbout({
                   {tag}
                 </span>
               ))}
-            </div>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href={getDoctorAppointmentPath(doctor.slug)}
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-teal-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-teal-600"
-              >
-                <CalendarIcon className="h-4 w-4" />
-                Book Appointment
-              </Link>
-              <Link
-                href="/team-of-doctors"
-                className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-teal-700 bg-white px-6 py-3 text-sm font-semibold text-teal-800 transition hover:bg-teal-50"
-              >
-                View All Doctors
-              </Link>
             </div>
           </div>
         </div>
