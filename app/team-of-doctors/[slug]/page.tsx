@@ -3,6 +3,10 @@ import { SiteHeader } from "@/components/site-header";
 import { DoctorProfileAbout } from "@/components/doctor-profile-about";
 import { DoctorProfileHero } from "@/components/doctor-profile-hero";
 import {
+  getDoctorProfileSettingsMapBySlug,
+  resolvePublicProfileSettings,
+} from "@/lib/doctor-profile-settings";
+import {
   DOCTORS,
   getDoctorBySlug,
 } from "@/lib/doctors";
@@ -43,7 +47,12 @@ export default async function TeamDoctorProfilePage({ params }: DoctorPageProps)
   }
 
   const photoMap = await getPersonnelPhotoMapBySlug();
+  const profileSettingsMap = await getDoctorProfileSettingsMapBySlug();
   const photoUrl = photoMap.get(slug);
+  const profileDisplay = resolvePublicProfileSettings(
+    doctor,
+    profileSettingsMap.get(slug),
+  );
 
   return (
     <div className="flex flex-1 flex-col">
@@ -51,7 +60,11 @@ export default async function TeamDoctorProfilePage({ params }: DoctorPageProps)
       <SiteHeader />
       <main className="flex flex-1 flex-col bg-slate-50">
         <DoctorProfileHero doctor={doctor} photoUrl={photoUrl} />
-        <DoctorProfileAbout doctor={doctor} photoUrl={photoUrl} />
+        <DoctorProfileAbout
+          doctor={doctor}
+          photoUrl={photoUrl}
+          profileDisplay={profileDisplay}
+        />
       </main>
 
       <footer className="border-t border-slate-200 bg-white px-6 py-6 text-center text-sm text-slate-500">

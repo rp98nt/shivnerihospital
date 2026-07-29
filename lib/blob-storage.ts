@@ -63,6 +63,14 @@ export async function deletePersonnelPhoto(url: string | null | undefined) {
 }
 
 export function buildDoctorPhotoPath(slug: string, fileName: string) {
+  return buildDoctorMediaPath(slug, "headshot", fileName);
+}
+
+export function buildDoctorMediaPath(
+  slug: string,
+  mediaType: "headshot" | "about-inset",
+  fileName: string,
+) {
   const extension = fileName.split(".").pop()?.toLowerCase() || "jpg";
-  return `personnel/doctors/${slug}.${extension}`;
+  return `personnel/doctors/${slug}/${mediaType}.${extension}`;
 }

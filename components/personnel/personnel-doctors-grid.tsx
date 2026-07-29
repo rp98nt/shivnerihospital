@@ -5,6 +5,7 @@ import { PersonnelDoctorPhoto } from "@/components/personnel/personnel-doctor-ph
 import { getDoctorBySlug } from "@/lib/doctors";
 import type { PersonnelAccount } from "@/lib/db/schema";
 import { getPersonnelAccountSlug } from "@/lib/personnel-accounts";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 
 type PersonnelDoctorsGridProps = {
@@ -123,7 +124,7 @@ export function PersonnelDoctorsGrid({
                 </span>
               </div>
 
-              <div className="flex min-h-0 flex-[3] flex-col items-center justify-center border-t border-slate-100 px-4 py-3">
+              <div className="flex min-h-0 flex-[3] flex-col items-center justify-center gap-2 border-t border-slate-100 px-4 py-3">
                 <div className="flex items-center gap-2.5">
                   <DoctorAvatar
                     name={doctor.name}
@@ -139,6 +140,15 @@ export function PersonnelDoctorsGrid({
                     </p>
                   </div>
                 </div>
+
+                {canUploadPhotos ? (
+                  <Link
+                    href={`/personnel/doctors/${doctor.id}/public-profile`}
+                    className="text-xs font-semibold text-teal-700 transition hover:text-teal-600"
+                  >
+                    Customize public profile
+                  </Link>
+                ) : null}
               </div>
             </article>
           ))}

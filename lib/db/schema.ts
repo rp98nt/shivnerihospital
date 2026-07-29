@@ -1,5 +1,7 @@
+import type { DoctorProfileSettings } from "@/lib/doctor-profile-settings";
 import {
   boolean,
+  jsonb,
   pgTable,
   text,
   timestamp,
@@ -12,6 +14,7 @@ export const personnelAccounts = pgTable("personnel_accounts", {
   role: text("role").notNull(),
   specialty: text("specialty"),
   photoUrl: text("photo_url"),
+  profileSettings: jsonb("profile_settings").$type<DoctorProfileSettings | null>(),
   username: text("username").notNull().unique(),
   passwordHash: text("password_hash").notNull(),
   isActive: boolean("is_active").notNull().default(true),

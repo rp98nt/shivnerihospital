@@ -34,6 +34,11 @@ export async function ensurePersonnelSchema() {
       ADD COLUMN IF NOT EXISTS "photo_url" text;
     `);
 
+    await db.execute(sql`
+      ALTER TABLE "personnel_accounts"
+      ADD COLUMN IF NOT EXISTS "profile_settings" jsonb;
+    `);
+
     for (const account of PERSONNEL_SEED_ACCOUNTS) {
       await db.execute(sql`
         INSERT INTO "personnel_accounts" (

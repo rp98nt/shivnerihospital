@@ -1,4 +1,5 @@
 import { DoctorAvatar } from "@/components/doctor-avatar";
+import type { ResolvedDoctorProfileSettings } from "@/lib/doctor-profile-settings";
 import {
   getDoctorAppointmentPath,
   type Doctor,
@@ -9,13 +10,19 @@ import Link from "next/link";
 type DoctorProfileAboutProps = {
   doctor: Doctor;
   photoUrl?: string;
+  profileDisplay?: ResolvedDoctorProfileSettings;
 };
 
 export function DoctorProfileAbout({
   doctor,
   photoUrl,
+  profileDisplay,
 }: DoctorProfileAboutProps) {
-  const expertiseTags = getExpertiseTags(doctor);
+  const expertiseTags = profileDisplay?.expertiseTags ?? getExpertiseTags(doctor);
+  const aboutInsetUrl = profileDisplay?.aboutInsetUrl;
+  const languages =
+    profileDisplay?.languages ?? "English, Hindi, Marathi";
+  const availability = profileDisplay?.availability ?? "Mon - Sat";
   const roleLabel = doctor.isGuest ? "Guest Faculty" : "Consultant Surgeon";
 
   return (
@@ -24,15 +31,14 @@ export function DoctorProfileAbout({
         <div className="grid items-start gap-10 overflow-visible lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
           <div
             className={
-              doctor.aboutInsetImage
-                ? "relative z-20 overflow-visible"
-                : undefined
+              aboutInsetUrl ? "relative z-20 overflow-visible" : undefined
             }
           >
             <DoctorAboutVisuals
               doctor={doctor}
               photoUrl={photoUrl}
               roleLabel={roleLabel}
+              aboutInsetUrl={aboutInsetUrl}
             />
           </div>
 
@@ -77,11 +83,11 @@ export function DoctorProfileAbout({
               <div>
                 <AboutDetail
                   label="Languages"
-                  value="English, Hindi, Marathi"
+                  value={languages}
                 />
                 <AboutDetail
                   label="Availability"
-                  value="Mon - Sat"
+                  value={availability}
                   highlight
                   className="mt-5"
                 />
@@ -130,12 +136,14 @@ function DoctorAboutVisuals({
   doctor,
   photoUrl,
   roleLabel,
+  aboutInsetUrl,
 }: {
   doctor: Doctor;
   photoUrl?: string;
   roleLabel: string;
+  aboutInsetUrl?: string;
 }) {
-  const insetImage = doctor.aboutInsetImage;
+  const insetImage = aboutInsetUrl;
 
   return (
     <div

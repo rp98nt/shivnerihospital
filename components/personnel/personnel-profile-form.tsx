@@ -1,6 +1,7 @@
 "use client";
 
 import { PersonnelDoctorPhoto } from "@/components/personnel/personnel-doctor-photo";
+import { PersonnelPublicProfileEditor } from "@/components/personnel/personnel-public-profile-editor";
 import { formatPersonnelRoleLabel } from "@/lib/personnel-access";
 import type { PersonnelAccount } from "@/lib/db/schema";
 import { FormEvent, useState } from "react";
@@ -55,7 +56,7 @@ export function PersonnelProfileForm({ account }: PersonnelProfileFormProps) {
   }
 
   return (
-    <div className="mx-auto max-w-2xl">
+    <div className="mx-auto max-w-3xl space-y-6">
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="mb-6">
           <h2 className="text-lg font-semibold text-slate-900">My profile</h2>
@@ -138,6 +139,10 @@ export function PersonnelProfileForm({ account }: PersonnelProfileFormProps) {
           ) : null}
         </form>
       </div>
+
+      {isDoctor ? (
+        <PersonnelPublicProfileEditor account={account} canEdit />
+      ) : null}
     </div>
   );
 }
