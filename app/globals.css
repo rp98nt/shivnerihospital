@@ -293,7 +293,7 @@ body {
   }
 }
 
-.doctor-learn-more-pulse {
+.doctor-learn-more-pulse:hover {
   animation: doctor-learn-more-pulse 2s ease-in-out infinite;
 }
 
