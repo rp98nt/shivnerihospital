@@ -40,13 +40,18 @@ export function DoctorProfileServices({ doctor }: DoctorProfileServicesProps) {
           {services.map((service) => (
             <article
               key={service.title}
-              className="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-teal-200 hover:shadow-md sm:p-7"
+              className="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:border-slate-200 hover:shadow-[0_10px_40px_-12px_rgba(15,118,110,0.18)] sm:p-7"
             >
-              <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-teal-50 text-teal-700">
+              <span
+                className="pointer-events-none absolute inset-y-0 left-0 w-1 bg-teal-700 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                aria-hidden
+              />
+
+              <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-slate-50 text-teal-700 transition-colors duration-300 group-hover:bg-teal-50">
                 <ServiceIcon icon={service.icon} className="h-6 w-6" />
               </span>
 
-              <h3 className="mt-5 text-lg font-bold text-slate-900">
+              <h3 className="mt-5 text-lg font-bold text-slate-900 transition-colors duration-300 group-hover:text-teal-900">
                 {service.title}
               </h3>
 
@@ -56,10 +61,15 @@ export function DoctorProfileServices({ doctor }: DoctorProfileServicesProps) {
 
               <Link
                 href={appointmentPath}
-                className="mt-6 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.14em] text-teal-700 transition hover:text-teal-800"
+                className="mt-6 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.14em] text-teal-700 transition-colors duration-300 group-hover:text-teal-800"
               >
                 Schedule Now
-                <span aria-hidden>→</span>
+                <span
+                  className="transition-transform duration-300 group-hover:translate-x-0.5"
+                  aria-hidden
+                >
+                  →
+                </span>
               </Link>
             </article>
           ))}
