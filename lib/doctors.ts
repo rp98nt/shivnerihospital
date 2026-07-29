@@ -4,6 +4,7 @@ export type Doctor = {
   specialty: string;
   qualifications: string;
   expertiseTags?: string[];
+  aboutInsetImage?: string;
   isGuest?: boolean;
 };
 
@@ -56,6 +57,7 @@ export const DOCTORS: Doctor[] = [
     specialty: "Orthopaedics",
     qualifications: "MBBS, D.Ortho",
     expertiseTags: ["Orthoscopy", "Orthoplasty", "Spine"],
+    aboutInsetImage: "/doctors/ninad-suryatale-about-inset.png",
   }),
   defineDoctor({
     name: "Dr. Prakash Chavan",

@@ -127,6 +127,8 @@ function DoctorAboutVisuals({
   photoUrl?: string;
   roleLabel: string;
 }) {
+  const insetImage = doctor.aboutInsetImage;
+
   return (
     <div className="relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none">
       <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-linear-to-b from-teal-50 to-slate-100 shadow-lg">
@@ -151,26 +153,42 @@ function DoctorAboutVisuals({
         )}
       </div>
 
-      <div className="absolute right-4 top-4 rounded-2xl bg-teal-900 px-5 py-4 text-white shadow-xl sm:right-6 sm:top-6">
-        <p className="text-3xl font-bold leading-none sm:text-4xl">
-          {doctor.specialty.split(/\s+/)[0]}
-        </p>
-        <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-teal-100 sm:text-[11px]">
-          {roleLabel}
-        </p>
-      </div>
+      {!insetImage ? (
+        <>
+          <div className="absolute right-4 top-4 rounded-2xl bg-teal-900 px-5 py-4 text-white shadow-xl sm:right-6 sm:top-6">
+            <p className="text-3xl font-bold leading-none sm:text-4xl">
+              {doctor.specialty.split(/\s+/)[0]}
+            </p>
+            <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-teal-100 sm:text-[11px]">
+              {roleLabel}
+            </p>
+          </div>
 
-      <div className="absolute -bottom-5 left-4 w-[42%] max-w-[11rem] overflow-hidden rounded-2xl border-4 border-amber-100 bg-white shadow-xl sm:-bottom-6 sm:left-6 sm:max-w-[12rem]">
-        <div className="relative aspect-square bg-linear-to-br from-teal-800 via-teal-900 to-slate-900">
-          <Image
-            src="/shivneri-hospital-logo.png"
-            alt="Shivneri Hospital"
-            fill
-            className="object-contain p-4"
-            sizes="12rem"
-          />
+          <div className="absolute -bottom-5 left-4 w-[42%] max-w-[11rem] overflow-hidden rounded-2xl border-4 border-amber-100 bg-white shadow-xl sm:-bottom-6 sm:left-6 sm:max-w-[12rem]">
+            <div className="relative aspect-square bg-linear-to-br from-teal-800 via-teal-900 to-slate-900">
+              <Image
+                src="/shivneri-hospital-logo.png"
+                alt="Shivneri Hospital"
+                fill
+                className="object-contain p-4"
+                sizes="12rem"
+              />
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="absolute bottom-[16%] right-3 z-10 w-[56%] overflow-hidden rounded-2xl border-2 border-amber-200 bg-white shadow-xl sm:bottom-[18%] sm:right-4">
+          <div className="relative aspect-[4/3]">
+            <Image
+              src={insetImage}
+              alt={`${doctor.name} in surgery`}
+              fill
+              className="object-cover object-center"
+              sizes="(max-width: 1024px) 45vw, 16rem"
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
