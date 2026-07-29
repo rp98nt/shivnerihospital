@@ -6,8 +6,8 @@ import { z } from "zod";
 
 const profileSettingsSchema = z.object({
   showAboutInset: z.boolean().optional(),
-  aboutInsetX: z.number().min(0).max(100).optional(),
-  aboutInsetY: z.number().min(0).max(100).optional(),
+  aboutInsetX: z.number().min(-25).max(125).optional(),
+  aboutInsetY: z.number().min(-25).max(125).optional(),
   expertiseTags: z.array(z.string().trim().min(1).max(80)).max(12).optional(),
   languages: z.string().trim().min(1).max(200).optional(),
   availability: z.string().trim().min(1).max(120).optional(),

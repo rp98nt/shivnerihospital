@@ -112,8 +112,8 @@ export function PersonnelAboutSectionEditor({
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
           About section preview
         </p>
-        <div className="relative mx-auto mt-3 aspect-[4/5] w-full max-w-[14rem] overflow-hidden rounded-2xl bg-slate-100 shadow-sm">
-          <div className="relative h-full w-full overflow-hidden rounded-2xl border border-slate-200 bg-linear-to-b from-teal-50 to-slate-100">
+        <div className="relative mx-auto mt-3 aspect-[4/5] w-full max-w-[14rem] overflow-visible pr-4">
+          <div className="absolute inset-0 overflow-hidden rounded-2xl border border-slate-200 bg-linear-to-b from-teal-50 to-slate-100 shadow-sm">
             {previewBackgroundUrl ? (
               <Image
                 src={previewBackgroundUrl}
@@ -132,18 +132,18 @@ export function PersonnelAboutSectionEditor({
                 />
               </div>
             )}
-
-            {aboutInsetUrl && showAboutInset !== false ? (
-              <DoctorAboutInsetOverlay
-                aboutInsetUrl={aboutInsetUrl}
-                alt="About section overlay preview"
-                position={insetPosition}
-                draggable={!disabled}
-                onPositionChange={onInsetPositionChange}
-                sizes="8rem"
-              />
-            ) : null}
           </div>
+
+          {aboutInsetUrl && showAboutInset !== false ? (
+            <DoctorAboutInsetOverlay
+              aboutInsetUrl={aboutInsetUrl}
+              alt="About section overlay preview"
+              position={insetPosition}
+              draggable={!disabled}
+              onPositionChange={onInsetPositionChange}
+              sizes="8rem"
+            />
+          ) : null}
         </div>
         {usingHeadshotFallback ? (
           <p className="mt-2 text-xs text-slate-500">
@@ -170,7 +170,7 @@ export function PersonnelAboutSectionEditor({
 
       <MediaControl
         title="About overlay"
-        description="Smaller photo placed on top of the background. Drag it in the preview to reposition."
+        description="Smaller photo placed on top of the background. Drag it in the preview to reposition — it can extend slightly past the background edges."
         uploadLabel={aboutInsetUrl ? "Change overlay" : "Upload overlay"}
         uploading={uploadingType === "about-inset"}
         removing={removingType === "about-inset"}

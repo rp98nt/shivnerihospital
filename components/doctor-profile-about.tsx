@@ -164,29 +164,31 @@ function DoctorAboutVisuals({
   return (
     <div
       className={`relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none ${
-        aboutInsetUrl ? "overflow-visible" : ""
+        aboutInsetUrl ? "overflow-visible pr-6 sm:pr-10 lg:pr-14" : ""
       }`}
     >
-      <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-linear-to-b from-teal-50 to-slate-100 shadow-lg">
-        {backgroundUrl ? (
-          <Image
-            src={backgroundUrl}
-            alt={doctor.name}
-            fill
-            className="object-cover object-[center_22%]"
-            sizes="(max-width: 1024px) 100vw, 28rem"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center">
-            <DoctorAvatar
-              name={doctor.name}
-              photoUrl={null}
-              size="lg"
-              tone="teal"
-              className="!h-40 !w-40 text-5xl"
+      <div className="relative aspect-[4/5] overflow-visible">
+        <div className="absolute inset-0 overflow-hidden rounded-2xl bg-linear-to-b from-teal-50 to-slate-100 shadow-lg">
+          {backgroundUrl ? (
+            <Image
+              src={backgroundUrl}
+              alt={doctor.name}
+              fill
+              className="object-cover object-[center_22%]"
+              sizes="(max-width: 1024px) 100vw, 28rem"
             />
-          </div>
-        )}
+          ) : (
+            <div className="flex h-full w-full items-center justify-center">
+              <DoctorAvatar
+                name={doctor.name}
+                photoUrl={null}
+                size="lg"
+                tone="teal"
+                className="!h-40 !w-40 text-5xl"
+              />
+            </div>
+          )}
+        </div>
 
         {aboutInsetUrl ? (
           <DoctorAboutInsetOverlay

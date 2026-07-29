@@ -9,6 +9,9 @@ export const DEFAULT_ABOUT_INSET_POSITION: AboutInsetPosition = {
 };
 
 export const DEFAULT_ABOUT_INSET_WIDTH_PERCENT = 58;
+/** How far the overlay can extend beyond the background edges (in %). */
+export const ABOUT_INSET_OVERFLOW_PERCENT = 20;
+
 const PORTRAIT_ASPECT = 4 / 5;
 const INSET_ASPECT = 4 / 3;
 
@@ -24,8 +27,8 @@ export function normalizeAboutInsetPosition(
   position?: Partial<AboutInsetPosition> | null,
 ): AboutInsetPosition {
   return {
-    x: clamp(position?.x ?? DEFAULT_ABOUT_INSET_POSITION.x, 0, 100),
-    y: clamp(position?.y ?? DEFAULT_ABOUT_INSET_POSITION.y, 0, 100),
+    x: position?.x ?? DEFAULT_ABOUT_INSET_POSITION.x,
+    y: position?.y ?? DEFAULT_ABOUT_INSET_POSITION.y,
   };
 }
 
@@ -34,9 +37,10 @@ export function clampAboutInsetPosition(
   widthPercent = DEFAULT_ABOUT_INSET_WIDTH_PERCENT,
 ): AboutInsetPosition {
   const heightPercent = getAboutInsetHeightPercent(widthPercent);
+  const overflow = ABOUT_INSET_OVERFLOW_PERCENT;
 
   return {
-    x: clamp(position.x, 0, 100 - widthPercent),
-    y: clamp(position.y, 0, 100 - heightPercent),
+    x: clamp(position.x, -overflow, 100 - widthPercent + overflow),
+    y: clamp(position.y, -overflow, 100 - heightPercent + overflow),
   };
 }
