@@ -30,7 +30,7 @@ export const NAV_MENUS: Record<LowerNavItem, NavEntry[]> = {
     { label: "About us" },
     { label: "Milestones" },
     { label: "Board of Trustees" },
-    { label: "Appeal" },
+    { label: "Team of Doctors", href: "/team-of-doctors" },
     { label: "Scope of Services" },
   ],
   Diagnostics: [
