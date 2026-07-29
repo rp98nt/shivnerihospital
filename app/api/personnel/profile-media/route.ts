@@ -1,5 +1,8 @@
 import { auth } from "@/lib/auth";
-import { removeDoctorAboutInset } from "@/lib/doctor-profile-settings";
+import {
+  removeDoctorAboutBackground,
+  removeDoctorAboutInset,
+} from "@/lib/doctor-profile-settings";
 import { revalidateDoctorPublicProfile } from "@/lib/revalidate-doctor-profile";
 
 function canManageAccountUpload(
@@ -30,8 +33,12 @@ export async function DELETE(request: Request) {
   }
 
   try {
-    const body = (await request.json()) as { accountId?: string };
+    const body = (await request.json()) as {
+      accountId?: string;
+      mediaType?: "about-inset" | "about-background";
+    };
     const accountId = body.accountId ?? "";
+    const mediaType = body.mediaType ?? "about-inset";
 
     if (!accountId) {
       return Response.json({ error: "Missing accountId." }, { status: 400 });
@@ -41,7 +48,10 @@ export async function DELETE(request: Request) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const updated = await removeDoctorAboutInset(accountId);
+    const updated =
+      mediaType === "about-background"
+        ? await removeDoctorAboutBackground(accountId)
+        : await removeDoctorAboutInset(accountId);
 
     if (!updated) {
       return Response.json(

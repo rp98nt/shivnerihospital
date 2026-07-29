@@ -46,6 +46,7 @@ export function DoctorProfileAbout({
               <DoctorAboutVisuals
                 doctor={doctor}
                 photoUrl={photoUrl}
+                aboutBackgroundUrl={profileDisplay?.aboutBackgroundUrl}
                 aboutInsetUrl={aboutInsetUrl}
                 aboutInsetX={profileDisplay?.aboutInsetX}
                 aboutInsetY={profileDisplay?.aboutInsetY}
@@ -146,16 +147,20 @@ export function DoctorProfileAbout({
 function DoctorAboutVisuals({
   doctor,
   photoUrl,
+  aboutBackgroundUrl,
   aboutInsetUrl,
   aboutInsetX,
   aboutInsetY,
 }: {
   doctor: Doctor;
   photoUrl?: string;
+  aboutBackgroundUrl?: string;
   aboutInsetUrl?: string;
   aboutInsetX?: number;
   aboutInsetY?: number;
 }) {
+  const backgroundUrl = aboutBackgroundUrl ?? photoUrl;
+
   return (
     <div
       className={`relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none ${
@@ -163,9 +168,9 @@ function DoctorAboutVisuals({
       }`}
     >
       <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-linear-to-b from-teal-50 to-slate-100 shadow-lg">
-        {photoUrl ? (
+        {backgroundUrl ? (
           <Image
-            src={photoUrl}
+            src={backgroundUrl}
             alt={doctor.name}
             fill
             className="object-cover object-[center_22%]"

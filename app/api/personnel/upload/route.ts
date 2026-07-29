@@ -1,6 +1,11 @@
 import { auth } from "@/lib/auth";
 import { isBlobStorageConfigured } from "@/lib/blob-storage";
-import { uploadDoctorAboutInset } from "@/lib/doctor-profile-settings";
+import {
+  removeDoctorAboutBackground,
+  removeDoctorAboutInset,
+  uploadDoctorAboutBackground,
+  uploadDoctorAboutInset,
+} from "@/lib/doctor-profile-settings";
 import { uploadPersonnelAccountPhoto } from "@/lib/personnel-photos";
 import { revalidateDoctorPublicProfile } from "@/lib/revalidate-doctor-profile";
 
@@ -64,7 +69,7 @@ export async function POST(request: Request) {
 
       if (!updated) {
         return Response.json(
-          { error: "Failed to update about section photo." },
+          { error: "Failed to update about overlay photo." },
           { status: 500 },
         );
       }
@@ -78,6 +83,29 @@ export async function POST(request: Request) {
           typeof updated.profileSettings === "object" &&
           "aboutInsetUrl" in updated.profileSettings
             ? updated.profileSettings.aboutInsetUrl
+            : null,
+      });
+    }
+
+    if (mediaType === "about-background") {
+      const updated = await uploadDoctorAboutBackground(accountId, file);
+
+      if (!updated) {
+        return Response.json(
+          { error: "Failed to update about background photo." },
+          { status: 500 },
+        );
+      }
+
+      await revalidateDoctorPublicProfile(accountId);
+
+      return Response.json({
+        accountId: updated.id,
+        aboutBackgroundUrl:
+          updated.profileSettings &&
+          typeof updated.profileSettings === "object" &&
+          "aboutBackgroundUrl" in updated.profileSettings
+            ? updated.profileSettings.aboutBackgroundUrl
             : null,
       });
     }

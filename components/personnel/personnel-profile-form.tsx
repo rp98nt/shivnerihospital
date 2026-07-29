@@ -67,8 +67,17 @@ export function PersonnelProfileForm({ account }: PersonnelProfileFormProps) {
         </div>
 
         {isDoctor ? (
-          <div className="relative mx-auto mb-6 aspect-[4/5] w-full max-w-[12rem] overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 sm:max-w-[14rem]">
-            <PersonnelDoctorPhoto doctor={account} canUpload layout="profile" />
+          <div className="mb-6">
+            <p className="mb-2 text-sm font-medium text-slate-700">
+              Profile photo
+            </p>
+            <p className="mb-3 text-xs text-slate-500">
+              Used in the profile hero, team cards, and header avatar — not the
+              About section background.
+            </p>
+            <div className="relative mx-auto aspect-[4/5] w-full max-w-[12rem] overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 sm:max-w-[14rem]">
+              <PersonnelDoctorPhoto doctor={account} canUpload layout="profile" />
+            </div>
           </div>
         ) : null}
 

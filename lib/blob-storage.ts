@@ -68,7 +68,7 @@ export function buildDoctorPhotoPath(slug: string, fileName: string) {
 
 export function buildDoctorMediaPath(
   slug: string,
-  mediaType: "headshot" | "about-inset",
+  mediaType: "headshot" | "about-background" | "about-inset",
   fileName: string,
 ) {
   const extension = fileName.split(".").pop()?.toLowerCase() || "jpg";

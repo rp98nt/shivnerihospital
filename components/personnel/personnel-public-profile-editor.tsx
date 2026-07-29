@@ -1,6 +1,6 @@
 "use client";
 
-import { PersonnelAboutInsetUpload } from "@/components/personnel/personnel-about-inset-upload";
+import { PersonnelAboutSectionEditor } from "@/components/personnel/personnel-about-section-editor";
 import { getDoctorBySlug } from "@/lib/doctors";
 import {
   normalizeAboutInsetPosition,
@@ -132,9 +132,9 @@ export function PersonnelPublicProfileEditor({
             Public profile page
           </h2>
           <p className="mt-1 text-sm text-slate-500">
-            Customize how {account.name}&apos;s profile appears on the hospital
-            website. Photos are stored in a dedicated blob folder for this
-            doctor.
+            Control the About section images separately from your main profile
+            photo. Upload a background, an overlay, and drag the overlay to
+            position it.
           </p>
           {staticDoctor ? (
             <Link
@@ -147,11 +147,12 @@ export function PersonnelPublicProfileEditor({
           ) : null}
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-[12rem_1fr]">
-          <PersonnelAboutInsetUpload
+        <div className="grid gap-8 lg:grid-cols-[14rem_1fr]">
+          <PersonnelAboutSectionEditor
             accountId={account.id}
             doctorName={account.name}
-            photoUrl={account.photoUrl}
+            headshotUrl={account.photoUrl}
+            aboutBackgroundUrl={profileSettings.aboutBackgroundUrl}
             aboutInsetUrl={profileSettings.aboutInsetUrl}
             showAboutInset={showAboutInset}
             insetPosition={insetPosition}

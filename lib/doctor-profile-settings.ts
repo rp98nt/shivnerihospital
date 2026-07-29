@@ -15,6 +15,7 @@ import {
 import { getPersonnelAccountSlug } from "@/lib/personnel-accounts";
 
 export type DoctorProfileSettings = {
+  aboutBackgroundUrl?: string | null;
   aboutInsetUrl?: string | null;
   showAboutInset?: boolean;
   aboutInsetX?: number;
@@ -25,6 +26,7 @@ export type DoctorProfileSettings = {
 };
 
 export type ResolvedDoctorProfileSettings = {
+  aboutBackgroundUrl?: string;
   aboutInsetUrl?: string;
   aboutInsetX: number;
   aboutInsetY: number;
@@ -46,6 +48,10 @@ export function parseDoctorProfileSettings(
   const record = value as Record<string, unknown>;
 
   return {
+    aboutBackgroundUrl:
+      typeof record.aboutBackgroundUrl === "string"
+        ? record.aboutBackgroundUrl
+        : null,
     aboutInsetUrl:
       typeof record.aboutInsetUrl === "string" ? record.aboutInsetUrl : null,
     showAboutInset:
@@ -99,6 +105,7 @@ export function resolvePublicProfileSettings(
   });
 
   return {
+    aboutBackgroundUrl: settings?.aboutBackgroundUrl ?? undefined,
     aboutInsetUrl,
     aboutInsetX: insetPosition.x,
     aboutInsetY: insetPosition.y,
@@ -249,5 +256,67 @@ export async function removeDoctorAboutInset(accountId: string) {
   return updateDoctorProfileSettings(accountId, {
     aboutInsetUrl: null,
     showAboutInset: false,
+  });
+}
+
+export async function uploadDoctorAboutBackground(accountId: string, file: File) {
+  const db = getDb();
+  if (!db) {
+    throw new Error("Database is not configured.");
+  }
+
+  await ensurePersonnelSchema();
+
+  const [account] = await db
+    .select()
+    .from(personnelAccounts)
+    .where(eq(personnelAccounts.id, accountId))
+    .limit(1);
+
+  if (!account) {
+    throw new Error("Personnel account not found.");
+  }
+
+  const slug = getPersonnelAccountSlug(account);
+  const blob = await uploadPersonnelPhoto({
+    file,
+    pathname: buildDoctorMediaPath(slug, "about-background", file.name),
+  });
+
+  const current = parseDoctorProfileSettings(account.profileSettings);
+
+  if (current.aboutBackgroundUrl) {
+    await deletePersonnelPhoto(current.aboutBackgroundUrl);
+  }
+
+  return updateDoctorProfileSettings(accountId, {
+    aboutBackgroundUrl: blob.url,
+  });
+}
+
+export async function removeDoctorAboutBackground(accountId: string) {
+  const db = getDb();
+  if (!db) {
+    throw new Error("Database is not configured.");
+  }
+
+  const [account] = await db
+    .select()
+    .from(personnelAccounts)
+    .where(eq(personnelAccounts.id, accountId))
+    .limit(1);
+
+  if (!account) {
+    throw new Error("Personnel account not found.");
+  }
+
+  const current = parseDoctorProfileSettings(account.profileSettings);
+
+  if (current.aboutBackgroundUrl) {
+    await deletePersonnelPhoto(current.aboutBackgroundUrl);
+  }
+
+  return updateDoctorProfileSettings(accountId, {
+    aboutBackgroundUrl: null,
   });
 }
