@@ -170,5 +170,49 @@ function TimelineIcon({
           <path d="M8.5 13 6 21l6-3 6 3-2.5-8" />
         </svg>
       );
+    case "user":
+      return (
+        <svg
+          className={className}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.75"
+          aria-hidden
+        >
+          <circle cx="12" cy="8" r="4" />
+          <path d="M6 20v-1a6 6 0 0 1 12 0v1" />
+        </svg>
+      );
+    case "clinical":
+      return (
+        <svg
+          className={className}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.75"
+          aria-hidden
+        >
+          <rect x="3" y="3" width="18" height="18" rx="4" />
+          <path d="M12 8v8M8 12h8" />
+        </svg>
+      );
+    case "research":
+      return (
+        <svg
+          className={className}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.75"
+          aria-hidden
+        >
+          <path d="M6 18h12" />
+          <path d="M8 18V9l4-3 4 3v9" />
+          <path d="M10 13h4" />
+          <circle cx="14" cy="6" r="2" />
+        </svg>
+      );
   }
 }
