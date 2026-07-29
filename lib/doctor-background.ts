@@ -135,11 +135,6 @@ function buildWorkExperience(doctor: Doctor): BackgroundEntry[] {
     },
   ];
 
-  if (doctor.slug === "ninad-suryatale") {
-    entries[0].period = "2021 - Present";
-    entries[1].period = "2019 - 2020";
-  }
-
   return entries;
 }
 
