@@ -1,5 +1,6 @@
+import { SiteHeaderHeightSync } from "@/components/site-header-height-sync";
 import { SiteHeader } from "@/components/site-header";
-import { DoctorAvatar } from "@/components/doctor-avatar";
+import { DoctorProfileHero } from "@/components/doctor-profile-hero";
 import {
   DOCTORS,
   getDoctorAppointmentPath,
@@ -47,61 +48,65 @@ export default async function DoctorPage({ params }: DoctorPageProps) {
 
   return (
     <div className="flex flex-1 flex-col">
+      <SiteHeaderHeightSync />
       <SiteHeader />
       <main className="flex flex-1 flex-col bg-slate-50">
-        <section className="border-b border-slate-200 bg-white py-10 sm:py-12">
-          <div className="mx-auto max-w-3xl px-4 sm:px-6">
-            <Link
-              href="/"
-              className="text-sm font-medium text-teal-700 hover:text-teal-800"
-            >
-              ← Back to home
-            </Link>
+        <DoctorProfileHero doctor={doctor} photoUrl={photoUrl} />
 
-            <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-md">
-              <div className="bg-linear-to-b from-teal-50 to-slate-100 px-6 py-10 sm:px-8 sm:py-12">
-                <DoctorAvatar
-                  name={doctor.name}
-                  photoUrl={photoUrl}
-                  size="lg"
-                  tone="teal"
-                  className="mx-auto"
-                />
-              </div>
+        <section className="border-t border-slate-200 bg-slate-50 py-10 sm:py-12">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+              <h2 className="text-xl font-bold text-teal-900 sm:text-2xl">
+                About {doctor.name}
+              </h2>
 
-              <div className="px-6 py-6 sm:px-8 sm:py-8">
-                <div className="flex flex-wrap items-start gap-3">
-                  <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">
-                    {doctor.name}
-                  </h1>
-                  {doctor.isGuest ? (
-                    <span className="inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-amber-900">
-                      Guest Faculty
-                    </span>
-                  ) : null}
+              <dl className="mt-6 grid gap-5 sm:grid-cols-2">
+                <div>
+                  <dt className="text-sm font-medium text-slate-500">
+                    Speciality
+                  </dt>
+                  <dd className="mt-1 text-base font-semibold text-slate-900">
+                    {doctor.specialty}
+                  </dd>
                 </div>
+                <div>
+                  <dt className="text-sm font-medium text-slate-500">
+                    Qualifications
+                  </dt>
+                  <dd className="mt-1 text-base font-semibold text-slate-900">
+                    {doctor.qualifications}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-sm font-medium text-slate-500">
+                    Hospital
+                  </dt>
+                  <dd className="mt-1 text-base font-semibold text-slate-900">
+                    Shivneri Hospital, Parbhani
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-sm font-medium text-slate-500">Role</dt>
+                  <dd className="mt-1 text-base font-semibold text-slate-900">
+                    {doctor.isGuest ? "Guest Faculty" : "Consultant"}
+                  </dd>
+                </div>
+              </dl>
 
-                <p className="mt-2 text-base font-medium text-teal-800">
-                  {doctor.specialty}
-                </p>
-                <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
-                  {doctor.qualifications}
-                </p>
-                <p className="mt-4 text-sm text-slate-500">
-                  Shivneri Hospital, Parbhani
-                </p>
-
-                <Link
-                  href={getDoctorAppointmentPath(doctor.slug)}
-                  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-amber-400 px-4 py-3.5 text-sm font-semibold text-slate-900 transition hover:bg-amber-300 sm:w-auto sm:min-w-[220px]"
-                >
-                  Book Appointment
-                </Link>
-              </div>
+              <Link
+                href={getDoctorAppointmentPath(doctor.slug)}
+                className="mt-8 inline-flex items-center justify-center rounded-lg bg-teal-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-teal-600"
+              >
+                Book Appointment with {doctor.name}
+              </Link>
             </div>
           </div>
         </section>
       </main>
+
+      <footer className="border-t border-slate-200 bg-white px-6 py-6 text-center text-sm text-slate-500">
+        © {new Date().getFullYear()} Shivneri Hospital. All rights reserved.
+      </footer>
     </div>
   );
 }
