@@ -62,8 +62,8 @@ export function DoctorProfileAbout({
 
             <h2 className="mt-5 text-3xl font-bold leading-tight text-slate-900 sm:text-4xl lg:text-[2.65rem]">
               Committed To{" "}
-              <em className="not-italic text-teal-700">Healing</em> With Science
-              &amp; Heart
+              <em className="not-italic text-teal-700">Healing</em>{" "}
+              With Science &amp; Heart
             </h2>
 
             <div className="mt-5 space-y-4 text-base leading-relaxed text-slate-600">
