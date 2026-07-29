@@ -131,7 +131,7 @@ function TimelineRevealItem({ children }: { children: React.ReactNode }) {
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.2 },
+      { threshold: 0.3 },
     );
 
     observer.observe(node);
