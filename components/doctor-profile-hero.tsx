@@ -49,21 +49,6 @@ export function DoctorProfileHero({
               care for patients at Shivneri Hospital with a focus on clear
               communication and lasting recovery.
             </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href={getDoctorAppointmentPath(doctor.slug)}
-                className="inline-flex items-center justify-center rounded-lg bg-teal-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-teal-600"
-              >
-                Book Appointment
-              </Link>
-              <Link
-                href="/team-of-doctors"
-                className="inline-flex items-center justify-center rounded-lg border-2 border-teal-700 bg-white px-6 py-3 text-sm font-semibold text-teal-800 transition hover:bg-teal-50"
-              >
-                View All Doctors
-              </Link>
-            </div>
           </div>
 
           <div className="relative mx-auto flex min-h-[22rem] w-full max-w-lg items-end justify-center sm:min-h-[26rem] lg:mx-0 lg:max-w-none lg:justify-end">
