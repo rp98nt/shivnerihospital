@@ -85,14 +85,33 @@ export const DOCTORS: Doctor[] = [
   }),
 ];
 
+export const DOCTOR_DISPLAY_ORDER = [
+  "sanjay-khillare",
+  "sanjyot-gajendra-giri",
+  "govind-pawade-patil",
+  "rahul-tengase-patil",
+  "pooja-tengase-khupase",
+  "ninad-suryatale",
+  "prakash-chavan",
+  "kailas-giri",
+  "varsha-sanjay-killare",
+  "ashok-bun",
+  "anvesh-sattepar-jain",
+] as const;
+
+function getDoctorDisplayOrder(slug: string) {
+  const index = DOCTOR_DISPLAY_ORDER.indexOf(
+    slug as (typeof DOCTOR_DISPLAY_ORDER)[number],
+  );
+  return index === -1 ? Number.MAX_SAFE_INTEGER : index;
+}
+
 export function getDoctorSortName(name: string) {
   return name.replace(/^Dr\.?\s+/i, "").trim();
 }
 
-export const SORTED_DOCTORS = [...DOCTORS].sort((a, b) =>
-  getDoctorSortName(a.name).localeCompare(getDoctorSortName(b.name), "en", {
-    sensitivity: "base",
-  }),
+export const SORTED_DOCTORS = [...DOCTORS].sort(
+  (a, b) => getDoctorDisplayOrder(a.slug) - getDoctorDisplayOrder(b.slug),
 );
 
 export function getDoctorBySlug(slug: string) {
