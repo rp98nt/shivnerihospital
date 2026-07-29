@@ -3,6 +3,7 @@ export type Doctor = {
   name: string;
   specialty: string;
   qualifications: string;
+  expertiseTags?: string[];
   isGuest?: boolean;
 };
 
@@ -54,6 +55,7 @@ export const DOCTORS: Doctor[] = [
     name: "Dr. Ninad Suryatale",
     specialty: "Orthopaedics",
     qualifications: "MBBS, D.Ortho",
+    expertiseTags: ["Orthoscopy", "Orthoplasty", "Spine"],
   }),
   defineDoctor({
     name: "Dr. Prakash Chavan",

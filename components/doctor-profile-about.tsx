@@ -203,6 +203,10 @@ function AboutDetail({
 }
 
 function getExpertiseTags(doctor: Doctor) {
+  if (doctor.expertiseTags?.length) {
+    return doctor.expertiseTags;
+  }
+
   const qualificationTags = doctor.qualifications
     .split(",")
     .map((part) => part.trim())
