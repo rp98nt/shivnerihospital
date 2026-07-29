@@ -104,7 +104,7 @@ function buildWorkExperience(doctor: Doctor): BackgroundEntry[] {
     ];
   }
 
-  return [
+  const entries: BackgroundEntry[] = [
     {
       period: "2018 — Present",
       title: `${specialty} Consultant`,
@@ -134,6 +134,13 @@ function buildWorkExperience(doctor: Doctor): BackgroundEntry[] {
       icon: "clinical",
     },
   ];
+
+  if (doctor.slug === "ninad-suryatale") {
+    entries[0].period = "2021 - Present";
+    entries[1].period = "2019 - 2020";
+  }
+
+  return entries;
 }
 
 function buildAwards(doctor: Doctor): BackgroundEntry[] {
