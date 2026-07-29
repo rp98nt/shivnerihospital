@@ -37,7 +37,6 @@ export function DoctorProfileAbout({
             <DoctorAboutVisuals
               doctor={doctor}
               photoUrl={photoUrl}
-              roleLabel={roleLabel}
               aboutInsetUrl={aboutInsetUrl}
             />
           </div>
@@ -135,20 +134,16 @@ export function DoctorProfileAbout({
 function DoctorAboutVisuals({
   doctor,
   photoUrl,
-  roleLabel,
   aboutInsetUrl,
 }: {
   doctor: Doctor;
   photoUrl?: string;
-  roleLabel: string;
   aboutInsetUrl?: string;
 }) {
-  const insetImage = aboutInsetUrl;
-
   return (
     <div
       className={`relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none ${
-        insetImage ? "overflow-visible pr-8 sm:pr-12 lg:pr-16" : ""
+        aboutInsetUrl ? "overflow-visible pr-8 sm:pr-12 lg:pr-16" : ""
       }`}
     >
       <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-linear-to-b from-teal-50 to-slate-100 shadow-lg">
@@ -173,33 +168,10 @@ function DoctorAboutVisuals({
         )}
       </div>
 
-      {!insetImage ? (
-        <>
-          <div className="absolute right-4 top-4 rounded-2xl bg-teal-900 px-5 py-4 text-white shadow-xl sm:right-6 sm:top-6">
-            <p className="text-3xl font-bold leading-none sm:text-4xl">
-              {doctor.specialty.split(/\s+/)[0]}
-            </p>
-            <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-teal-100 sm:text-[11px]">
-              {roleLabel}
-            </p>
-          </div>
-
-          <div className="absolute -bottom-5 left-4 w-[42%] max-w-[11rem] overflow-hidden rounded-2xl border-4 border-amber-100 bg-white shadow-xl sm:-bottom-6 sm:left-6 sm:max-w-[12rem]">
-            <div className="relative aspect-square bg-linear-to-br from-teal-800 via-teal-900 to-slate-900">
-              <Image
-                src="/shivneri-hospital-logo.png"
-                alt="Shivneri Hospital"
-                fill
-                className="object-contain p-4"
-                sizes="12rem"
-              />
-            </div>
-          </div>
-        </>
-      ) : (
+      {aboutInsetUrl ? (
         <div className="absolute bottom-[14%] -right-3 z-30 w-[58%] max-w-[17rem] overflow-hidden rounded-2xl border-[3px] border-amber-200 bg-white shadow-2xl sm:bottom-[16%] sm:-right-5 lg:-right-10">
           <Image
-            src={insetImage}
+            src={aboutInsetUrl}
             alt={`${doctor.name} in surgery`}
             width={640}
             height={480}
@@ -208,7 +180,7 @@ function DoctorAboutVisuals({
             priority
           />
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

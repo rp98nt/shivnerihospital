@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth";
 import { isBlobStorageConfigured } from "@/lib/blob-storage";
 import { uploadDoctorAboutInset } from "@/lib/doctor-profile-settings";
 import { uploadPersonnelAccountPhoto } from "@/lib/personnel-photos";
+import { revalidateDoctorPublicProfile } from "@/lib/revalidate-doctor-profile";
 
 function canManageAccountUpload(
   session: {
@@ -68,6 +69,8 @@ export async function POST(request: Request) {
         );
       }
 
+      await revalidateDoctorPublicProfile(accountId);
+
       return Response.json({
         accountId: updated.id,
         aboutInsetUrl:
@@ -84,6 +87,8 @@ export async function POST(request: Request) {
     if (!updated) {
       return Response.json({ error: "Failed to update account photo." }, { status: 500 });
     }
+
+    await revalidateDoctorPublicProfile(accountId);
 
     return Response.json({
       photoUrl: updated.photoUrl,

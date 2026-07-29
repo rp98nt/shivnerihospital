@@ -1,5 +1,6 @@
 import { auth } from "@/lib/auth";
 import { removeDoctorAboutInset } from "@/lib/doctor-profile-settings";
+import { revalidateDoctorPublicProfile } from "@/lib/revalidate-doctor-profile";
 
 function canManageAccountUpload(
   session: {
@@ -48,6 +49,8 @@ export async function DELETE(request: Request) {
         { status: 500 },
       );
     }
+
+    await revalidateDoctorPublicProfile(accountId);
 
     return Response.json({ success: true });
   } catch (error) {

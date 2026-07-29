@@ -22,6 +22,8 @@ export async function generateStaticParams() {
   return DOCTORS.map((doctor) => ({ slug: doctor.slug }));
 }
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({
   params,
 }: DoctorPageProps): Promise<Metadata> {

@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
 import { updateDoctorProfileSettings } from "@/lib/doctor-profile-settings";
 import { updatePersonnelAccountSpecialty } from "@/lib/personnel-accounts";
+import { revalidateDoctorPublicProfile } from "@/lib/revalidate-doctor-profile";
 import { z } from "zod";
 
 const profileSettingsSchema = z.object({
@@ -96,6 +97,8 @@ export async function PATCH(request: Request) {
     if (!updatedAccount) {
       return Response.json({ error: "Failed to update profile." }, { status: 500 });
     }
+
+    await revalidateDoctorPublicProfile(accountId);
 
     return Response.json({
       specialty: updatedAccount.specialty,
