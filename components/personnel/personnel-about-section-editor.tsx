@@ -3,7 +3,10 @@
 import { DoctorAboutExperienceBadge } from "@/components/doctor-about-experience-badge";
 import { DoctorAboutInsetOverlay } from "@/components/doctor-about-inset-overlay";
 import { DoctorAvatar } from "@/components/doctor-avatar";
-import type { AboutInsetPosition } from "@/lib/about-inset-position";
+import {
+  type AboutInsetPosition,
+  normalizeExperienceBadgePosition,
+} from "@/lib/about-inset-position";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
@@ -22,6 +25,8 @@ type PersonnelAboutSectionEditorProps = {
   showExperienceBadge?: boolean;
   experienceBadgeValue?: string;
   experienceBadgeLabel?: string;
+  experienceBadgePosition: AboutInsetPosition;
+  onExperienceBadgePositionChange: (position: AboutInsetPosition) => void;
   disabled?: boolean;
 };
 
@@ -37,6 +42,8 @@ export function PersonnelAboutSectionEditor({
   showExperienceBadge = true,
   experienceBadgeValue = "",
   experienceBadgeLabel = "Years Of Experience",
+  experienceBadgePosition,
+  onExperienceBadgePositionChange,
   disabled = false,
 }: PersonnelAboutSectionEditorProps) {
   const router = useRouter();
@@ -152,7 +159,9 @@ export function PersonnelAboutSectionEditor({
             <DoctorAboutExperienceBadge
               value={previewExperienceBadge.value}
               label={previewExperienceBadge.label}
-              className="right-1 top-2 px-3 py-2.5 sm:right-2 sm:top-3 sm:px-3.5 sm:py-3"
+              position={experienceBadgePosition}
+              draggable={!disabled}
+              onPositionChange={onExperienceBadgePositionChange}
             />
           ) : null}
 

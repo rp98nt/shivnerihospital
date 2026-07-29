@@ -11,6 +11,8 @@ const profileSettingsSchema = z.object({
   showExperienceBadge: z.boolean().optional(),
   experienceBadgeValue: z.string().trim().max(12).optional(),
   experienceBadgeLabel: z.string().trim().min(1).max(80).optional(),
+  experienceBadgeX: z.number().min(-25).max(125).optional(),
+  experienceBadgeY: z.number().min(-25).max(125).optional(),
   expertiseTags: z.array(z.string().trim().min(1).max(80)).max(12).optional(),
   languages: z.string().trim().min(1).max(200).optional(),
   availability: z.string().trim().min(1).max(120).optional(),

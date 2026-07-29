@@ -10,7 +10,9 @@ import { ensurePersonnelSchema } from "@/lib/db/ensure-schema";
 import { personnelAccounts } from "@/lib/db/schema";
 import {
   DEFAULT_ABOUT_INSET_POSITION,
+  DEFAULT_EXPERIENCE_BADGE_POSITION,
   normalizeAboutInsetPosition,
+  normalizeExperienceBadgePosition,
 } from "@/lib/about-inset-position";
 import { getPersonnelAccountSlug } from "@/lib/personnel-accounts";
 
@@ -23,6 +25,8 @@ export type DoctorProfileSettings = {
   showExperienceBadge?: boolean;
   experienceBadgeValue?: string;
   experienceBadgeLabel?: string;
+  experienceBadgeX?: number;
+  experienceBadgeY?: number;
   expertiseTags?: string[];
   languages?: string;
   availability?: string;
@@ -36,6 +40,8 @@ export type ResolvedDoctorProfileSettings = {
   experienceBadge?: {
     value: string;
     label: string;
+    x: number;
+    y: number;
   };
   expertiseTags: string[];
   languages: string;
@@ -81,6 +87,14 @@ export function parseDoctorProfileSettings(
     experienceBadgeLabel:
       typeof record.experienceBadgeLabel === "string"
         ? record.experienceBadgeLabel
+        : undefined,
+    experienceBadgeX:
+      typeof record.experienceBadgeX === "number"
+        ? record.experienceBadgeX
+        : undefined,
+    experienceBadgeY:
+      typeof record.experienceBadgeY === "number"
+        ? record.experienceBadgeY
         : undefined,
     expertiseTags: Array.isArray(record.expertiseTags)
       ? record.expertiseTags
@@ -130,6 +144,10 @@ export function resolvePublicProfileSettings(
   const showExperienceBadge =
     settings?.showExperienceBadge !== false &&
     Boolean(experienceValue);
+  const badgePosition = normalizeExperienceBadgePosition({
+    x: settings?.experienceBadgeX,
+    y: settings?.experienceBadgeY,
+  });
 
   return {
     aboutBackgroundUrl: settings?.aboutBackgroundUrl ?? undefined,
@@ -137,7 +155,12 @@ export function resolvePublicProfileSettings(
     aboutInsetX: insetPosition.x,
     aboutInsetY: insetPosition.y,
     experienceBadge: showExperienceBadge
-      ? { value: experienceValue!, label: experienceLabel }
+      ? {
+          value: experienceValue!,
+          label: experienceLabel,
+          x: badgePosition.x,
+          y: badgePosition.y,
+        }
       : undefined,
     expertiseTags: settings?.expertiseTags?.length
       ? settings.expertiseTags

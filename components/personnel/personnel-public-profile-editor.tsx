@@ -4,6 +4,7 @@ import { PersonnelAboutSectionEditor } from "@/components/personnel/personnel-ab
 import { getDoctorBySlug } from "@/lib/doctors";
 import {
   normalizeAboutInsetPosition,
+  normalizeExperienceBadgePosition,
   type AboutInsetPosition,
 } from "@/lib/about-inset-position";
 import {
@@ -71,6 +72,13 @@ export function PersonnelPublicProfileEditor({
   const [experienceBadgeLabel, setExperienceBadgeLabel] = useState(
     profileSettings.experienceBadgeLabel ?? DEFAULT_EXPERIENCE_BADGE_LABEL,
   );
+  const [experienceBadgePosition, setExperienceBadgePosition] =
+    useState<AboutInsetPosition>(
+      normalizeExperienceBadgePosition({
+        x: profileSettings.experienceBadgeX,
+        y: profileSettings.experienceBadgeY,
+      }),
+    );
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -101,6 +109,8 @@ export function PersonnelPublicProfileEditor({
             showExperienceBadge,
             experienceBadgeValue: experienceBadgeValue.trim(),
             experienceBadgeLabel: experienceBadgeLabel.trim(),
+            experienceBadgeX: experienceBadgePosition.x,
+            experienceBadgeY: experienceBadgePosition.y,
             expertiseTags: expertiseTags
               .split(",")
               .map((tag) => tag.trim())
@@ -173,6 +183,8 @@ export function PersonnelPublicProfileEditor({
             showExperienceBadge={showExperienceBadge}
             experienceBadgeValue={experienceBadgeValue}
             experienceBadgeLabel={experienceBadgeLabel}
+            experienceBadgePosition={experienceBadgePosition}
+            onExperienceBadgePositionChange={setExperienceBadgePosition}
             disabled={!canEdit}
           />
 
@@ -212,8 +224,9 @@ export function PersonnelPublicProfileEditor({
                     Show experience badge
                   </span>
                   <span className="mt-1 block text-slate-500">
-                    Teal badge on the About photo, like &ldquo;15 Years Of
-                    Experience&rdquo;.
+                    Small teal badge on the About photo. Drag it in the preview
+                    to reposition — it can extend slightly past the background
+                    edges.
                   </span>
                 </span>
               </label>

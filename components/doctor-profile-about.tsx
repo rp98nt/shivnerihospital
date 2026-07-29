@@ -163,7 +163,7 @@ function DoctorAboutVisuals({
   aboutInsetUrl?: string;
   aboutInsetX?: number;
   aboutInsetY?: number;
-  experienceBadge?: { value: string; label: string };
+  experienceBadge?: { value: string; label: string; x: number; y: number };
 }) {
   const backgroundUrl = aboutBackgroundUrl ?? photoUrl;
   const hasOverflowContent = Boolean(aboutInsetUrl || experienceBadge);
@@ -201,6 +201,7 @@ function DoctorAboutVisuals({
           <DoctorAboutExperienceBadge
             value={experienceBadge.value}
             label={experienceBadge.label}
+            position={{ x: experienceBadge.x, y: experienceBadge.y }}
           />
         ) : null}
 
