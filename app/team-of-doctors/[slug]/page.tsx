@@ -2,6 +2,7 @@ import { SiteHeaderHeightSync } from "@/components/site-header-height-sync";
 import { SiteHeader } from "@/components/site-header";
 import { DoctorProfileAbout } from "@/components/doctor-profile-about";
 import { DoctorProfileHero } from "@/components/doctor-profile-hero";
+import { DoctorProfileBackground } from "@/components/doctor-profile-background";
 import { DoctorProfileServices } from "@/components/doctor-profile-services";
 import {
   getDoctorProfileSettingsMapBySlug,
@@ -69,6 +70,7 @@ export default async function TeamDoctorProfilePage({ params }: DoctorPageProps)
           profileDisplay={profileDisplay}
         />
         <DoctorProfileServices doctor={doctor} />
+        <DoctorProfileBackground doctor={doctor} />
       </main>
 
       <footer className="border-t border-slate-200 bg-white px-6 py-6 text-center text-sm text-slate-500">
