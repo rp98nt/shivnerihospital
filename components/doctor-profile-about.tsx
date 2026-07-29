@@ -72,16 +72,16 @@ export function DoctorProfileAbout({
                   value="English, Hindi, Marathi"
                 />
                 <AboutDetail
-                  label="Role"
-                  value={roleLabel}
-                  highlight={!doctor.isGuest}
+                  label="Availability"
+                  value="Mon - Sat"
+                  highlight
                   className="mt-5"
                 />
               </div>
               <AboutDetail
-                label="Availability"
-                value="Mon - Sat"
-                highlight
+                label="Role"
+                value={roleLabel}
+                highlight={!doctor.isGuest}
               />
             </dl>
 
