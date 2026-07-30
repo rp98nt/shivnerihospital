@@ -79,18 +79,6 @@ export function DoctorProfileHero({
                 </div>
               )}
             </div>
-
-            <div className="absolute bottom-2 left-1/2 z-20 flex w-[min(100%,19rem)] -translate-x-1/2 items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-2.5 shadow-lg sm:bottom-4 sm:left-auto sm:right-0 sm:w-auto sm:max-w-none sm:translate-x-0 sm:px-4 sm:py-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-teal-50 text-teal-700">
-                <HospitalIcon className="h-5 w-5" />
-              </span>
-              <div>
-                <p className="text-sm font-semibold text-slate-900">
-                  Shivneri Hospital
-                </p>
-                <p className="text-xs text-slate-500">Parbhani, Maharashtra</p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -107,23 +95,6 @@ function StarIcon({ className }: { className?: string }) {
       aria-hidden
     >
       <path d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.2L12 18.8 7.6 21.6l1.7-7.2-5.6-4.9 7.4-.6L12 2z" />
-    </svg>
-  );
-}
-
-function HospitalIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.75"
-      aria-hidden
-    >
-      <path d="M3 21h18" />
-      <path d="M6 21V7l6-4 6 4v14" />
-      <path d="M12 10v4M10 12h4" />
     </svg>
   );
 }
