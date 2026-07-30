@@ -34,7 +34,7 @@ const DEFAULT_BLOG_POSTS: DoctorBlogPost[] = [
     date: "11 March 2025",
     category: "Event",
     imageUrl:
-      "https://images.unsplash.com/photo-1631217868264-e5b1bb5c4db7?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=900&q=80",
     href: "/",
   },
 ];
