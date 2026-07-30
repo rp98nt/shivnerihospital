@@ -162,8 +162,7 @@ export function DoctorProfileTestimonials({
 function TestimonialCard({ testimonial }: { testimonial: PatientTestimonial }) {
   return (
     <article className="flex h-full min-w-0 flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-      <div className="flex items-start justify-between gap-3">
-        <QuoteIcon className="h-10 w-10 shrink-0 text-amber-500 sm:h-11 sm:w-11" />
+      <div className="flex justify-end">
         <StarRating />
       </div>
 
@@ -197,19 +196,6 @@ function StarRating() {
         <StarIcon key={index} className="h-4 w-4 text-amber-400" />
       ))}
     </div>
-  );
-}
-
-function QuoteIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 64 48"
-      fill="currentColor"
-      aria-hidden
-    >
-      <path d="M18 44c-8.8 0-16-7.2-16-16 0-10 8-18 18-20v10c-6 1.8-10 6.8-10 12.5 0 2.8 1.2 5.2 3 7h5zm28 0c-8.8 0-16-7.2-16-16 0-10 8-18 18-20v10c-6 1.8-10 6.8-10 12.5 0 2.8 1.2 5.2 3 7h5z" />
-    </svg>
   );
 }
 
