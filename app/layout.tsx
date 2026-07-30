@@ -19,6 +19,11 @@ export const metadata: Metadata = {
     "Shivneri Hospital — compassionate, professional multispecialty healthcare.",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{

@@ -62,7 +62,7 @@ export default async function TeamDoctorProfilePage({ params }: DoctorPageProps)
     <div className="flex flex-1 flex-col">
       <SiteHeaderHeightSync />
       <SiteHeader />
-      <main className="flex flex-1 flex-col bg-slate-50">
+      <main className="flex flex-1 flex-col overflow-x-clip bg-slate-50">
         <DoctorProfileHero doctor={doctor} photoUrl={photoUrl} />
         <DoctorProfileAbout
           doctor={doctor}

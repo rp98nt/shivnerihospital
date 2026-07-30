@@ -22,7 +22,7 @@ export function DoctorProfileBackground({ doctor }: DoctorProfileBackgroundProps
   const entries = getBackgroundEntries(background, activeTab);
 
   return (
-    <section className="border-t border-slate-200 bg-[#faf9f6] py-12 sm:py-16">
+    <section className="overflow-x-clip border-t border-slate-200 bg-[#faf9f6] py-10 sm:py-12 md:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-3xl text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-teal-200 bg-teal-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-teal-800">
@@ -30,7 +30,7 @@ export function DoctorProfileBackground({ doctor }: DoctorProfileBackgroundProps
             Background
           </span>
 
-          <h2 className="mt-5 text-3xl font-bold leading-tight text-slate-900 sm:text-4xl lg:text-[2.65rem]">
+          <h2 className="mt-5 text-2xl font-bold leading-tight text-slate-900 sm:text-4xl lg:text-[2.65rem]">
             Experience &amp;{" "}
             <em className="not-italic text-teal-700">Education</em>
           </h2>
@@ -40,7 +40,7 @@ export function DoctorProfileBackground({ doctor }: DoctorProfileBackgroundProps
           </p>
         </div>
 
-        <div className="mt-10 flex flex-wrap justify-center gap-2 sm:gap-3 lg:mt-12">
+        <div className="-mx-4 mt-8 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:mt-10 sm:flex-wrap sm:justify-center sm:gap-3 sm:overflow-visible sm:px-0 lg:mt-12">
           {BACKGROUND_TABS.map((tab) => {
             const isActive = activeTab === tab.id;
 
@@ -49,7 +49,7 @@ export function DoctorProfileBackground({ doctor }: DoctorProfileBackgroundProps
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
-                className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-colors duration-200 sm:px-6 ${
+                className={`shrink-0 rounded-full px-4 py-2.5 text-sm font-semibold transition-colors duration-200 sm:px-6 ${
                   isActive
                     ? "bg-teal-700 text-white shadow-sm"
                     : "border border-slate-200 bg-white text-slate-600 hover:border-teal-200 hover:text-teal-800"
@@ -61,35 +61,35 @@ export function DoctorProfileBackground({ doctor }: DoctorProfileBackgroundProps
           })}
         </div>
 
-        <div className="mx-auto mt-10 max-w-3xl lg:mt-12">
-          <div className="relative">
+        <div className="mx-auto mt-8 max-w-3xl sm:mt-10 lg:mt-12">
+          <div className="relative min-w-0">
             <div
-              className="absolute bottom-6 left-6 top-6 w-px bg-slate-200"
+              className="absolute bottom-4 left-5 top-4 w-px bg-slate-200 sm:bottom-6 sm:left-6 sm:top-6"
               aria-hidden
             />
 
-            <ul className="space-y-8">
+            <ul className="space-y-6 sm:space-y-8">
               {entries.map((entry) => (
                 <ScrollReveal
                   key={`${activeTab}-${entry.title}-${entry.period}`}
                   as="li"
                   direction="up"
                 >
-                  <div className="relative flex gap-5 sm:gap-6">
-                    <div className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-teal-700 bg-white text-teal-700 shadow-sm">
-                      <TimelineIcon icon={entry.icon} className="h-5 w-5" />
+                  <div className="relative flex min-w-0 gap-4 sm:gap-6">
+                    <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-teal-700 bg-white text-teal-700 shadow-sm sm:h-12 sm:w-12">
+                      <TimelineIcon icon={entry.icon} className="h-4 w-4 sm:h-5 sm:w-5" />
                     </div>
 
-                    <article className="w-full min-w-0 flex-1 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-                      <p className="text-xs font-bold uppercase tracking-[0.16em] text-teal-700">
+                    <article className="w-full min-w-0 flex-1 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+                      <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-700 sm:text-xs sm:tracking-[0.16em]">
                         {entry.period}
                       </p>
 
-                      <h3 className="mt-2 text-lg font-bold text-slate-900 sm:text-xl">
+                      <h3 className="mt-2 break-words text-base font-bold text-slate-900 sm:text-xl">
                         {entry.title}
                       </h3>
 
-                      <p className="mt-1 text-sm font-medium text-slate-700 sm:text-base">
+                      <p className="mt-1 break-words text-sm font-medium text-slate-700 sm:text-base">
                         {entry.organization}
                       </p>
 

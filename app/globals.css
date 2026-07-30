@@ -17,6 +17,10 @@ html {
   height: 100%;
 }
 
+body {
+  overflow-x: clip;
+}
+
 html.loading {
   overflow: hidden;
 }

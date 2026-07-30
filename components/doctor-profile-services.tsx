@@ -18,7 +18,7 @@ export function DoctorProfileServices({ doctor }: DoctorProfileServicesProps) {
   const appointmentPath = getDoctorAppointmentPath(doctor.slug);
 
   return (
-    <section className="border-t border-slate-200 bg-white py-12 sm:py-16">
+    <section className="overflow-x-clip border-t border-slate-200 bg-white py-10 sm:py-12 md:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-3xl text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-teal-200 bg-teal-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-teal-800">
@@ -26,7 +26,7 @@ export function DoctorProfileServices({ doctor }: DoctorProfileServicesProps) {
             What I Offer
           </span>
 
-          <h2 className="mt-5 text-3xl font-bold leading-tight text-slate-900 sm:text-4xl lg:text-[2.65rem]">
+          <h2 className="mt-5 text-2xl font-bold leading-tight text-slate-900 sm:text-4xl lg:text-[2.65rem]">
             Medical{" "}
             <em className="not-italic text-teal-700">Services</em>
           </h2>
@@ -36,11 +36,11 @@ export function DoctorProfileServices({ doctor }: DoctorProfileServicesProps) {
           </p>
         </div>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:mt-12 lg:grid-cols-3 lg:gap-8">
+        <div className="mt-8 grid min-w-0 gap-5 sm:mt-10 sm:grid-cols-2 sm:gap-6 lg:mt-12 lg:grid-cols-3 lg:gap-8">
           {services.map((service) => (
             <article
               key={service.title}
-              className="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-slate-200 hover:shadow-[0_16px_48px_-14px_rgba(15,118,110,0.22)] sm:p-7"
+              className="group relative flex min-w-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-slate-200 hover:shadow-[0_16px_48px_-14px_rgba(15,118,110,0.22)] sm:p-7"
             >
               <span
                 className="pointer-events-none absolute inset-y-0 left-0 w-1 bg-teal-700 opacity-0 transition-opacity duration-300 group-hover:opacity-100"

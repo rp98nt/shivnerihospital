@@ -31,13 +31,13 @@ export function DoctorProfileAbout({
     aboutInsetUrl || profileDisplay?.experienceBadge,
   );
   const visualsFrameClass = `relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none${
-    hasOverflowContent ? " overflow-visible pr-6 sm:pr-10 lg:pr-14" : ""
+    hasOverflowContent ? " overflow-visible pr-4 sm:pr-10 lg:pr-14" : ""
   }`;
 
   return (
-    <section className="bg-[#faf9f6] py-12 sm:py-16">
+    <section className="overflow-x-clip bg-[#faf9f6] py-10 sm:py-12 md:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="grid items-stretch gap-10 overflow-visible lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
+        <div className="grid items-stretch gap-8 overflow-x-clip sm:gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
           <ScrollReveal
             direction="left"
             className={`flex flex-col ${
@@ -67,18 +67,18 @@ export function DoctorProfileAbout({
               </div>
 
               <div
-                className={`${visualsFrameClass} mt-6 flex gap-4 lg:mt-auto lg:pt-8`}
+                className={`${visualsFrameClass} mt-6 flex flex-col gap-3 sm:flex-row sm:gap-4 lg:mt-auto lg:pt-8`}
               >
                 <Link
                   href={getDoctorAppointmentPath(doctor.slug)}
-                  className="inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-lg bg-teal-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-teal-600 sm:px-5"
+                  className="inline-flex min-h-11 min-w-0 flex-1 items-center justify-center gap-2 rounded-lg bg-teal-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-teal-600 sm:px-5"
                 >
                   <CalendarIcon className="h-4 w-4 shrink-0" />
                   Book Appointment
                 </Link>
                 <Link
                   href="/team-of-doctors"
-                  className="inline-flex min-w-0 flex-1 items-center justify-center rounded-lg border-2 border-teal-700 bg-white px-4 py-3 text-sm font-semibold text-teal-800 transition hover:bg-teal-50 sm:px-5"
+                  className="inline-flex min-h-11 min-w-0 flex-1 items-center justify-center rounded-lg border-2 border-teal-700 bg-white px-4 py-3 text-sm font-semibold text-teal-800 transition hover:bg-teal-50 sm:px-5"
                 >
                   View All Doctors
                 </Link>
@@ -92,7 +92,7 @@ export function DoctorProfileAbout({
               About Me
             </span>
 
-            <h2 className="mt-5 text-3xl font-bold leading-tight text-slate-900 sm:text-4xl lg:text-[2.65rem]">
+            <h2 className="mt-5 text-2xl font-bold leading-tight text-slate-900 sm:text-4xl lg:text-[2.65rem]">
               Committed To{" "}
               <em className="not-italic text-teal-700">Healing</em>{" "}
               With Science &amp; Heart

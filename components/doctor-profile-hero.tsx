@@ -13,16 +13,16 @@ export function DoctorProfileHero({
   photoUrl,
 }: DoctorProfileHeroProps) {
   return (
-    <section className="overflow-hidden bg-white">
-      <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:py-16">
+    <section className="overflow-x-clip bg-white">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-12 lg:py-16">
         <Link
           href="/team-of-doctors"
-          className="inline-flex text-sm font-medium text-teal-700 transition hover:text-teal-800"
+          className="inline-flex min-h-11 items-center text-sm font-medium text-teal-700 transition hover:text-teal-800"
         >
           ← Back to Team of Doctors
         </Link>
 
-        <div className="mt-8 grid items-center gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-12">
+        <div className="mt-6 grid items-center gap-8 sm:mt-8 sm:gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-12">
           <div className="min-w-0">
             {doctor.isGuest ? (
               <span className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-4 py-1.5 text-sm font-medium text-amber-900">
@@ -36,11 +36,11 @@ export function DoctorProfileHero({
               </span>
             )}
 
-            <h1 className="mt-5 text-4xl font-bold leading-tight text-teal-900 sm:text-5xl">
+            <h1 className="mt-5 text-3xl font-bold leading-tight text-teal-900 sm:text-5xl">
               {doctor.name}
             </h1>
 
-            <p className="mt-3 text-xl font-semibold text-slate-900 sm:text-2xl">
+            <p className="mt-3 text-lg font-semibold leading-snug text-slate-900 sm:text-2xl">
               Experienced {doctor.specialty} Specialist in Parbhani
             </p>
 
@@ -51,7 +51,7 @@ export function DoctorProfileHero({
             </p>
           </div>
 
-          <div className="relative mx-auto flex min-h-[22rem] w-full max-w-lg items-end justify-center sm:min-h-[26rem] lg:mx-0 lg:max-w-none lg:justify-end">
+          <div className="relative mx-auto flex min-h-[18rem] w-full max-w-lg items-end justify-center sm:min-h-[22rem] md:min-h-[26rem] lg:mx-0 lg:max-w-none lg:justify-end">
             <div
               className="absolute right-0 top-6 h-[88%] w-[72%] rounded-2xl bg-linear-to-br from-teal-800 via-teal-900 to-slate-900 sm:w-[68%] lg:right-4"
               aria-hidden
@@ -80,7 +80,7 @@ export function DoctorProfileHero({
               )}
             </div>
 
-            <div className="absolute bottom-2 right-0 z-20 flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-lg sm:bottom-4 lg:right-0">
+            <div className="absolute bottom-2 left-1/2 z-20 flex w-[min(100%,19rem)] -translate-x-1/2 items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-2.5 shadow-lg sm:bottom-4 sm:left-auto sm:right-0 sm:w-auto sm:max-w-none sm:translate-x-0 sm:px-4 sm:py-3">
               <span className="flex h-10 w-10 items-center justify-center rounded-full bg-teal-50 text-teal-700">
                 <HospitalIcon className="h-5 w-5" />
               </span>
