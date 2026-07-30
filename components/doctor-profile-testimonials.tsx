@@ -163,12 +163,12 @@ function TestimonialCard({ testimonial }: { testimonial: PatientTestimonial }) {
   return (
     <article className="flex h-full min-w-0 flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
       <div className="flex items-start justify-between gap-3">
-        <QuoteIcon className="h-8 w-8 shrink-0 text-amber-500 sm:h-9 sm:w-9" />
+        <QuoteIcon className="h-10 w-10 shrink-0 text-amber-500 sm:h-11 sm:w-11" />
         <StarRating />
       </div>
 
       <p className="mt-4 flex-1 text-sm leading-relaxed text-slate-600 sm:text-[0.9375rem]">
-        &ldquo;{testimonial.quote}&rdquo;
+        {testimonial.quote}
       </p>
 
       <div className="mt-5 border-t border-slate-100 pt-5">
@@ -204,11 +204,11 @@ function QuoteIcon({ className }: { className?: string }) {
   return (
     <svg
       className={className}
-      viewBox="0 0 24 24"
+      viewBox="0 0 64 48"
       fill="currentColor"
       aria-hidden
     >
-      <path d="M7 7.5c0-2.2 1.8-4 4-4 .8 0 1.5.2 2.1.6-.3.9-.5 1.8-.5 2.7 0 2.8 2.2 5 5 5v3c-3.9 0-7-3.1-7-7v-.3zm10 0c0-2.2 1.8-4 4-4 .8 0 1.5.2 2.1.6-.3.9-.5 1.8-.5 2.7 0 2.8 2.2 5 5 5v3c-3.9 0-7-3.1-7-7v-.3z" />
+      <path d="M18 44c-8.8 0-16-7.2-16-16 0-10 8-18 18-20v10c-6 1.8-10 6.8-10 12.5 0 2.8 1.2 5.2 3 7h5zm28 0c-8.8 0-16-7.2-16-16 0-10 8-18 18-20v10c-6 1.8-10 6.8-10 12.5 0 2.8 1.2 5.2 3 7h5z" />
     </svg>
   );
 }
