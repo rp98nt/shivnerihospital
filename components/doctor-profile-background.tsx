@@ -74,6 +74,8 @@ export function DoctorProfileBackground({ doctor }: DoctorProfileBackgroundProps
                   key={`${activeTab}-${entry.title}-${entry.period}`}
                   as="li"
                   direction="up"
+                  threshold={0.5}
+                  slideDistance="large"
                 >
                   <div className="relative flex min-w-0 gap-4 sm:gap-6">
                     <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-teal-700 bg-white text-teal-700 shadow-sm sm:h-12 sm:w-12">

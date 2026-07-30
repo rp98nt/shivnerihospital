@@ -15,18 +15,31 @@ type ScrollRevealProps = {
   direction?: ScrollRevealDirection;
   className?: string;
   as?: ElementType;
+  threshold?: number;
+  slideDistance?: "default" | "large";
 };
 
-const hiddenClasses: Record<ScrollRevealDirection, string> = {
-  up: "translate-y-10 opacity-0 md:translate-y-12",
-  left: "-translate-x-10 opacity-0 md:-translate-x-12",
-  right: "translate-x-10 opacity-0 md:translate-x-12",
+const hiddenClasses: Record<
+  ScrollRevealDirection,
+  Record<"default" | "large", string>
+> = {
+  up: {
+    default: "translate-y-10 opacity-0 md:translate-y-12",
+    large: "translate-y-14 opacity-0 sm:translate-y-16 md:translate-y-20",
+  },
+  left: {
+    default: "-translate-x-10 opacity-0 md:-translate-x-12",
+    large: "-translate-x-12 opacity-0 md:-translate-x-16",
+  },
+  right: {
+    default: "translate-x-10 opacity-0 md:translate-x-12",
+    large: "translate-x-12 opacity-0 md:translate-x-16",
+  },
 };
 
-const mobileHiddenClasses: Record<ScrollRevealDirection, string> = {
-  up: "translate-y-8 opacity-0",
-  left: "translate-y-8 opacity-0",
-  right: "translate-y-8 opacity-0",
+const mobileHiddenClasses: Record<"default" | "large", string> = {
+  default: "translate-y-8 opacity-0",
+  large: "translate-y-12 opacity-0",
 };
 
 function resolveDirection(
@@ -45,6 +58,8 @@ export function ScrollReveal({
   direction = "up",
   className = "",
   as: Component = "div",
+  threshold = 0.3,
+  slideDistance = "default",
 }: ScrollRevealProps) {
   const itemRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -83,7 +98,7 @@ export function ScrollReveal({
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.3 },
+      { threshold },
     );
 
     observer.observe(node);
@@ -91,17 +106,21 @@ export function ScrollReveal({
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [threshold]);
 
   const resolvedDirection = resolveDirection(direction, isMobile);
   const motionClasses = isMobile
-    ? mobileHiddenClasses[resolvedDirection]
-    : hiddenClasses[resolvedDirection];
+    ? mobileHiddenClasses[slideDistance]
+    : hiddenClasses[resolvedDirection][slideDistance];
+  const transitionClass =
+    slideDistance === "large"
+      ? "duration-800 ease-[cubic-bezier(0.22,1,0.36,1)]"
+      : "duration-700 ease-out";
 
   return (
     <Component
       ref={itemRef}
-      className={`transform transition-all duration-700 ease-out motion-reduce:transform-none motion-reduce:opacity-100 motion-reduce:transition-none ${
+      className={`transform transition-all ${transitionClass} motion-reduce:transform-none motion-reduce:opacity-100 motion-reduce:transition-none ${
         isVisible
           ? "translate-x-0 translate-y-0 opacity-100"
           : motionClasses
