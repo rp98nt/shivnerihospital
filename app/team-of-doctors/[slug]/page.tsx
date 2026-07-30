@@ -4,6 +4,7 @@ import { DoctorProfileAbout } from "@/components/doctor-profile-about";
 import { DoctorProfileHero } from "@/components/doctor-profile-hero";
 import { DoctorProfileBackground } from "@/components/doctor-profile-background";
 import { DoctorProfileServices } from "@/components/doctor-profile-services";
+import { DoctorProfileTestimonials } from "@/components/doctor-profile-testimonials";
 import {
   getDoctorProfileSettingsMapBySlug,
   resolvePublicProfileSettings,
@@ -71,6 +72,7 @@ export default async function TeamDoctorProfilePage({ params }: DoctorPageProps)
         />
         <DoctorProfileServices doctor={doctor} />
         <DoctorProfileBackground doctor={doctor} />
+        <DoctorProfileTestimonials doctor={doctor} />
       </main>
 
       <footer className="border-t border-slate-200 bg-white px-6 py-6 text-center text-sm text-slate-500">
