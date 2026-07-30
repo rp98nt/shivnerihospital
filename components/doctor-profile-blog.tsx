@@ -18,7 +18,7 @@ export function DoctorProfileBlog({ doctor }: DoctorProfileBlogProps) {
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-3xl text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-teal-200 bg-teal-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-teal-800">
-            <HeartIcon className="h-3.5 w-3.5 text-teal-700" />
+            <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
             Doctor&apos;s Blog
           </span>
 
@@ -98,14 +98,6 @@ function BlogWatermark({
         strokeWidth="8"
         strokeLinecap="round"
       />
-    </svg>
-  );
-}
-
-function HeartIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-      <path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 5.5-7 10-7 10z" />
     </svg>
   );
 }
