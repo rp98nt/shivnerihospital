@@ -221,9 +221,9 @@ export function SiteFooter() {
             © {new Date().getFullYear()} {HOSPITAL_NAME}. All rights reserved.
           </p>
           <p className="inline-flex items-center gap-1.5">
-            Caring for Parbhani with
+            Designed with
             <HeartIcon className="h-4 w-4 text-teal-400" />
-            from Shivneri Hospital
+            by AlienCore
           </p>
         </div>
       </div>
