@@ -16,11 +16,11 @@ const FOOTER_BG_CLASS =
 
 const USEFUL_LINKS = [
   { label: "Home", href: "/" },
-  { label: "Team of Doctors", href: "/team-of-doctors" },
-  { label: "Book Appointment", href: "/appointment" },
   { label: "About Shivneri", href: "/" },
   { label: "Patient Guide", href: "/" },
   { label: "Contact", href: "/appointment" },
+  { label: "Book Appointment", href: "/appointment" },
+  { label: "Team of Doctors", href: "/team-of-doctors" },
 ];
 
 const POPULAR_POSTS = [
@@ -222,7 +222,7 @@ export function SiteFooter() {
           </p>
           <p className="inline-flex items-center gap-1.5">
             Designed with
-            <HeartIcon className="h-4 w-4 text-teal-400" />
+            <HeartIcon className="h-4 w-4 text-red-500" />
             by AlienCore
           </p>
         </div>
