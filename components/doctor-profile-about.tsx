@@ -48,7 +48,7 @@ export function DoctorProfileAbout({
           >
             <div className="hidden lg:block" aria-hidden>
               <span className="invisible inline-flex items-center gap-2 rounded-full border border-teal-200 bg-teal-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-teal-800">
-                <span className="h-1.5 w-1.5 rounded-full bg-teal-600" />
+                <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
                 About Me
               </span>
               <div className="mt-5" />
