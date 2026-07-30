@@ -18,15 +18,15 @@ type ScrollRevealProps = {
 };
 
 const hiddenClasses: Record<ScrollRevealDirection, string> = {
-  up: "-translate-y-8 opacity-0 md:-translate-y-12",
-  left: "-translate-x-8 opacity-0 md:-translate-x-12",
-  right: "translate-x-8 opacity-0 md:translate-x-12",
+  up: "translate-y-10 opacity-0 md:translate-y-12",
+  left: "-translate-x-10 opacity-0 md:-translate-x-12",
+  right: "translate-x-10 opacity-0 md:translate-x-12",
 };
 
 const mobileHiddenClasses: Record<ScrollRevealDirection, string> = {
-  up: "-translate-y-8 opacity-0",
-  left: "-translate-y-8 opacity-0",
-  right: "-translate-y-8 opacity-0",
+  up: "translate-y-8 opacity-0",
+  left: "translate-y-8 opacity-0",
+  right: "translate-y-8 opacity-0",
 };
 
 function resolveDirection(
