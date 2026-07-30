@@ -9,6 +9,7 @@ import {
   VISIT_LOCATION,
 } from "@/lib/hospital-contact";
 import Link from "next/link";
+import Image from "next/image";
 import { FormEvent, useState, type ReactNode } from "react";
 
 const FOOTER_BG_CLASS =
@@ -27,12 +28,14 @@ const POPULAR_POSTS = [
   {
     title: "Managing Diabetes with Expert Care at Shivneri Hospital",
     date: "April 17, 2026",
-    imageClassName: "bg-linear-to-br from-teal-600 to-teal-800",
+    imageUrl:
+      "https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=200&q=80",
   },
   {
     title: "Understanding Joint Replacement and Recovery Support",
     date: "April 10, 2026",
-    imageClassName: "bg-linear-to-br from-cyan-600 to-teal-800",
+    imageUrl:
+      "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=200&q=80",
   },
 ];
 
@@ -154,9 +157,17 @@ export function SiteFooter() {
                     className="group flex gap-3 transition hover:opacity-90"
                   >
                     <div
-                      className={`h-16 w-16 shrink-0 overflow-hidden rounded-lg ${post.imageClassName}`}
+                      className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-teal-800"
                       aria-hidden
-                    />
+                    >
+                      <Image
+                        src={post.imageUrl}
+                        alt=""
+                        fill
+                        className="object-cover"
+                        sizes="64px"
+                      />
+                    </div>
                     <div className="min-w-0">
                       <p className="text-xs text-teal-100/70">{post.date}</p>
                       <p className="mt-1 text-sm font-medium leading-snug text-white group-hover:text-lime-200">
