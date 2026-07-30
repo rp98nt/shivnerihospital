@@ -1,5 +1,6 @@
 import { SiteHeaderHeightSync } from "@/components/site-header-height-sync";
 import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 import { TeamOfDoctorsSection } from "@/components/team-of-doctors-section";
 import type { Metadata } from "next";
 
@@ -33,9 +34,7 @@ export default function TeamOfDoctorsPage() {
         </section>
       </main>
 
-      <footer className="border-t border-slate-200 bg-white px-6 py-6 text-center text-sm text-slate-500">
-        © {new Date().getFullYear()} Shivneri Hospital. All rights reserved.
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

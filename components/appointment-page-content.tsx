@@ -1,6 +1,7 @@
 "use client";
 
 import { AppointmentForm } from "@/components/appointment-form";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { useSearchParams } from "next/navigation";
 
@@ -16,6 +17,7 @@ export function AppointmentPageContent() {
           <AppointmentForm initialDoctorSlug={doctorSlug} />
         </div>
       </main>
+      <SiteFooter />
     </div>
   );
 }

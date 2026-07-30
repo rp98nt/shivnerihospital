@@ -1,5 +1,6 @@
 import { SiteHeaderHeightSync } from "@/components/site-header-height-sync";
 import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 import { DoctorProfileAbout } from "@/components/doctor-profile-about";
 import { DoctorProfileHero } from "@/components/doctor-profile-hero";
 import { DoctorProfileBackground } from "@/components/doctor-profile-background";
@@ -75,9 +76,7 @@ export default async function TeamDoctorProfilePage({ params }: DoctorPageProps)
         <DoctorProfileTestimonials doctor={doctor} />
       </main>
 
-      <footer className="border-t border-slate-200 bg-white px-6 py-6 text-center text-sm text-slate-500">
-        © {new Date().getFullYear()} Shivneri Hospital. All rights reserved.
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { HomeHero } from "@/components/home-hero";
 import { OurDoctorsSection } from "@/components/our-doctors-section";
 import { SiteHeaderHeightSync } from "@/components/site-header-height-sync";
 import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 import { VisitLocationSection } from "@/components/visit-location-section";
 
 export default function Home() {
@@ -16,9 +17,7 @@ export default function Home() {
         <VisitLocationSection />
       </main>
 
-      <footer className="border-t border-slate-200 bg-white px-6 py-6 text-center text-sm text-slate-500">
-        © {new Date().getFullYear()} Shivneri Hospital. All rights reserved.
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
