@@ -6,7 +6,7 @@ export const APPOINTMENT_PHONE = "02452-222350";
 export const APPOINTMENT_PHONE_TEL = "02452222350";
 
 const HOSPITAL_ADDRESS =
-  "Surya I.C.U. Hospital, Swastik Chamber, Gavhane Road, Near Niraj Hotel, Gavhane Chowk, Parbhani, Maharashtra 431401";
+  "Shivneri Hospital, Swastik Chamber, Gavhane Road, Near Hotel Niraj International, Gavhane Chowk, Parbhani, Maharashtra 431401";
 
 export const VISIT_LOCATION = {
   heading: "Visit Our Parbhani Hospital Campus",
