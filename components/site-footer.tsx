@@ -17,7 +17,7 @@ const FOOTER_BG_CLASS =
 
 const USEFUL_LINKS = [
   { label: "Home", href: "/" },
-  { label: "About Shivneri", href: "/" },
+  { label: "About Shivneri", href: "/about-us" },
   { label: "Patient Guide", href: "/" },
   { label: "Contact", href: "/appointment" },
   { label: "Book Appointment", href: "/appointment" },

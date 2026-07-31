@@ -27,7 +27,7 @@ export type LowerNavItem = (typeof LOWER_NAV_ITEMS)[number];
 
 export const NAV_MENUS: Record<LowerNavItem, NavEntry[]> = {
   "About us": [
-    { label: "About us" },
+    { label: "About us", href: "/about-us" },
     { label: "Milestones" },
     { label: "Board of Trustees" },
     { label: "Team of Doctors", href: "/team-of-doctors" },
