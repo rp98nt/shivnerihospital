@@ -15,7 +15,7 @@ export default function AboutUsPage() {
     <div className="flex flex-1 flex-col">
       <SiteHeaderHeightSync />
       <SiteHeader />
-      <main className="flex flex-1 flex-col bg-slate-50">
+      <main className="flex flex-1 flex-col">
         <AboutUsContent />
       </main>
 
