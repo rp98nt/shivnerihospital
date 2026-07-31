@@ -61,11 +61,6 @@ export const OUR_SPECIALTIES: OurSpecialty[] = [
     imageSrc: "/our-specialties/laproscopy.png",
   },
   {
-    name: "Lasik",
-    href: "#",
-    imageSrc: "/our-specialties/lasik.png",
-  },
-  {
     name: "Nephrology",
     href: "#",
     imageSrc: "/our-specialties/nephrology.png",

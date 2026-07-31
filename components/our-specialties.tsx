@@ -26,7 +26,7 @@ function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
   return (
     <Link
       href={specialty.href}
-      className="group flex min-h-[2.75rem] flex-row items-center gap-2 rounded-xl border-2 border-lime-400 bg-white px-2 py-2 text-lime-700 shadow-sm transition-[background-color,color,box-shadow,transform] duration-300 ease-in hover:-translate-y-0.5 hover:bg-lime-300 hover:text-white hover:shadow-lg sm:aspect-square sm:min-h-0 sm:flex-col sm:justify-center sm:px-2 sm:py-3"
+      className="group flex min-h-[2.75rem] flex-row items-center gap-2 rounded-xl border-2 border-teal-700 bg-white px-2 py-2 text-teal-800 shadow-sm transition-[box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:aspect-square sm:min-h-0 sm:flex-col sm:justify-center sm:px-2 sm:py-3"
     >
       <div className={`relative shrink-0 ${LOGO_SIZE_CLASS}`}>
         <Image
@@ -37,7 +37,7 @@ function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
           sizes="(max-width: 640px) 47px, 63px"
         />
       </div>
-      <p className="min-w-0 text-left text-[0.6875rem] font-medium leading-snug transition-colors duration-300 ease-in group-hover:text-white sm:mt-1.5 sm:px-0.5 sm:text-center sm:text-[0.625rem] lg:text-xs">
+      <p className="min-w-0 text-left text-[0.6875rem] font-medium leading-snug sm:mt-1.5 sm:px-0.5 sm:text-center sm:text-[0.625rem] lg:text-xs">
         {specialty.name}
       </p>
     </Link>
