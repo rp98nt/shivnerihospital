@@ -57,23 +57,10 @@ export function AboutUsContent() {
 
           <div className="mt-6 grid gap-6 lg:mt-0 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-10">
             <div className="lg:col-span-5 lg:pt-4">
-              <div className="flex flex-wrap items-start gap-3">
-                <h1 className="max-w-md text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-[3.35rem]">
-                  <span className="text-teal-600">About</span>{" "}
-                  <span className="text-slate-900">Shivneri Hospital</span>
-                </h1>
-                <span className="mt-2 rounded-md border border-slate-200 bg-white/80 px-2 py-1 text-xs font-medium text-slate-500">
-                  {"{Details}"}
-                </span>
-              </div>
-
-              <p className="mt-4 text-sm font-medium text-slate-500">
-                — {HOSPITAL_NAME}
-              </p>
-
-              <span className="mt-6 inline-flex rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-slate-600 sm:text-sm sm:normal-case sm:tracking-normal">
-                Looks like: Modern medicine
-              </span>
+              <h1 className="max-w-md text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-[3.35rem]">
+                <span className="text-teal-600">About</span>{" "}
+                <span className="text-slate-900">Shivneri Hospital</span>
+              </h1>
 
               <p className="mt-6 hidden max-w-md text-sm leading-relaxed text-slate-600 lg:block">
                 {HOSPITAL_NAME} is a trusted multispecialty hospital serving
@@ -160,9 +147,9 @@ export function AboutUsContent() {
       </section>
 
       <section className="border-t border-slate-200 bg-white py-12 sm:py-16">
-        <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-start lg:gap-12">
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-teal-200 bg-teal-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-teal-800">
+        <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-stretch lg:gap-12">
+          <article className="flex h-full flex-col rounded-[1.75rem] border border-slate-200 bg-slate-50 p-6 shadow-sm sm:p-8">
+            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-teal-200 bg-teal-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-teal-800">
               <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
               Our Story
             </span>
@@ -172,7 +159,7 @@ export function AboutUsContent() {
               <span className="text-teal-700">guided by expertise</span>
             </h2>
 
-            <div className="mt-6 space-y-4 text-sm leading-relaxed text-slate-600 sm:text-base">
+            <div className="mt-6 flex flex-1 flex-col justify-between space-y-4 text-sm leading-relaxed text-slate-600 sm:text-base">
               <p>
                 {HOSPITAL_NAME} provides trusted outpatient, inpatient,
                 diagnostic, and emergency care with experienced consultants and
@@ -190,9 +177,9 @@ export function AboutUsContent() {
                 we deliver care every day.
               </p>
             </div>
-          </div>
+          </article>
 
-          <aside className="rounded-[1.75rem] border border-slate-200 bg-slate-50 p-6 shadow-sm sm:p-8">
+          <aside className="flex h-full flex-col rounded-[1.75rem] border border-slate-200 bg-slate-50 p-6 shadow-sm sm:p-8">
             <h3 className="text-lg font-bold text-teal-900 sm:text-xl">
               At a glance
             </h3>
