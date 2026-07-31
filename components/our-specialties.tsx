@@ -4,12 +4,12 @@ import Link from "next/link";
 
 const LOGO_SIZE_CLASS = {
   default: "h-[5.1rem] w-[5.1rem] sm:h-[6.75rem] sm:w-[6.75rem]",
-  large: "h-[6.63rem] w-[6.63rem] sm:h-[8.775rem] sm:w-[8.775rem]",
+  large: "h-[4.64rem] w-[4.64rem] sm:h-[6.14rem] sm:w-[6.14rem]",
 } as const;
 
 const LOGO_IMAGE_SIZES = {
   default: "(max-width: 640px) 82px, 108px",
-  large: "(max-width: 640px) 107px, 140px",
+  large: "(max-width: 640px) 75px, 98px",
 } as const;
 
 export function OurSpecialties() {
@@ -49,7 +49,7 @@ function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
       </div>
       <p
         className={`min-w-0 text-left text-sm font-medium leading-snug sm:px-1 sm:text-center sm:text-xs lg:text-sm ${
-          specialty.largeLogo ? "sm:-mt-2 lg:-mt-3" : ""
+          specialty.largeLogo ? "sm:-mt-1 lg:-mt-2" : ""
         }`}
       >
         {specialty.name}
