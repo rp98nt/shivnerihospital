@@ -47,7 +47,7 @@ export function OurSpecialties() {
     <section className="border-b border-slate-200 bg-white py-10 sm:py-12">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <h2 className="text-center text-2xl font-bold text-teal-900 sm:text-3xl">
-          Our <span className="text-teal-700">Specialties</span>
+          Our <span className="text-teal-700">Specialities</span>
         </h2>
 
         <div className="mt-6 grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:mt-10 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
