@@ -47,7 +47,11 @@ function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
           sizes={LOGO_IMAGE_SIZES[logoSize]}
         />
       </div>
-      <p className="min-w-0 text-left text-sm font-medium leading-snug sm:px-1 sm:text-center sm:text-xs lg:text-sm">
+      <p
+        className={`min-w-0 text-left text-sm font-medium leading-snug sm:px-1 sm:text-center sm:text-xs lg:text-sm ${
+          specialty.largeLogo ? "sm:-mt-2 lg:-mt-3" : ""
+        }`}
+      >
         {specialty.name}
       </p>
     </Link>
