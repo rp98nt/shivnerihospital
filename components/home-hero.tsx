@@ -137,9 +137,9 @@ export function HomeHero({
         </div>
       </section>
 
-      <PartnerCarouselsGroup />
       <OurSpecialties />
       {doctorsSection ?? <OurDoctors />}
+      <PartnerCarouselsGroup />
     </>
   );
 }
