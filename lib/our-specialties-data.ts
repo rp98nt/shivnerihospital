@@ -2,6 +2,7 @@ export type OurSpecialty = {
   name: string;
   href: string;
   imageSrc: string;
+  largeLogo?: boolean;
 };
 
 export const OUR_SPECIALTIES: OurSpecialty[] = [
@@ -44,11 +45,13 @@ export const OUR_SPECIALTIES: OurSpecialty[] = [
     name: "Hematology",
     href: "#",
     imageSrc: "/our-specialties/hematology.png",
+    largeLogo: true,
   },
   {
     name: "ICU Services",
     href: "#",
     imageSrc: "/our-specialties/icu-services.png",
+    largeLogo: true,
   },
   {
     name: "Infection",
@@ -114,6 +117,7 @@ export const OUR_SPECIALTIES: OurSpecialty[] = [
     name: "Radiology",
     href: "#",
     imageSrc: "/our-specialties/radiology.png",
+    largeLogo: true,
   },
   {
     name: "Robotic Surgery",
