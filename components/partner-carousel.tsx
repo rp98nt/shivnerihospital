@@ -54,7 +54,7 @@ export function PartnerCarousel({
         {heading}
       </h2>
 
-      <div className="partner-carousel-mask relative mt-8 sm:mt-10">
+      <div className="partner-carousel-mask relative mt-4 sm:mt-5">
         <div
           className={`partner-carousel-track flex w-max gap-4 sm:gap-5 ${trackDirectionClass}`}
           style={{ animationDuration: `${scrollDuration}s` }}
