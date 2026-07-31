@@ -1,46 +1,8 @@
+import { OUR_SPECIALTIES, type OurSpecialty } from "@/lib/our-specialties-data";
 import Image from "next/image";
 import Link from "next/link";
 
-type Specialty = {
-  name: string;
-  href: string;
-  imageSrc: string;
-};
-
 const LOGO_SIZE_CLASS = "h-[4.2rem] w-[4.2rem] sm:h-[5.6rem] sm:w-[5.6rem]";
-
-const SPECIALTIES: Specialty[] = [
-  {
-    name: "Cardiac Sciences",
-    href: "#",
-    imageSrc: "/our-specialties/cardiac-sciences.png",
-  },
-  {
-    name: "Neuro Sciences",
-    href: "#",
-    imageSrc: "/our-specialties/neuro-sciences.png",
-  },
-  {
-    name: "Pulmonology",
-    href: "#",
-    imageSrc: "/our-specialties/pulmonology.png",
-  },
-  {
-    name: "Endoscopy",
-    href: "#",
-    imageSrc: "/our-specialties/endoscopy.png",
-  },
-  {
-    name: "Ophthalmology",
-    href: "#",
-    imageSrc: "/our-specialties/ophthalmology.png",
-  },
-  {
-    name: "Knee Replacement",
-    href: "#",
-    imageSrc: "/our-specialties/knee-replacement.png",
-  },
-];
 
 export function OurSpecialties() {
   return (
@@ -50,8 +12,8 @@ export function OurSpecialties() {
           Our <span className="text-teal-700">Specialities</span>
         </h2>
 
-        <div className="mt-6 grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:mt-10 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
-          {SPECIALTIES.map((specialty) => (
+        <div className="mt-6 grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:mt-10 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
+          {OUR_SPECIALTIES.map((specialty) => (
             <SpecialtyCard key={specialty.name} specialty={specialty} />
           ))}
         </div>
@@ -60,7 +22,7 @@ export function OurSpecialties() {
   );
 }
 
-function SpecialtyCard({ specialty }: { specialty: Specialty }) {
+function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
   return (
     <Link
       href={specialty.href}
