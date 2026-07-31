@@ -22,8 +22,8 @@ type PartnerCarouselProps = {
 };
 
 const GROUPED_PADDING = {
-  default: "py-8 sm:py-10",
-  compactTop: "pt-4 pb-8 sm:pt-5 sm:pb-10",
+  default: "py-4 sm:py-5",
+  compactTop: "pt-4 pb-4 sm:pt-5 sm:pb-5",
 } as const;
 
 const SPACING_CLASSES = {
