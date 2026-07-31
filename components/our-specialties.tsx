@@ -2,7 +2,7 @@ import { OUR_SPECIALTIES, type OurSpecialty } from "@/lib/our-specialties-data";
 import Image from "next/image";
 import Link from "next/link";
 
-const LOGO_SIZE_CLASS = "h-[5.1rem] w-[5.1rem] sm:h-[6.75rem] sm:w-[6.75rem]";
+const LOGO_SIZE_CLASS = "h-[6.63rem] w-[6.63rem] sm:h-[8.775rem] sm:w-[8.775rem]";
 
 export function OurSpecialties() {
   return (
