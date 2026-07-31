@@ -36,7 +36,7 @@ export const OUR_SPECIALTIES: OurSpecialty[] = [
     imageSrc: "/our-specialties/general-surgery.png",
   },
   {
-    name: "Gynacology",
+    name: "Gynaecology",
     href: "#",
     imageSrc: "/our-specialties/gynacology.png",
   },
