@@ -29,6 +29,7 @@ export function InsurancePartners() {
       partners={PARTNERS}
       direction="rtl"
       grouped
+      compactGroupTop
     />
   );
 }

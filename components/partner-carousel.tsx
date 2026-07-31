@@ -17,8 +17,14 @@ type PartnerCarouselProps = {
   direction?: "ltr" | "rtl";
   spacing?: "first" | "middle" | "last";
   grouped?: boolean;
+  compactGroupTop?: boolean;
   className?: string;
 };
+
+const GROUPED_PADDING = {
+  default: "py-8 sm:py-10",
+  compactTop: "pt-4 pb-8 sm:pt-5 sm:pb-10",
+} as const;
 
 const SPACING_CLASSES = {
   first: "pt-10 pb-6 sm:pt-12 sm:pb-8",
@@ -39,6 +45,7 @@ export function PartnerCarousel({
   direction = "rtl",
   spacing = "middle",
   grouped = false,
+  compactGroupTop = false,
   className = "",
 }: PartnerCarouselProps) {
   const carouselItems = [...partners, ...partners];
@@ -73,7 +80,7 @@ export function PartnerCarousel({
   if (grouped) {
     return (
       <div
-        className={`px-4 py-8 sm:px-6 sm:py-10 ${className}`.trim()}
+        className={`px-4 sm:px-6 ${compactGroupTop ? GROUPED_PADDING.compactTop : GROUPED_PADDING.default} ${className}`.trim()}
       >
         {content}
       </div>
