@@ -42,11 +42,19 @@ export function DoctorCard({
     ? "flex w-full items-center justify-center gap-1.5 bg-amber-400 py-2.5 text-xs font-semibold text-slate-900 transition hover:bg-amber-300 sm:gap-2 sm:py-3.5 sm:text-sm"
     : "flex w-full items-center justify-center gap-2 bg-amber-400 py-3.5 text-sm font-semibold text-slate-900 transition hover:bg-amber-300";
 
+  const photoAreaClassName = isCarousel
+    ? "relative flex-1 bg-linear-to-b from-teal-50 to-slate-100 min-h-[12rem] sm:min-h-0"
+    : "relative min-h-0 flex-1 bg-linear-to-b from-teal-50 to-slate-100";
+
   return (
     <article
-      className={`flex flex-col overflow-hidden border border-slate-100 bg-white shadow-md transition duration-300 hover:shadow-xl ${isCarousel ? "sm:hover:-translate-y-1" : "hover:-translate-y-1"} ${shellClassName} ${widthClassName}`}
+      className={`flex flex-col overflow-hidden border border-slate-100 bg-white shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-xl ${shellClassName} ${widthClassName}`}
     >
-      <div className="relative min-h-0 flex-1 bg-linear-to-b from-teal-50 to-slate-100">
+      <div
+        className={`${photoAreaClassName}${
+          !photoUrl ? " flex items-center justify-center" : ""
+        }`}
+      >
         {photoUrl ? (
           <Image
             src={photoUrl}
@@ -60,14 +68,17 @@ export function DoctorCard({
             }
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center">
-            <DoctorAvatar
-              name={doctor.name}
-              photoUrl={null}
-              size="lg"
-              tone="teal"
-            />
-          </div>
+          <DoctorAvatar
+            name={doctor.name}
+            photoUrl={null}
+            size="lg"
+            tone="teal"
+            className={
+              isCarousel
+                ? "h-20 w-20 text-2xl sm:h-32 sm:w-32 sm:text-4xl"
+                : undefined
+            }
+          />
         )}
         {doctor.isGuest ? (
           <span
