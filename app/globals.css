@@ -352,4 +352,62 @@ body {
   .doctor-learn-more-pulse {
     animation: none;
   }
+
+  .specialty-card-shell::before {
+    animation: none;
+    opacity: 0;
+  }
+
+  .specialty-card-shell:hover .specialty-card-link,
+  .specialty-card-shell:focus-within .specialty-card-link {
+    border-color: rgb(15 118 110);
+  }
+}
+
+.specialty-card-shell {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.specialty-card-shell::before {
+  content: "";
+  position: absolute;
+  inset: -120%;
+  z-index: 0;
+  background: conic-gradient(
+    from 0deg,
+    rgb(15 118 110) 0deg,
+    rgb(15 118 110) 34deg,
+    transparent 34deg,
+    transparent 180deg,
+    rgb(15 118 110) 180deg,
+    rgb(15 118 110) 214deg,
+    transparent 214deg,
+    transparent 360deg
+  );
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.specialty-card-shell:hover::before,
+.specialty-card-shell:focus-within::before {
+  opacity: 1;
+  animation: specialty-border-rotate 2.4s linear infinite;
+}
+
+.specialty-card-link {
+  position: relative;
+  z-index: 1;
+}
+
+.specialty-card-shell:hover .specialty-card-link,
+.specialty-card-shell:focus-within .specialty-card-link {
+  border-color: transparent;
+}
+
+@keyframes specialty-border-rotate {
+  to {
+    transform: rotate(360deg);
+  }
 }

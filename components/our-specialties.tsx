@@ -34,22 +34,24 @@ export function OurSpecialties() {
 
 function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
   return (
-    <Link
-      href={specialty.href}
-      className="group flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl border-2 border-teal-700 bg-white text-teal-800 shadow-sm transition-[box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:rounded-2xl"
-    >
-      <div className="flex flex-col items-center gap-2 px-1.5 sm:gap-2 lg:gap-2.5">
-        <div className={LOGO_SLOT_CLASS}>
-          <Image
-            src={specialty.imageSrc}
-            alt=""
-            fill
-            className="object-contain"
-            sizes={LOGO_IMAGE_SIZES}
-          />
+    <div className="specialty-card-shell aspect-square w-full rounded-xl sm:rounded-2xl">
+      <Link
+        href={specialty.href}
+        className="specialty-card-link group flex h-full w-full items-center justify-center overflow-hidden rounded-xl border-2 border-teal-700 bg-white text-teal-800 shadow-sm transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:rounded-2xl"
+      >
+        <div className="flex flex-col items-center gap-2 px-1.5 sm:gap-2 lg:gap-2.5">
+          <div className={LOGO_SLOT_CLASS}>
+            <Image
+              src={specialty.imageSrc}
+              alt=""
+              fill
+              className="object-contain"
+              sizes={LOGO_IMAGE_SIZES}
+            />
+          </div>
+          <p className={LABEL_SLOT_CLASS}>{specialty.name}</p>
         </div>
-        <p className={LABEL_SLOT_CLASS}>{specialty.name}</p>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 }
