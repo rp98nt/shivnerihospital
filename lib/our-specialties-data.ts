@@ -2,8 +2,6 @@ export type OurSpecialty = {
   name: string;
   href: string;
   imageSrc: string;
-  largeLogo?: boolean;
-  extraLabelGap?: boolean;
 };
 
 export const OUR_SPECIALTIES: OurSpecialty[] = [
@@ -16,7 +14,6 @@ export const OUR_SPECIALTIES: OurSpecialty[] = [
     name: "Burns Unit",
     href: "#",
     imageSrc: "/our-specialties/burns-unit.png",
-    extraLabelGap: true,
   },
   {
     name: "Cardiology",
@@ -47,13 +44,11 @@ export const OUR_SPECIALTIES: OurSpecialty[] = [
     name: "Hematology",
     href: "#",
     imageSrc: "/our-specialties/hematology.png",
-    largeLogo: true,
   },
   {
     name: "ICU Services",
     href: "#",
     imageSrc: "/our-specialties/icu-services.png",
-    largeLogo: true,
   },
   {
     name: "Infection",
@@ -119,7 +114,6 @@ export const OUR_SPECIALTIES: OurSpecialty[] = [
     name: "Radiology",
     href: "#",
     imageSrc: "/our-specialties/radiology.png",
-    largeLogo: true,
   },
   {
     name: "Robotic Surgery",
