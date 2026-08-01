@@ -19,7 +19,7 @@ const FAQ_ITEMS = [
       "Our Emergency & ICU services are available 24 hours a day, 7 days a week.",
   },
   {
-    question: "Which medical specialties are available at the hospital?",
+    question: "Which medical specialities are available at the hospital?",
     answer:
       "We provide services in General Medicine, Cardiology, Nephrology, Neurology, Orthopedics, Surgery, Pediatrics, Gynecology, Urology, Critical Care, Dialysis, and more.",
   },
