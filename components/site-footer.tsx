@@ -94,7 +94,7 @@ export function SiteFooter() {
             <p className="mt-3 text-3xl font-bold sm:text-4xl">9+ Specialists</p>
           </div>
 
-          <div className="flex lg:justify-end">
+          <div className="flex justify-center lg:justify-end">
             <Link
               href="/appointment"
               className="inline-flex min-h-11 items-center justify-center rounded-full bg-teal-500 px-8 py-3 text-sm font-semibold text-white transition hover:bg-teal-400"
