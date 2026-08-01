@@ -55,7 +55,7 @@ export const DOCTORS: Doctor[] = [
     name: "Dr. Ninad Suryatale",
     specialty: "Orthopaedics",
     qualifications: "MBBS, D.Ortho",
-    expertiseTags: ["Orthoscopy", "Arthoplasty", "Spine"],
+    expertiseTags: ["Arthroscopy", "Arthroplasty", "Spine"],
   }),
   defineDoctor({
     name: "Dr. Prakash Chavan",
