@@ -377,7 +377,7 @@ body {
   overflow: hidden;
   border-radius: 0.75rem;
   background-color: rgb(15 118 110);
-  transition: background-color 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: background-color 0.48s ease-out;
 }
 
 @media (min-width: 640px) {
@@ -401,21 +401,22 @@ body {
   transform-origin: center center;
   opacity: 0;
   transition:
-    opacity 0.2s ease,
-    width 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+    opacity 0.48s ease-out,
+    width 0.48s ease-out;
 }
 
 .specialty-card-frame::before {
-  animation: specialty-card-border-spin-a 2.4s linear infinite paused;
+  animation: specialty-card-border-spin-a 2.4s linear 0.48s infinite paused;
 }
 
 .specialty-card-frame::after {
-  animation: specialty-card-border-spin-b 2.4s linear infinite paused;
+  animation: specialty-card-border-spin-b 2.4s linear 0.48s infinite paused;
 }
 
 .specialty-card-frame:hover,
 .specialty-card-frame:focus-visible {
   background-color: transparent;
+  transition: background-color 0.48s ease-in;
 }
 
 .specialty-card-frame:hover::before,
@@ -425,6 +426,9 @@ body {
   opacity: 1;
   width: 20%;
   animation-play-state: running;
+  transition:
+    opacity 0.48s ease-in,
+    width 0.48s ease-in;
 }
 
 .specialty-card {
