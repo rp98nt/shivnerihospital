@@ -202,7 +202,7 @@ export function OurDoctors({
                 {carouselDoctors.map((doctor, index) => (
                   <div
                     key={`${doctor.slug}-${index}`}
-                    className="flex w-[12.48rem] shrink-0 justify-center sm:w-auto sm:block"
+                    className="flex h-[22.8rem] w-[12.48rem] shrink-0 justify-center overflow-hidden sm:h-auto sm:w-auto sm:overflow-visible"
                   >
                     <div className="origin-top scale-[0.8] sm:scale-100">
                       <DoctorCard

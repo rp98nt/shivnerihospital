@@ -192,28 +192,17 @@ body {
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  padding-block: 0.5rem;
+  padding-block: 0.25rem;
+}
+
+@media (min-width: 640px) {
+  .doctors-carousel-scroll {
+    padding-block: 0.5rem;
+  }
 }
 
 .doctors-carousel-scroll::-webkit-scrollbar {
   display: none;
-}
-
-@media (max-width: 639px) {
-  .doctors-carousel-card-slot {
-    display: flex;
-    width: 10.92rem;
-    justify-content: center;
-  }
-
-  .doctors-carousel-card-slot > article {
-    transform: scale(0.7);
-    transform-origin: top center;
-  }
-
-  .doctors-carousel-card-slot > article:hover {
-    transform: scale(0.7) translateY(-0.25rem);
-  }
 }
 
 .doctors-carousel-pagination {
