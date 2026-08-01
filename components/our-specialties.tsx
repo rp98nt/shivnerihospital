@@ -36,7 +36,7 @@ function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
   return (
     <Link
       href={specialty.href}
-      className="specialty-card group relative flex aspect-square w-full flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-teal-700 bg-white text-teal-800 shadow-sm transition-[border-color,box-shadow] duration-200 hover:border-transparent hover:shadow-md sm:rounded-2xl"
+      className="specialty-card group relative flex aspect-square w-full flex-col items-center justify-center overflow-hidden rounded-xl border-0 bg-white text-teal-800 shadow-[inset_0_0_0_2px_rgb(15_118_110)] transition-[box-shadow] duration-200 hover:shadow-none sm:rounded-2xl"
     >
       <svg
         className="specialty-card__border pointer-events-none absolute inset-0 h-full w-full"
@@ -45,7 +45,17 @@ function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
         aria-hidden
       >
         <rect
-          className="specialty-card__border-path"
+          className="specialty-card__border-path specialty-card__border-path--a"
+          x="1"
+          y="1"
+          width="98"
+          height="98"
+          rx="11"
+          ry="11"
+          pathLength="100"
+        />
+        <rect
+          className="specialty-card__border-path specialty-card__border-path--b"
           x="1"
           y="1"
           width="98"

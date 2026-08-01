@@ -358,14 +358,16 @@ body {
     opacity: 0;
   }
 
-  .specialty-card:hover .specialty-card__border-path,
-  .specialty-card:focus-visible .specialty-card__border-path {
+  .specialty-card:hover .specialty-card__border-path--a,
+  .specialty-card:focus-visible .specialty-card__border-path--a,
+  .specialty-card:hover .specialty-card__border-path--b,
+  .specialty-card:focus-visible .specialty-card__border-path--b {
     animation: none;
   }
 
   .specialty-card:hover,
   .specialty-card:focus-visible {
-    border-color: rgb(15 118 110);
+    box-shadow: inset 0 0 0 2px rgb(15 118 110);
   }
 }
 
@@ -381,8 +383,12 @@ body {
   stroke-width: 2;
   vector-effect: non-scaling-stroke;
   stroke-linecap: butt;
-  stroke-dasharray: 12 38 12 38;
+  stroke-dasharray: 12 88;
   stroke-dashoffset: 0;
+}
+
+.specialty-card__border-path--b {
+  stroke-dashoffset: -50;
 }
 
 .specialty-card:hover .specialty-card__border,
@@ -390,13 +396,32 @@ body {
   opacity: 1;
 }
 
-.specialty-card:hover .specialty-card__border-path,
-.specialty-card:focus-visible .specialty-card__border-path {
-  animation: specialty-card-border-marquee 2.4s linear infinite;
+.specialty-card:hover .specialty-card__border-path--a,
+.specialty-card:focus-visible .specialty-card__border-path--a {
+  animation: specialty-card-border-a 2.4s linear infinite;
 }
 
-@keyframes specialty-card-border-marquee {
+.specialty-card:hover .specialty-card__border-path--b,
+.specialty-card:focus-visible .specialty-card__border-path--b {
+  animation: specialty-card-border-b 2.4s linear infinite;
+}
+
+@keyframes specialty-card-border-a {
+  from {
+    stroke-dashoffset: 0;
+  }
+
   to {
     stroke-dashoffset: -100;
+  }
+}
+
+@keyframes specialty-card-border-b {
+  from {
+    stroke-dashoffset: -50;
+  }
+
+  to {
+    stroke-dashoffset: -150;
   }
 }
