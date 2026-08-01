@@ -35,6 +35,23 @@ export function OurSpecialties() {
 function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
   return (
     <div className="specialty-card-shell aspect-square w-full rounded-xl shadow-sm hover:shadow-lg sm:rounded-2xl">
+      <svg
+        className="specialty-card-border-svg"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        aria-hidden
+      >
+        <rect
+          className="specialty-card-border-track"
+          x="1"
+          y="1"
+          width="98"
+          height="98"
+          rx="11"
+          ry="11"
+          pathLength="100"
+        />
+      </svg>
       <Link
         href={specialty.href}
         className="specialty-card-link group flex h-full w-full items-center justify-center overflow-hidden rounded-xl border-2 border-teal-700 bg-white text-teal-800 transition-[border-color] duration-300 sm:rounded-2xl"
