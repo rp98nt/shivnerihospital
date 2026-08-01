@@ -79,7 +79,6 @@ export function AboutUsContent() {
                 </strong>{" "}
                 at every stage of treatment.
               </p>
-              <IdeaSplashIcon className="pointer-events-none absolute -bottom-3 -left-3 h-24 w-24 text-teal-500/90 sm:h-28 sm:w-28" />
             </article>
 
             <article className="relative overflow-hidden rounded-[1.75rem] bg-white p-6 shadow-[0_20px_60px_rgb(15_23_42_/_0.08)] sm:p-8 lg:col-span-5">
@@ -109,8 +108,6 @@ export function AboutUsContent() {
                 for all age groups, with easy access to appointments, information
                 about specialities, services, and doctors.
               </p>
-
-              <GlobeSplashIcon className="pointer-events-none absolute -bottom-2 right-0 h-24 w-24 text-teal-500/85 sm:h-28 sm:w-28" />
 
               <Link
                 href="/team-of-doctors"
@@ -289,7 +286,7 @@ export function AboutUsContent() {
                   rel="noopener noreferrer"
                   className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/25 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/15"
                 >
-                  Get Directions
+                  Get Hospital Location
                 </Link>
               </div>
             </div>
@@ -353,40 +350,6 @@ function AboutHexPattern({ className }: { className?: string }) {
         </pattern>
       </defs>
       <rect width="100%" height="100%" fill="url(#about-hex-pattern)" />
-    </svg>
-  );
-}
-
-function IdeaSplashIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 120 120" fill="none" aria-hidden>
-      <circle cx="60" cy="60" r="52" fill="currentColor" fillOpacity="0.12" />
-      <circle cx="60" cy="60" r="34" fill="currentColor" fillOpacity="0.18" />
-      <path
-        d="M60 28c-8.8 0-16 7.2-16 16 0 6.2 3.6 11.6 8.8 14.2V64h14.4v-5.8c5.2-2.6 8.8-8 8.8-14.2 0-8.8-7.2-16-16-16z"
-        fill="currentColor"
-      />
-      <path
-        d="M52 68h16v6H52zM54 74h12v8H54z"
-        fill="currentColor"
-        fillOpacity="0.85"
-      />
-    </svg>
-  );
-}
-
-function GlobeSplashIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 120 120" fill="none" aria-hidden>
-      <circle cx="60" cy="60" r="52" fill="currentColor" fillOpacity="0.12" />
-      <circle cx="60" cy="60" r="34" fill="currentColor" fillOpacity="0.18" />
-      <circle cx="60" cy="60" r="22" stroke="currentColor" strokeWidth="3" />
-      <path
-        d="M38 60h44M60 38c-8 6-8 28 0 44M60 38c8 6 8 28 0 44"
-        stroke="currentColor"
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
     </svg>
   );
 }
