@@ -353,15 +353,14 @@ body {
     animation: none;
   }
 
-  .specialty-card-border-track-a,
-  .specialty-card-border-track-b {
+  .specialty-border-runner {
     animation: none;
     opacity: 0;
   }
 
   .specialty-card-shell:hover .specialty-card-link,
   .specialty-card-shell:focus-within .specialty-card-link {
-    border-color: rgb(15 118 110);
+    box-shadow: inset 0 0 0 2px rgb(15 118 110);
   }
 }
 
@@ -378,40 +377,45 @@ body {
   transform: translateY(-0.125rem);
 }
 
-.specialty-card-border-svg {
+.specialty-border-runner {
   position: absolute;
-  inset: 0;
   z-index: 2;
-  width: 100%;
-  height: 100%;
+  top: 0;
+  left: 0;
+  width: 24%;
+  height: 2px;
+  border-radius: 9999px;
+  background-color: rgb(15 118 110);
   pointer-events: none;
-  overflow: visible;
-}
-
-.specialty-card-border-track {
-  fill: none;
-  stroke: rgb(15 118 110);
-  stroke-width: 2;
-  stroke-linecap: butt;
-  vector-effect: non-scaling-stroke;
-  stroke-dasharray: 12 88;
   opacity: 0;
+  offset-path: rect(0 0 100% 100% round 12px);
+  offset-distance: 0%;
+  offset-rotate: auto;
 }
 
-.specialty-card-border-track-b {
-  stroke-dashoffset: -50;
+@media (min-width: 640px) {
+  .specialty-border-runner {
+    offset-path: rect(0 0 100% 100% round 16px);
+  }
 }
 
-.specialty-card-shell:hover .specialty-card-border-track-a,
-.specialty-card-shell:focus-within .specialty-card-border-track-a {
+.specialty-border-runner-b {
+  offset-distance: 50%;
+}
+
+.specialty-card-shell:hover .specialty-border-runner,
+.specialty-card-shell:focus-within .specialty-border-runner {
   opacity: 1;
-  animation: specialty-border-run-a 2.2s linear infinite;
 }
 
-.specialty-card-shell:hover .specialty-card-border-track-b,
-.specialty-card-shell:focus-within .specialty-card-border-track-b {
-  opacity: 1;
-  animation: specialty-border-run-b 2.2s linear infinite;
+.specialty-card-shell:hover .specialty-border-runner-a,
+.specialty-card-shell:focus-within .specialty-border-runner-a {
+  animation: specialty-border-runner-a 2.2s linear infinite;
+}
+
+.specialty-card-shell:hover .specialty-border-runner-b,
+.specialty-card-shell:focus-within .specialty-border-runner-b {
+  animation: specialty-border-runner-b 2.2s linear infinite;
 }
 
 .specialty-card-link {
@@ -421,25 +425,25 @@ body {
 
 .specialty-card-shell:hover .specialty-card-link,
 .specialty-card-shell:focus-within .specialty-card-link {
-  border-color: white;
+  box-shadow: none;
 }
 
-@keyframes specialty-border-run-a {
+@keyframes specialty-border-runner-a {
   from {
-    stroke-dashoffset: 0;
+    offset-distance: 0%;
   }
 
   to {
-    stroke-dashoffset: -100;
+    offset-distance: 100%;
   }
 }
 
-@keyframes specialty-border-run-b {
+@keyframes specialty-border-runner-b {
   from {
-    stroke-dashoffset: -50;
+    offset-distance: 50%;
   }
 
   to {
-    stroke-dashoffset: -150;
+    offset-distance: 150%;
   }
 }

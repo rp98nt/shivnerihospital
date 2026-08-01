@@ -35,36 +35,11 @@ export function OurSpecialties() {
 function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
   return (
     <div className="specialty-card-shell aspect-square w-full rounded-xl shadow-sm hover:shadow-lg sm:rounded-2xl">
-      <svg
-        className="specialty-card-border-svg"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-        aria-hidden
-      >
-        <rect
-          className="specialty-card-border-track specialty-card-border-track-a"
-          x="1"
-          y="1"
-          width="98"
-          height="98"
-          rx="11"
-          ry="11"
-          pathLength="100"
-        />
-        <rect
-          className="specialty-card-border-track specialty-card-border-track-b"
-          x="1"
-          y="1"
-          width="98"
-          height="98"
-          rx="11"
-          ry="11"
-          pathLength="100"
-        />
-      </svg>
+      <span className="specialty-border-runner specialty-border-runner-a" aria-hidden />
+      <span className="specialty-border-runner specialty-border-runner-b" aria-hidden />
       <Link
         href={specialty.href}
-        className="specialty-card-link group flex h-full w-full items-center justify-center overflow-hidden rounded-xl border-2 border-teal-700 bg-white text-teal-800 sm:rounded-2xl"
+        className="specialty-card-link group flex h-full w-full items-center justify-center overflow-hidden rounded-xl border-2 border-transparent bg-white text-teal-800 shadow-[inset_0_0_0_2px_rgb(15_118_110)] sm:rounded-2xl"
       >
         <div className="mt-2 flex flex-col items-center gap-0 px-1.5 sm:mt-2.5 lg:mt-3">
           <div className={`${LOGO_SLOT_CLASS} -mb-1 sm:-mb-1.5 lg:-mb-2`}>
