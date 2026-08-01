@@ -254,7 +254,7 @@ function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
     <Link
       href={specialty.href}
       className={`group flex aspect-square w-[11rem] shrink-0 flex-col items-center justify-center rounded-2xl border-2 border-teal-700 bg-white px-2.5 py-3.5 text-teal-800 shadow-sm transition-[box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:px-3 sm:py-5 ${
-        specialty.largeLogo ? "gap-2.5 sm:gap-3" : "gap-2 sm:gap-2.5"
+        specialty.largeLogo ? "gap-2 sm:gap-2.5" : "gap-1.5 sm:gap-1"
       }`}
     >
       <div className={`relative shrink-0 ${LOGO_SIZE_CLASS[logoSize]}`}>
@@ -266,7 +266,11 @@ function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
           sizes={LOGO_IMAGE_SIZES[logoSize]}
         />
       </div>
-      <p className="flex min-h-[2.5rem] w-full items-center justify-center px-1 text-center text-xs font-semibold leading-snug line-clamp-3 sm:min-h-0 sm:font-medium lg:text-sm">
+      <p
+        className={`flex min-h-[2.5rem] w-full items-center justify-center px-1 text-center text-xs font-semibold leading-snug line-clamp-3 sm:min-h-0 sm:font-medium lg:text-sm${
+          specialty.extraLabelGap ? " mt-1.5 sm:mt-2" : ""
+        }`}
+      >
         {specialty.name}
       </p>
     </Link>

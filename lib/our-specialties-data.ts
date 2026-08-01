@@ -3,6 +3,7 @@ export type OurSpecialty = {
   href: string;
   imageSrc: string;
   largeLogo?: boolean;
+  extraLabelGap?: boolean;
 };
 
 export const OUR_SPECIALTIES: OurSpecialty[] = [
@@ -15,6 +16,7 @@ export const OUR_SPECIALTIES: OurSpecialty[] = [
     name: "Burns Unit",
     href: "#",
     imageSrc: "/our-specialties/burns-unit.png",
+    extraLabelGap: true,
   },
   {
     name: "Cardiology",
