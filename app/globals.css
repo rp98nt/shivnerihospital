@@ -353,14 +353,10 @@ body {
     animation: none;
   }
 
-  .specialty-card-frame:hover .specialty-card__border,
-  .specialty-card-frame:focus-visible .specialty-card__border {
-    opacity: 0;
-  }
-
   .specialty-card-frame:hover .specialty-card__runner,
   .specialty-card-frame:focus-visible .specialty-card__runner {
-    visibility: hidden;
+    opacity: 0;
+    animation: none;
   }
 
   .specialty-card-frame:hover,
@@ -369,20 +365,61 @@ body {
   }
 }
 
-.specialty-card__border {
+/* Centerline of the 2px frame border; radii match rounded-xl / sm:rounded-2xl minus 1px. */
+.specialty-card__runner {
+  position: absolute;
   z-index: 2;
+  top: 0;
+  left: 0;
+  width: 22%;
+  height: 2px;
+  border-radius: 1px;
+  background-color: rgb(15 118 110);
+  pointer-events: none;
   opacity: 0;
+  offset-path: rect(1px 1px 1px 1px round 11px);
+  offset-distance: 0%;
+  offset-rotate: auto;
   transition: opacity 0.2s ease;
 }
 
-.specialty-card__runner-line {
-  stroke: rgb(15 118 110);
-  stroke-width: 2;
-  vector-effect: non-scaling-stroke;
-  stroke-linecap: butt;
+@media (min-width: 640px) {
+  .specialty-card__runner {
+    offset-path: rect(1px 1px 1px 1px round 15px);
+  }
 }
 
-.specialty-card-frame:hover .specialty-card__border,
-.specialty-card-frame:focus-visible .specialty-card__border {
+.specialty-card-frame:hover .specialty-card__runner,
+.specialty-card-frame:focus-visible .specialty-card__runner {
   opacity: 1;
+}
+
+.specialty-card-frame:hover .specialty-card__runner--a,
+.specialty-card-frame:focus-visible .specialty-card__runner--a {
+  animation: specialty-card-runner-a 2.4s linear infinite;
+}
+
+.specialty-card-frame:hover .specialty-card__runner--b,
+.specialty-card-frame:focus-visible .specialty-card__runner--b {
+  animation: specialty-card-runner-b 2.4s linear infinite;
+}
+
+@keyframes specialty-card-runner-a {
+  from {
+    offset-distance: 0%;
+  }
+
+  to {
+    offset-distance: 100%;
+  }
+}
+
+@keyframes specialty-card-runner-b {
+  from {
+    offset-distance: 50%;
+  }
+
+  to {
+    offset-distance: 150%;
+  }
 }
