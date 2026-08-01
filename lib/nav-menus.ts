@@ -50,7 +50,6 @@ export const NAV_MENU_ENTRIES: Record<LowerNavItem, NavEntry[]> = {
         { label: "Radiology" },
         { label: "Ultrasonography" },
         { label: "Computed Tomography Scan (CT Scan)" },
-        { label: "Magnetic Resonance Imaging (MRI)" },
       ],
     },
   ],
