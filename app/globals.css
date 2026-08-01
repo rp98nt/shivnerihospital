@@ -353,7 +353,8 @@ body {
     animation: none;
   }
 
-  .specialty-card-border-track {
+  .specialty-card-border-track-a,
+  .specialty-card-border-track-b {
     animation: none;
     opacity: 0;
   }
@@ -393,16 +394,24 @@ body {
   stroke-width: 2;
   stroke-linecap: butt;
   vector-effect: non-scaling-stroke;
-  stroke-dasharray: 10 40 10 40;
-  stroke-dashoffset: 0;
+  stroke-dasharray: 12 88;
   opacity: 0;
-  transition: opacity 0.25s ease;
 }
 
-.specialty-card-shell:hover .specialty-card-border-track,
-.specialty-card-shell:focus-within .specialty-card-border-track {
+.specialty-card-border-track-b {
+  stroke-dashoffset: -50;
+}
+
+.specialty-card-shell:hover .specialty-card-border-track-a,
+.specialty-card-shell:focus-within .specialty-card-border-track-a {
   opacity: 1;
-  animation: specialty-border-run 2.2s linear infinite;
+  animation: specialty-border-run-a 2.2s linear infinite;
+}
+
+.specialty-card-shell:hover .specialty-card-border-track-b,
+.specialty-card-shell:focus-within .specialty-card-border-track-b {
+  opacity: 1;
+  animation: specialty-border-run-b 2.2s linear infinite;
 }
 
 .specialty-card-link {
@@ -412,15 +421,25 @@ body {
 
 .specialty-card-shell:hover .specialty-card-link,
 .specialty-card-shell:focus-within .specialty-card-link {
-  border-color: transparent;
+  border-color: white;
 }
 
-@keyframes specialty-border-run {
+@keyframes specialty-border-run-a {
   from {
     stroke-dashoffset: 0;
   }
 
   to {
     stroke-dashoffset: -100;
+  }
+}
+
+@keyframes specialty-border-run-b {
+  from {
+    stroke-dashoffset: -50;
+  }
+
+  to {
+    stroke-dashoffset: -150;
   }
 }

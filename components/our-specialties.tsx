@@ -42,7 +42,17 @@ function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
         aria-hidden
       >
         <rect
-          className="specialty-card-border-track"
+          className="specialty-card-border-track specialty-card-border-track-a"
+          x="1"
+          y="1"
+          width="98"
+          height="98"
+          rx="11"
+          ry="11"
+          pathLength="100"
+        />
+        <rect
+          className="specialty-card-border-track specialty-card-border-track-b"
           x="1"
           y="1"
           width="98"
@@ -54,7 +64,7 @@ function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
       </svg>
       <Link
         href={specialty.href}
-        className="specialty-card-link group flex h-full w-full items-center justify-center overflow-hidden rounded-xl border-2 border-teal-700 bg-white text-teal-800 transition-[border-color] duration-300 sm:rounded-2xl"
+        className="specialty-card-link group flex h-full w-full items-center justify-center overflow-hidden rounded-xl border-2 border-teal-700 bg-white text-teal-800 sm:rounded-2xl"
       >
         <div className="mt-2 flex flex-col items-center gap-0 px-1.5 sm:mt-2.5 lg:mt-3">
           <div className={`${LOGO_SLOT_CLASS} -mb-1 sm:-mb-1.5 lg:-mb-2`}>
