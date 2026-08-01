@@ -26,7 +26,8 @@ const FLOW_LOCK_MS =
   FLOW_DURATION_MS + (MOBILE_CONTACT_COUNT - 1) * FLOW_STAGGER_MS;
 const COMPACT_ENTER_SCROLL_Y = 40;
 const COMPACT_EXIT_SCROLL_Y = 8;
-const SCROLL_DELTA_THRESHOLD = 8;
+const SCROLL_DOWN_THRESHOLD = 8;
+const SCROLL_UP_THRESHOLD = 4;
 
 function useMobileHeaderCompact(
   expandedIconRefs: React.RefObject<(HTMLElement | null)[]>,
@@ -68,17 +69,16 @@ function useMobileHeaderCompact(
       if (scrollY <= COMPACT_EXIT_SCROLL_Y) {
         nextCompact = false;
       } else if (
-        !isCompactRef.current &&
-        scrollY >= COMPACT_ENTER_SCROLL_Y &&
-        delta >= SCROLL_DELTA_THRESHOLD
-      ) {
-        nextCompact = true;
-      } else if (
         isCompactRef.current &&
-        delta <= -SCROLL_DELTA_THRESHOLD &&
-        scrollY <= COMPACT_ENTER_SCROLL_Y + 24
+        delta <= -SCROLL_UP_THRESHOLD
       ) {
         nextCompact = false;
+      } else if (
+        !isCompactRef.current &&
+        scrollY >= COMPACT_ENTER_SCROLL_Y &&
+        delta >= SCROLL_DOWN_THRESHOLD
+      ) {
+        nextCompact = true;
       }
 
       if (nextCompact !== isCompactRef.current) {
