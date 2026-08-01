@@ -11,14 +11,6 @@ const LABEL_SLOT_CLASS =
 const LOGO_IMAGE_SIZES =
   "(max-width: 640px) 48px, (max-width: 1024px) 56px, 68px";
 
-/** Border centerline: rounded-xl outer (12px) minus 1px inset. */
-const SPECIALTY_BORDER_TRACK_DEFAULT =
-  "M 12 1 H 88 A 11 11 0 0 1 99 12 V 88 A 11 11 0 0 1 88 99 H 12 A 11 11 0 0 1 1 88 V 12 A 11 11 0 0 1 12 1 Z";
-
-/** Border centerline: rounded-2xl outer (16px) minus 1px inset. */
-const SPECIALTY_BORDER_TRACK_SM =
-  "M 16 1 H 84 A 15 15 0 0 1 99 16 V 84 A 15 15 0 0 1 84 99 H 16 A 15 15 0 0 1 1 84 V 16 A 15 15 0 0 1 16 1 Z";
-
 export function OurSpecialties() {
   return (
     <section className="border-b border-slate-200 bg-white py-10 sm:py-12">
@@ -42,22 +34,9 @@ export function OurSpecialties() {
 
 function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
   return (
-    <Link
-      href={specialty.href}
-      className="specialty-card-frame relative block aspect-square w-full overflow-hidden rounded-xl bg-teal-700 p-[2px] transition-[background-color] duration-200 hover:bg-transparent sm:rounded-2xl"
-    >
-      <SpecialtyBorderSvg
-        trackPath={SPECIALTY_BORDER_TRACK_DEFAULT}
-        className="sm:hidden"
-      />
-
-      <SpecialtyBorderSvg
-        trackPath={SPECIALTY_BORDER_TRACK_SM}
-        className="hidden sm:block"
-      />
-
-      <span className="specialty-card relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-[10px] bg-white text-teal-800 sm:rounded-[14px]">
-        <span className="relative z-[1] mt-2 flex flex-col items-center gap-0 px-1.5 sm:mt-2.5 lg:mt-3">
+    <Link href={specialty.href} className="specialty-card-frame">
+      <span className="specialty-card">
+        <span className="relative mt-2 flex flex-col items-center gap-0 px-1.5 sm:mt-2.5 lg:mt-3">
           <span className={`relative block ${LOGO_SLOT_CLASS} -mb-1 sm:-mb-1.5 lg:-mb-2`}>
             <Image
               src={specialty.imageSrc}
@@ -71,28 +50,5 @@ function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
         </span>
       </span>
     </Link>
-  );
-}
-
-function SpecialtyBorderSvg({
-  trackPath,
-  className,
-}: {
-  trackPath: string;
-  className?: string;
-}) {
-  return (
-    <svg
-      className={`specialty-card__border pointer-events-none absolute inset-0 h-full w-full ${className ?? ""}`}
-      viewBox="0 0 100 100"
-      preserveAspectRatio="none"
-      aria-hidden
-    >
-      <path
-        className="specialty-card__border-path"
-        d={trackPath}
-        pathLength="100"
-      />
-    </svg>
   );
 }

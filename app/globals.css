@@ -353,14 +353,12 @@ body {
     animation: none;
   }
 
-  .specialty-card-frame:hover .specialty-card__border,
-  .specialty-card-frame:focus-visible .specialty-card__border {
-    opacity: 0;
-  }
-
-  .specialty-card-frame:hover .specialty-card__border-path,
-  .specialty-card-frame:focus-visible .specialty-card__border-path {
+  .specialty-card-frame:hover::before,
+  .specialty-card-frame:focus-visible::before,
+  .specialty-card-frame:hover::after,
+  .specialty-card-frame:focus-visible::after {
     animation: none;
+    opacity: 0;
   }
 
   .specialty-card-frame:hover,
@@ -369,40 +367,103 @@ body {
   }
 }
 
-.specialty-card__border {
-  z-index: 2;
+.specialty-card-frame {
+  position: relative;
+  isolation: isolate;
+  display: block;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  padding: 2px;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background-color: rgb(15 118 110);
+  transition: background-color 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (min-width: 640px) {
+  .specialty-card-frame {
+    border-radius: 1rem;
+  }
+}
+
+.specialty-card-frame::before,
+.specialty-card-frame::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: 160%;
+  height: 160%;
+  border-radius: inherit;
+  background: rgb(15 118 110);
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    width 0.48s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.specialty-card__border-path {
-  fill: none;
-  stroke: rgb(15 118 110);
-  stroke-width: 2;
-  vector-effect: non-scaling-stroke;
-  stroke-linecap: butt;
-  stroke-linejoin: round;
-  /* Exactly two dashes on pathLength 100 — one path, one animation. */
-  stroke-dasharray: 33 17 33 17;
-  stroke-dashoffset: 0;
+.specialty-card-frame::before {
+  animation: specialty-card-border-spin-a 2.4s linear infinite paused;
 }
 
-.specialty-card-frame:hover .specialty-card__border,
-.specialty-card-frame:focus-visible .specialty-card__border {
+.specialty-card-frame::after {
+  animation: specialty-card-border-spin-b 2.4s linear infinite paused;
+}
+
+.specialty-card-frame:hover,
+.specialty-card-frame:focus-visible {
+  background-color: transparent;
+}
+
+.specialty-card-frame:hover::before,
+.specialty-card-frame:focus-visible::before,
+.specialty-card-frame:hover::after,
+.specialty-card-frame:focus-visible::after {
   opacity: 1;
+  width: 20%;
+  animation-play-state: running;
 }
 
-.specialty-card-frame:hover .specialty-card__border-path,
-.specialty-card-frame:focus-visible .specialty-card__border-path {
-  animation: specialty-card-border-run 2.4s linear infinite;
+.specialty-card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #ffffff;
+  color: rgb(17 94 89);
 }
 
-@keyframes specialty-card-border-run {
+@media (min-width: 640px) {
+  .specialty-card {
+    border-radius: 14px;
+  }
+}
+
+@keyframes specialty-card-border-spin-a {
   from {
-    stroke-dashoffset: 0;
+    transform: translate(-50%, -50%) rotate(0deg);
   }
 
   to {
-    stroke-dashoffset: -100;
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes specialty-card-border-spin-b {
+  from {
+    transform: translate(-50%, -50%) rotate(180deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(540deg);
   }
 }
