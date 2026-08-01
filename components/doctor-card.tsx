@@ -36,8 +36,8 @@ export function DoctorCard({
     ? "mt-0.5 text-[10px] text-slate-500 sm:text-xs"
     : "mt-0.5 text-xs text-slate-500";
   const qualificationsClassName = isCarousel
-    ? "mt-1.5 mb-1 line-clamp-2 text-[10px] leading-relaxed text-slate-600 sm:mt-2 sm:mb-1.5 sm:text-xs"
-    : "mt-2 mb-1 line-clamp-2 text-[11px] leading-relaxed text-slate-600 sm:mb-1.5 sm:text-xs";
+    ? "mt-1.5 mb-3 line-clamp-2 text-[10px] leading-relaxed text-slate-600 sm:mt-2 sm:text-xs"
+    : "mt-2 mb-3 line-clamp-2 text-[11px] leading-relaxed text-slate-600 sm:text-xs";
   const actionClassName = isCarousel
     ? "flex w-full items-center justify-center gap-1.5 bg-amber-400 py-2.5 text-xs font-semibold text-slate-900 transition hover:bg-amber-300 sm:gap-2 sm:py-3.5 sm:text-sm"
     : "flex w-full items-center justify-center gap-2 bg-amber-400 py-3.5 text-sm font-semibold text-slate-900 transition hover:bg-amber-300";
