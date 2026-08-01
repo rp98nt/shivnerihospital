@@ -67,7 +67,7 @@ export function SiteHeader() {
 
 function TopBarContactGroup() {
   return (
-    <div className="flex w-full flex-col gap-2 lg:inline-flex lg:w-auto lg:flex-row lg:items-center lg:gap-6">
+    <div className="flex w-full flex-col gap-1.5 lg:inline-flex lg:w-auto lg:flex-row lg:items-center lg:gap-6">
       <TopBarDirectionsContact />
 
       <TopBarPhoneContact
@@ -91,16 +91,29 @@ function TopBarContactGroup() {
   );
 }
 
+const TOP_BAR_ROW_CLASS =
+  "grid w-full grid-cols-[1.75rem_minmax(0,1fr)] items-center gap-2.5 rounded-xl py-1 transition-opacity hover:opacity-80 lg:flex lg:w-auto";
+
+const TOP_BAR_ICON_SLOT_CLASS =
+  "flex h-7 w-7 shrink-0 items-center justify-center";
+
+const TOP_BAR_TEXT_CLASS =
+  "min-w-0 text-[11px] font-medium leading-tight text-slate-700 sm:text-sm sm:leading-none";
+
 function TopBarDirectionsContact() {
   return (
     <a
       href={VISIT_LOCATION.mapsDirectionsUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex w-full shrink-0 items-center gap-2.5 rounded-xl py-1 pl-0.5 pr-1 transition-opacity hover:opacity-80 lg:w-auto"
+      className={TOP_BAR_ROW_CLASS}
     >
-      <DirectionsMarkerIcon />
-      <span className="whitespace-nowrap text-[11px] font-medium leading-none text-slate-700 sm:text-sm">
+      <span
+        className={`${TOP_BAR_ICON_SLOT_CLASS} overflow-visible [&_.directions-marker-icon-shell]:!m-0 [&_.directions-marker-icon-shell]:!h-7 [&_.directions-marker-icon-shell]:!w-7`}
+      >
+        <DirectionsMarkerIcon />
+      </span>
+      <span className={TOP_BAR_TEXT_CLASS}>
         Get{" "}
         <span className="text-slate-600 transition-colors hover:text-teal-800">
           Directions
@@ -126,16 +139,13 @@ function TopBarPhoneContact({
   phoneClassName: string;
 }) {
   return (
-    <a
-      href={`tel:${phoneTel}`}
-      className="flex w-full shrink-0 items-center gap-2 rounded-xl px-1 py-1 transition-opacity hover:opacity-80 lg:w-auto"
-    >
+    <a href={`tel:${phoneTel}`} className={TOP_BAR_ROW_CLASS}>
       <span
-        className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm ${iconRingClassName}`}
+        className={`${TOP_BAR_ICON_SLOT_CLASS} rounded-full border-2 bg-white shadow-sm ${iconRingClassName}`}
       >
         {icon}
       </span>
-      <span className="whitespace-nowrap text-[11px] font-medium leading-none text-slate-700 sm:text-sm">
+      <span className={TOP_BAR_TEXT_CLASS}>
         {title}{" "}
         <span className={`text-slate-600 transition-colors ${phoneClassName}`}>
           {phone}
