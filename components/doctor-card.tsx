@@ -80,7 +80,7 @@ export function DoctorCard({
           />
         </div>
 
-        <p className="mt-2 line-clamp-2 text-[11px] leading-relaxed text-slate-600 sm:text-xs">
+        <p className="mt-2 mb-1 line-clamp-2 text-[11px] leading-relaxed text-slate-600 sm:mb-1.5 sm:text-xs">
           {doctor.qualifications}
         </p>
       </div>
