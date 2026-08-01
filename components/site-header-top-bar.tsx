@@ -197,7 +197,7 @@ function TopBarDirectionsContact({ compact = false }: { compact?: boolean }) {
       className={TOP_BAR_ROW_CLASS}
     >
       <span
-        className={`${TOP_BAR_ICON_SLOT_CLASS} overflow-visible [&_.directions-marker-icon-shell]:!m-0 [&_.directions-marker-icon-shell]:!h-7 [&_.directions-marker-icon-shell]:!w-7 lg:[&_.directions-marker-icon-shell]:!-translate-y-1`}
+        className={`${TOP_BAR_ICON_SLOT_CLASS} overflow-visible [&_.directions-marker-icon-shell]:!m-0 [&_.directions-marker-icon-shell]:!h-7 [&_.directions-marker-icon-shell]:!w-7 [&_.directions-marker-icon-shell]:!-translate-y-1.5 lg:[&_.directions-marker-icon-shell]:!-translate-y-1`}
       >
         <DirectionsMarkerIcon />
       </span>
