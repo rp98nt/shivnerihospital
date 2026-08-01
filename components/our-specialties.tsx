@@ -19,8 +19,8 @@ const SPECIALTY_BORDER_TRACK_DEFAULT =
 const SPECIALTY_BORDER_TRACK_SM =
   "M 16 1 H 84 A 15 15 0 0 1 99 16 V 84 A 15 15 0 0 1 84 99 H 16 A 15 15 0 0 1 1 84 V 16 A 15 15 0 0 1 16 1 Z";
 
-/** Strip length along the track (~24% of perimeter; 2× previous 11). */
-const RUNNER_LENGTH = 22;
+/** Strip length along the track (~66% of normalized perimeter). */
+const RUNNER_LENGTH = 66;
 
 const BORDER_ANIMATION_DURATION = "2.4s";
 
