@@ -34,26 +34,40 @@ export function OurSpecialties() {
 
 function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
   return (
-    <div className="specialty-card-shell aspect-square w-full rounded-xl shadow-sm hover:shadow-lg sm:rounded-2xl">
-      <span className="specialty-border-runner specialty-border-runner-a" aria-hidden />
-      <span className="specialty-border-runner specialty-border-runner-b" aria-hidden />
-      <Link
-        href={specialty.href}
-        className="specialty-card-link group flex h-full w-full items-center justify-center overflow-hidden rounded-xl border-2 border-transparent bg-white text-teal-800 shadow-[inset_0_0_0_2px_rgb(15_118_110)] sm:rounded-2xl"
+    <Link
+      href={specialty.href}
+      className="specialty-card group relative flex aspect-square w-full flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-teal-700 bg-white text-teal-800 shadow-sm transition-[border-color,box-shadow] duration-200 hover:border-transparent hover:shadow-md sm:rounded-2xl"
+    >
+      <svg
+        className="specialty-card__border pointer-events-none absolute inset-0 h-full w-full"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        aria-hidden
       >
-        <div className="mt-2 flex flex-col items-center gap-0 px-1.5 sm:mt-2.5 lg:mt-3">
-          <div className={`${LOGO_SLOT_CLASS} -mb-1 sm:-mb-1.5 lg:-mb-2`}>
-            <Image
-              src={specialty.imageSrc}
-              alt=""
-              fill
-              className="object-contain object-bottom"
-              sizes={LOGO_IMAGE_SIZES}
-            />
-          </div>
-          <p className={`${LABEL_SLOT_CLASS} -mt-1 sm:-mt-1.5 lg:-mt-2`}>{specialty.name}</p>
+        <rect
+          className="specialty-card__border-path"
+          x="1"
+          y="1"
+          width="98"
+          height="98"
+          rx="11"
+          ry="11"
+          pathLength="100"
+        />
+      </svg>
+
+      <div className="relative z-[1] mt-2 flex flex-col items-center gap-0 px-1.5 sm:mt-2.5 lg:mt-3">
+        <div className={`${LOGO_SLOT_CLASS} -mb-1 sm:-mb-1.5 lg:-mb-2`}>
+          <Image
+            src={specialty.imageSrc}
+            alt=""
+            fill
+            className="object-contain object-bottom"
+            sizes={LOGO_IMAGE_SIZES}
+          />
         </div>
-      </Link>
-    </div>
+        <p className={`${LABEL_SLOT_CLASS} -mt-1 sm:-mt-1.5 lg:-mt-2`}>{specialty.name}</p>
+      </div>
+    </Link>
   );
 }
