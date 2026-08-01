@@ -367,14 +367,23 @@ body {
 .specialty-card-shell {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.specialty-card-shell:hover,
+.specialty-card-shell:focus-within {
+  transform: translateY(-0.125rem);
 }
 
 .specialty-card-shell::before {
   content: "";
   position: absolute;
-  inset: -120%;
-  z-index: 0;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  padding: 2px;
   background: conic-gradient(
     from 0deg,
     rgb(15 118 110) 0deg,
@@ -386,8 +395,17 @@ body {
     transparent 214deg,
     transparent 360deg
   );
+  pointer-events: none;
   opacity: 0;
   transition: opacity 0.25s ease;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
 }
 
 .specialty-card-shell:hover::before,
