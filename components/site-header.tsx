@@ -48,7 +48,7 @@ export function SiteHeader() {
             <MobileNav />
           </div>
 
-          <div className="mt-3 flex justify-end lg:mt-0 lg:shrink-0">
+          <div className="mt-3 flex w-full justify-start lg:mt-0 lg:w-auto lg:shrink-0 lg:justify-end">
             <TopBarContactGroup />
           </div>
         </div>
@@ -67,7 +67,7 @@ export function SiteHeader() {
 
 function TopBarContactGroup() {
   return (
-    <div className="inline-flex max-w-full items-center gap-4 overflow-x-auto lg:gap-6 lg:overflow-visible">
+    <div className="flex w-full flex-col gap-2 lg:inline-flex lg:w-auto lg:flex-row lg:items-center lg:gap-6">
       <TopBarDirectionsContact />
 
       <TopBarPhoneContact
@@ -97,7 +97,7 @@ function TopBarDirectionsContact() {
       href={VISIT_LOCATION.mapsDirectionsUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex shrink-0 items-center gap-2.5 rounded-xl py-1 pl-0.5 pr-1 transition-opacity hover:opacity-80"
+      className="flex w-full shrink-0 items-center gap-2.5 rounded-xl py-1 pl-0.5 pr-1 transition-opacity hover:opacity-80 lg:w-auto"
     >
       <DirectionsMarkerIcon />
       <span className="whitespace-nowrap text-[11px] font-medium leading-none text-slate-700 sm:text-sm">
@@ -128,7 +128,7 @@ function TopBarPhoneContact({
   return (
     <a
       href={`tel:${phoneTel}`}
-      className="flex shrink-0 items-center gap-2 rounded-xl px-1 py-1 transition-opacity hover:opacity-80"
+      className="flex w-full shrink-0 items-center gap-2 rounded-xl px-1 py-1 transition-opacity hover:opacity-80 lg:w-auto"
     >
       <span
         className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-sm ${iconRingClassName}`}
