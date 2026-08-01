@@ -9,7 +9,7 @@ import { SORTED_DOCTORS } from "@/lib/doctors";
 import { FormEvent, useState, type ReactNode } from "react";
 
 const heroBookingFieldClassName =
-  "w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-base outline-none transition focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20";
+  "w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 invalid:text-slate-400 disabled:text-slate-400 disabled:placeholder:text-slate-400";
 
 export function HomeHero({
   doctorsSection,
@@ -87,10 +87,13 @@ export function HomeHero({
                   <select
                     name="doctor"
                     defaultValue=""
+                    required
                     aria-label="Select doctor"
-                    className={`${heroBookingFieldClassName} text-slate-700`}
+                    className={heroBookingFieldClassName}
                   >
-                    <option value="">Select doctor</option>
+                    <option value="" disabled>
+                      Select doctor
+                    </option>
                     {SORTED_DOCTORS.map((doctor) => (
                       <option key={doctor.slug} value={doctor.slug}>
                         {doctor.name} — {doctor.specialty}
