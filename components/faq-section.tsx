@@ -75,7 +75,7 @@ const FAQ_ITEMS = [
   {
     question: "Do you offer teleconsultation or online consultation services?",
     answer:
-      "Yes, online consultations may be available for selected specialties. Please contact our appointment desk to check doctor availability and schedule a virtual consultation.",
+      "Yes, online consultations may be available for selected specialities. Please contact our appointment desk to check doctor availability and schedule a virtual consultation.",
   },
   {
     question: "Which government healthcare schemes are accepted?",
