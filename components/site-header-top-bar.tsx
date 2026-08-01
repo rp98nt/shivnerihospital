@@ -11,31 +11,57 @@ import {
 } from "@/lib/hospital-contact";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type Ref,
+} from "react";
 
-function useMobileHeaderCompact() {
+const MOBILE_CONTACT_COUNT = 3;
+const FLIP_DURATION_MS = 320;
+const FLIP_STAGGER_MS = 48;
+
+function useMobileHeaderCompact(
+  itemRefs: React.RefObject<(HTMLElement | null)[]>,
+) {
   const [isCompact, setIsCompact] = useState(false);
+  const isCompactRef = useRef(false);
   const lastScrollY = useRef(0);
+  const flipCapture = useRef<(DOMRect | null)[]>([]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 1024px)");
 
     const updateCompactState = () => {
       if (mediaQuery.matches) {
-        setIsCompact(false);
+        if (isCompactRef.current) {
+          isCompactRef.current = false;
+          setIsCompact(false);
+        }
         lastScrollY.current = window.scrollY;
         return;
       }
 
       const scrollY = window.scrollY;
       const delta = scrollY - lastScrollY.current;
+      let nextCompact = isCompactRef.current;
 
       if (scrollY <= 12) {
-        setIsCompact(false);
+        nextCompact = false;
       } else if (delta > 2) {
-        setIsCompact(true);
+        nextCompact = true;
       } else if (delta < -2) {
-        setIsCompact(false);
+        nextCompact = false;
+      }
+
+      if (nextCompact !== isCompactRef.current) {
+        flipCapture.current = itemRefs.current.map(
+          (element) => element?.getBoundingClientRect() ?? null,
+        );
+        isCompactRef.current = nextCompact;
+        setIsCompact(nextCompact);
       }
 
       lastScrollY.current = scrollY;
@@ -49,17 +75,77 @@ function useMobileHeaderCompact() {
       window.removeEventListener("scroll", updateCompactState);
       mediaQuery.removeEventListener("change", updateCompactState);
     };
-  }, []);
+  }, [itemRefs]);
 
-  return isCompact;
+  return { isCompact, flipCapture };
+}
+
+function useContactFlipAnimation(
+  itemRefs: React.RefObject<(HTMLElement | null)[]>,
+  isCompact: boolean,
+  flipCapture: React.RefObject<(DOMRect | null)[]>,
+) {
+  const isInitialRender = useRef(true);
+
+  useLayoutEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 1024px)");
+    if (mediaQuery.matches) {
+      itemRefs.current.forEach((element) => {
+        if (!element) return;
+        element.style.transform = "";
+        element.style.transition = "";
+      });
+      return;
+    }
+
+    if (isInitialRender.current) {
+      isInitialRender.current = false;
+      return;
+    }
+
+    itemRefs.current.forEach((element, index) => {
+      if (!element) return;
+
+      const first = flipCapture.current[index];
+      if (!first) return;
+
+      const last = element.getBoundingClientRect();
+      const deltaX = first.left - last.left;
+      const deltaY = first.top - last.top;
+
+      if (deltaX === 0 && deltaY === 0) return;
+
+      element.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+      element.style.transition = "none";
+
+      requestAnimationFrame(() => {
+        const delay = index * FLIP_STAGGER_MS;
+        element.style.transition = `transform ${FLIP_DURATION_MS}ms ease-in ${delay}ms`;
+        element.style.transform = "";
+      });
+    });
+
+    flipCapture.current = [];
+  }, [flipCapture, isCompact, itemRefs]);
 }
 
 export function SiteHeaderTopBar() {
-  const isCompact = useMobileHeaderCompact();
+  const itemRefs = useRef<(HTMLElement | null)[]>(
+    Array.from({ length: MOBILE_CONTACT_COUNT }, () => null),
+  );
+  const { isCompact, flipCapture } = useMobileHeaderCompact(itemRefs);
+
+  useContactFlipAnimation(itemRefs, isCompact, flipCapture);
+
+  const registerItemRef = (index: number): Ref<HTMLAnchorElement> => {
+    return (element) => {
+      itemRefs.current[index] = element;
+    };
+  };
 
   return (
     <div
-      className={`mx-auto max-w-6xl px-4 transition-[padding] duration-300 ease-in lg:flex lg:items-center lg:justify-between lg:px-6 lg:py-2.5 ${
+      className={`relative mx-auto max-w-6xl px-4 transition-[padding] duration-300 ease-in lg:flex lg:items-center lg:justify-between lg:px-6 lg:py-2.5 ${
         isCompact ? "py-2" : "py-3"
       }`}
     >
@@ -85,61 +171,50 @@ export function SiteHeaderTopBar() {
           </span>
         </Link>
 
-        <div
-          className={`flex flex-1 items-center justify-center gap-1.5 overflow-hidden transition-all duration-300 ease-in lg:hidden ${
-            isCompact
-              ? "pointer-events-auto max-w-none scale-100 opacity-100"
-              : "pointer-events-none max-w-0 scale-95 opacity-0"
-          }`}
-          aria-hidden={!isCompact}
-        >
-          <TopBarDirectionsContact compact />
-          <TopBarPhoneContact
-            compact
-            icon={<EmergencyIcon className="h-4 w-4 text-red-600" />}
-            iconRingClassName="border-red-500"
-            title="For Emergency"
-            phone={EMERGENCY_MOBILE}
-            phoneTel={EMERGENCY_MOBILE_TEL}
-            phoneClassName="hover:text-red-600"
-          />
-          <TopBarPhoneContact
-            compact
-            icon={<AppointmentIcon className="h-4 w-4 text-teal-700" />}
-            iconRingClassName="border-green-600"
-            title="For Appointment"
-            phone={APPOINTMENT_PHONE}
-            phoneTel={APPOINTMENT_PHONE_TEL}
-            phoneClassName="hover:text-teal-800"
-          />
-        </div>
-
         <MobileNav />
       </div>
 
       <div
-        className={`grid transition-[grid-template-rows,margin,opacity] duration-300 ease-in lg:mt-0 lg:w-auto lg:shrink-0 lg:justify-end ${
+        className={`w-full lg:mt-0 lg:w-auto lg:shrink-0 lg:justify-end ${
           isCompact
-            ? "pointer-events-none mt-0 grid-rows-[0fr] opacity-0"
-            : "mt-3 grid-rows-[1fr] opacity-100"
-        } lg:pointer-events-auto lg:grid-rows-[1fr] lg:opacity-100`}
+            ? "pointer-events-none absolute inset-x-4 top-0 flex h-14 items-center justify-center lg:pointer-events-auto lg:static lg:inset-auto lg:flex lg:h-auto [&_a]:pointer-events-auto"
+            : "relative mt-3 lg:mt-0 lg:flex lg:justify-end"
+        }`}
       >
-        <div className="min-h-0 overflow-hidden">
-          <div className="flex w-full justify-start lg:flex lg:w-auto lg:justify-end">
-            <TopBarContactGroup />
-          </div>
-        </div>
+        <TopBarContactGroup
+          isCompact={isCompact}
+          registerItemRef={registerItemRef}
+        />
       </div>
     </div>
   );
 }
 
-function TopBarContactGroup() {
+function TopBarContactGroup({
+  isCompact,
+  registerItemRef,
+}: {
+  isCompact: boolean;
+  registerItemRef: (index: number) => Ref<HTMLAnchorElement>;
+}) {
   return (
-    <div className="flex w-full flex-col gap-1.5 pl-1.5 lg:inline-flex lg:w-auto lg:flex-row lg:items-center lg:gap-6 lg:pl-0">
-      <TopBarDirectionsContact />
+    <div
+      className={`flex w-full lg:inline-flex lg:w-auto lg:flex-row lg:items-center lg:gap-6 lg:pl-0 ${
+        isCompact
+          ? "flex-row items-center justify-center gap-1.5"
+          : "flex-col gap-1.5 pl-1.5"
+      }`}
+    >
+      <TopBarDirectionsContact
+        itemRef={registerItemRef(0)}
+        isCompact={isCompact}
+        index={0}
+      />
 
       <TopBarPhoneContact
+        itemRef={registerItemRef(1)}
+        isCompact={isCompact}
+        index={1}
         icon={<EmergencyIcon className="h-4 w-4 text-red-600" />}
         iconRingClassName="border-red-500"
         title="For Emergency"
@@ -149,6 +224,9 @@ function TopBarContactGroup() {
       />
 
       <TopBarPhoneContact
+        itemRef={registerItemRef(2)}
+        isCompact={isCompact}
+        index={2}
         icon={<AppointmentIcon className="h-4 w-4 text-teal-700" />}
         iconRingClassName="border-green-600"
         title="For Appointment"
@@ -167,52 +245,72 @@ const TOP_BAR_ICON_SLOT_CLASS =
   "flex h-7 w-7 shrink-0 items-center justify-center";
 
 const TOP_BAR_TEXT_CLASS =
-  "min-w-0 text-[11px] font-medium leading-tight text-slate-700 transition-all duration-300 ease-in sm:text-sm sm:leading-none";
+  "min-w-0 overflow-hidden whitespace-nowrap text-[11px] font-medium leading-tight text-slate-700 transition-[opacity,max-width] duration-300 ease-in sm:text-sm sm:leading-none lg:max-w-none lg:opacity-100";
 
-const TOP_BAR_COMPACT_LINK_CLASS =
-  "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-opacity duration-300 ease-in hover:opacity-80";
+function contactRowClass(isCompact: boolean) {
+  return isCompact
+    ? "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg lg:grid lg:h-auto lg:w-full lg:grid-cols-[1.75rem_minmax(0,1fr)] lg:gap-2.5 lg:rounded-xl lg:py-1"
+    : TOP_BAR_ROW_CLASS;
+}
 
-function TopBarDirectionsContact({ compact = false }: { compact?: boolean }) {
-  if (compact) {
-    return (
-      <a
-        href={VISIT_LOCATION.mapsDirectionsUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={TOP_BAR_COMPACT_LINK_CLASS}
-        aria-label="Get Directions"
-      >
-        <span className="flex h-7 w-7 items-center justify-center overflow-visible [&_.directions-marker-icon-shell]:!m-0 [&_.directions-marker-icon-shell]:!h-7 [&_.directions-marker-icon-shell]:!w-7 [&_.directions-marker-icon-shell]:!-translate-y-1.5">
-          <DirectionsMarkerIcon />
-        </span>
-      </a>
-    );
-  }
+function ContactText({
+  isCompact,
+  index,
+  children,
+}: {
+  isCompact: boolean;
+  index: number;
+  children: React.ReactNode;
+}) {
+  return (
+    <span
+      className={`${TOP_BAR_TEXT_CLASS} ${
+        isCompact ? "max-w-0 opacity-0" : "max-w-[20rem] opacity-100"
+      }`}
+      style={{ transitionDelay: `${index * FLIP_STAGGER_MS}ms` }}
+    >
+      {children}
+    </span>
+  );
+}
 
+function TopBarDirectionsContact({
+  itemRef,
+  isCompact,
+  index,
+}: {
+  itemRef: Ref<HTMLAnchorElement>;
+  isCompact: boolean;
+  index: number;
+}) {
   return (
     <a
+      ref={itemRef}
       href={VISIT_LOCATION.mapsDirectionsUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className={TOP_BAR_ROW_CLASS}
+      className={`${contactRowClass(isCompact)} transition-opacity duration-300 ease-in hover:opacity-80`}
+      aria-label={isCompact ? "Get Directions" : undefined}
     >
       <span
         className={`${TOP_BAR_ICON_SLOT_CLASS} overflow-visible [&_.directions-marker-icon-shell]:!m-0 [&_.directions-marker-icon-shell]:!h-7 [&_.directions-marker-icon-shell]:!w-7 [&_.directions-marker-icon-shell]:!-translate-y-1.5 lg:[&_.directions-marker-icon-shell]:!-translate-y-1`}
       >
         <DirectionsMarkerIcon />
       </span>
-      <span className={TOP_BAR_TEXT_CLASS}>
+      <ContactText isCompact={isCompact} index={index}>
         Get{" "}
         <span className="text-slate-600 transition-colors hover:text-teal-800">
           Directions
         </span>
-      </span>
+      </ContactText>
     </a>
   );
 }
 
 function TopBarPhoneContact({
-  compact = false,
+  itemRef,
+  isCompact,
+  index,
   icon,
   iconRingClassName,
   title,
@@ -220,7 +318,9 @@ function TopBarPhoneContact({
   phoneTel,
   phoneClassName,
 }: {
-  compact?: boolean;
+  itemRef: Ref<HTMLAnchorElement>;
+  isCompact: boolean;
+  index: number;
   icon: React.ReactNode;
   iconRingClassName: string;
   title: string;
@@ -228,35 +328,24 @@ function TopBarPhoneContact({
   phoneTel: string;
   phoneClassName: string;
 }) {
-  if (compact) {
-    return (
-      <a
-        href={`tel:${phoneTel}`}
-        className={TOP_BAR_COMPACT_LINK_CLASS}
-        aria-label={`${title}: ${phone}`}
-      >
-        <span
-          className={`flex h-7 w-7 items-center justify-center rounded-full border-2 bg-white shadow-sm ${iconRingClassName}`}
-        >
-          {icon}
-        </span>
-      </a>
-    );
-  }
-
   return (
-    <a href={`tel:${phoneTel}`} className={TOP_BAR_ROW_CLASS}>
+    <a
+      ref={itemRef}
+      href={`tel:${phoneTel}`}
+      className={`${contactRowClass(isCompact)} transition-opacity duration-300 ease-in hover:opacity-80`}
+      aria-label={isCompact ? `${title}: ${phone}` : undefined}
+    >
       <span
         className={`${TOP_BAR_ICON_SLOT_CLASS} rounded-full border-2 bg-white shadow-sm ${iconRingClassName}`}
       >
         {icon}
       </span>
-      <span className={TOP_BAR_TEXT_CLASS}>
+      <ContactText isCompact={isCompact} index={index}>
         {title}{" "}
         <span className={`text-slate-600 transition-colors ${phoneClassName}`}>
           {phone}
         </span>
-      </span>
+      </ContactText>
     </a>
   );
 }
