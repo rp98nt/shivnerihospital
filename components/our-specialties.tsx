@@ -3,13 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 
 const LOGO_SLOT_CLASS =
-  "relative h-12 w-12 shrink-0 sm:h-14 sm:w-14 lg:h-[4.25rem] lg:w-[4.25rem]";
+  "relative h-14 w-14 shrink-0 sm:h-14 sm:w-14 lg:h-[4.25rem] lg:w-[4.25rem]";
 
 const LABEL_SLOT_CLASS =
-  "flex h-[2.75rem] w-full shrink-0 items-center justify-center px-0.5 text-center text-[10px] font-semibold leading-tight line-clamp-3 sm:h-[3rem] sm:text-[11px] lg:h-[3.25rem] lg:text-xs lg:font-medium";
+  "flex h-[2.85rem] w-full shrink-0 items-center justify-center px-0.5 text-center text-[11px] font-semibold leading-snug line-clamp-3 sm:h-[3rem] sm:text-[11px] lg:h-[3.25rem] lg:text-xs lg:font-medium";
 
 const LOGO_IMAGE_SIZES =
-  "(max-width: 640px) 48px, (max-width: 1024px) 56px, 68px";
+  "(max-width: 640px) 56px, (max-width: 1024px) 56px, 68px";
 
 export function OurSpecialties() {
   return (
@@ -20,7 +20,7 @@ export function OurSpecialties() {
         </h2>
 
         <div
-          className="mt-8 grid grid-cols-2 items-start gap-3 sm:mt-10 sm:grid-cols-4 sm:gap-4 lg:grid-cols-8 lg:gap-3"
+          className="mt-8 grid grid-cols-3 items-start gap-2 sm:mt-10 sm:grid-cols-4 sm:gap-4 lg:grid-cols-8 lg:gap-3"
           aria-label="Hospital specialities"
         >
           {OUR_SPECIALTIES.map((specialty) => (
@@ -36,8 +36,8 @@ function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
   return (
     <Link href={specialty.href} className="specialty-card-frame">
       <span className="specialty-card">
-        <span className="relative mt-2 flex flex-col items-center gap-0 px-1.5 sm:mt-2.5 lg:mt-3">
-          <span className={`relative block ${LOGO_SLOT_CLASS} -mb-1 sm:-mb-1.5 lg:-mb-2`}>
+        <span className="relative mt-1 flex flex-col items-center gap-0 px-1 sm:mt-2.5 sm:px-1.5 lg:mt-3">
+          <span className={`relative block ${LOGO_SLOT_CLASS} -mb-0.5 sm:-mb-1.5 lg:-mb-2`}>
             <Image
               src={specialty.imageSrc}
               alt=""
