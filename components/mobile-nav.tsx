@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   isNavGroup,
   LOWER_NAV_ITEMS,
@@ -10,28 +11,54 @@ import {
   type NavLink,
 } from "@/lib/nav-menus";
 
+const MENU_TRANSITION_MS = 200;
+
 export function MobileNav() {
   const [open, setOpen] = useState(false);
   const [present, setPresent] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const closeTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
-    document.body.style.overflow = present ? "hidden" : "";
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+
     return () => {
       document.body.style.overflow = "";
     };
-  }, [present]);
+  }, [open]);
 
   useEffect(() => {
     if (open) {
+      if (closeTimerRef.current !== null) {
+        window.clearTimeout(closeTimerRef.current);
+        closeTimerRef.current = null;
+      }
+
       setPresent(true);
       const frame = requestAnimationFrame(() => {
         requestAnimationFrame(() => setVisible(true));
       });
+
       return () => cancelAnimationFrame(frame);
     }
 
     setVisible(false);
+    closeTimerRef.current = window.setTimeout(() => {
+      setPresent(false);
+      closeTimerRef.current = null;
+    }, MENU_TRANSITION_MS + 20);
+
+    return () => {
+      if (closeTimerRef.current !== null) {
+        window.clearTimeout(closeTimerRef.current);
+        closeTimerRef.current = null;
+      }
+    };
   }, [open]);
 
   function closeMenu() {
@@ -41,12 +68,69 @@ export function MobileNav() {
   function handlePanelTransitionEnd(
     event: React.TransitionEvent<HTMLDivElement>,
   ) {
-    if (event.propertyName !== "transform" || open || visible) {
-      return;
+    if (event.target !== event.currentTarget) return;
+    if (event.propertyName !== "transform" || open) return;
+
+    if (closeTimerRef.current !== null) {
+      window.clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
     }
 
     setPresent(false);
   }
+
+  const menuOverlay = present ? (
+    <div
+      className={`fixed inset-0 z-[100] lg:hidden transition-opacity duration-200 ease-in ${
+        visible ? "opacity-100" : "pointer-events-none opacity-0"
+      }`}
+    >
+      <button
+        type="button"
+        className={`absolute inset-0 bg-slate-900/40 transition-opacity duration-200 ease-in ${
+          visible ? "opacity-100" : "opacity-0"
+        }`}
+        aria-label="Close menu"
+        tabIndex={visible ? 0 : -1}
+        onClick={closeMenu}
+      />
+
+      <div
+        className={`absolute inset-y-0 right-0 flex w-full max-w-sm flex-col bg-white shadow-2xl transition-transform duration-200 ease-in ${
+          visible ? "translate-x-0" : "translate-x-full"
+        }`}
+        onTransitionEnd={handlePanelTransitionEnd}
+        aria-hidden={!visible}
+      >
+        <div className="flex items-center justify-between border-b border-slate-200 px-4 py-4">
+          <p className="text-base font-semibold text-slate-900">Menu</p>
+          <button
+            type="button"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 transition-colors duration-200 ease-in hover:bg-slate-100"
+            aria-label="Close menu"
+            onClick={closeMenu}
+          >
+            <CloseIcon className="h-5 w-5" />
+          </button>
+        </div>
+
+        <nav
+          id="mobile-main-nav"
+          className="flex-1 overflow-y-auto px-2 py-2"
+          aria-label="Mobile main"
+        >
+          {LOWER_NAV_ITEMS.map((label) => (
+            <MobileNavSection
+              key={label}
+              label={label}
+              items={NAV_MENUS[label]}
+              onNavigate={closeMenu}
+            />
+          ))}
+        </nav>
+      </div>
+    </div>
+  ) : null;
 
   return (
     <>
@@ -55,60 +139,13 @@ export function MobileNav() {
         className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-700 transition-colors duration-200 ease-in hover:bg-slate-50 lg:hidden"
         aria-label={open ? "Close menu" : "Open menu"}
         aria-expanded={open}
+        aria-controls={present ? "mobile-main-nav" : undefined}
         onClick={() => setOpen((value) => !value)}
       >
         {open ? <CloseIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
       </button>
 
-      {present ? (
-        <div
-          className={`fixed inset-0 z-[100] lg:hidden transition-opacity duration-200 ease-in ${
-            visible ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          <button
-            type="button"
-            className={`absolute inset-0 bg-slate-900/40 transition-opacity duration-200 ease-in ${
-              visible ? "opacity-100" : "opacity-0"
-            }`}
-            aria-label="Close menu"
-            onClick={closeMenu}
-          />
-
-          <div
-            className={`absolute inset-y-0 right-0 flex w-full max-w-sm flex-col bg-white shadow-2xl transition-transform duration-200 ease-in ${
-              visible ? "translate-x-0" : "translate-x-full"
-            }`}
-            onTransitionEnd={handlePanelTransitionEnd}
-          >
-            <div className="flex items-center justify-between border-b border-slate-200 px-4 py-4">
-              <p className="text-base font-semibold text-slate-900">Menu</p>
-              <button
-                type="button"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 transition-colors duration-200 ease-in hover:bg-slate-100"
-                aria-label="Close menu"
-                onClick={closeMenu}
-              >
-                <CloseIcon className="h-5 w-5" />
-              </button>
-            </div>
-
-            <nav
-              className="flex-1 overflow-y-auto px-2 py-2"
-              aria-label="Mobile main"
-            >
-              {LOWER_NAV_ITEMS.map((label) => (
-                <MobileNavSection
-                  key={label}
-                  label={label}
-                  items={NAV_MENUS[label]}
-                  onNavigate={closeMenu}
-                />
-              ))}
-            </nav>
-          </div>
-        </div>
-      ) : null}
+      {mounted && menuOverlay ? createPortal(menuOverlay, document.body) : null}
     </>
   );
 }
