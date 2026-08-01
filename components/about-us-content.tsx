@@ -131,16 +131,11 @@ export function AboutUsContent() {
                 priority
               />
               <div className="absolute inset-0 bg-linear-to-t from-teal-950/35 via-teal-900/10 to-transparent" />
-              <Link
-                href={VISIT_LOCATION.mapsDirectionsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="absolute inset-0 flex items-center justify-center px-6 text-center"
-              >
-                <span className="rounded-2xl bg-teal-700/90 px-6 py-4 text-lg font-semibold text-white shadow-lg backdrop-blur-sm transition hover:bg-teal-600 sm:text-2xl">
+              <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
+                <span className="rounded-2xl bg-teal-700/90 px-6 py-4 text-lg font-semibold text-white shadow-lg backdrop-blur-sm sm:text-2xl">
                   Take a look inside
                 </span>
-              </Link>
+              </div>
             </div>
           </div>
         </div>
