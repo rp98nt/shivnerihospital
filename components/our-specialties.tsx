@@ -42,7 +42,17 @@ function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
         aria-hidden
       >
         <rect
-          className="specialty-card-border-track"
+          className="specialty-card-border-track specialty-card-border-track-a"
+          x="1"
+          y="1"
+          width="98"
+          height="98"
+          rx="11"
+          ry="11"
+          pathLength="100"
+        />
+        <rect
+          className="specialty-card-border-track specialty-card-border-track-b"
           x="1"
           y="1"
           width="98"

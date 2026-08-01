@@ -393,10 +393,14 @@ body {
   stroke-width: 2;
   stroke-linecap: butt;
   vector-effect: non-scaling-stroke;
-  stroke-dasharray: 8 42 8 42;
+  stroke-dasharray: 10 90;
   stroke-dashoffset: 0;
   opacity: 0;
   transition: opacity 0.25s ease;
+}
+
+.specialty-card-border-track-b {
+  stroke-dashoffset: -50;
 }
 
 .specialty-card-shell:hover .specialty-card-border-track,
