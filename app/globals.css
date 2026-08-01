@@ -424,7 +424,7 @@ body {
 .specialty-card-frame:hover::after,
 .specialty-card-frame:focus-visible::after {
   opacity: 1;
-  width: 20%;
+  width: 50%;
   animation-play-state: running;
   transition:
     opacity 0.48s ease-in,
