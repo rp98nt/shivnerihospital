@@ -89,12 +89,7 @@ function SpecialtyBorderSvg({
       aria-hidden
     >
       <path
-        className="specialty-card__border-path specialty-card__border-path--a"
-        d={trackPath}
-        pathLength="100"
-      />
-      <path
-        className="specialty-card__border-path specialty-card__border-path--b"
+        className="specialty-card__border-path"
         d={trackPath}
         pathLength="100"
       />

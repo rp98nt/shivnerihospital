@@ -358,10 +358,8 @@ body {
     opacity: 0;
   }
 
-  .specialty-card-frame:hover .specialty-card__border-path--a,
-  .specialty-card-frame:focus-visible .specialty-card__border-path--a,
-  .specialty-card-frame:hover .specialty-card__border-path--b,
-  .specialty-card-frame:focus-visible .specialty-card__border-path--b {
+  .specialty-card-frame:hover .specialty-card__border-path,
+  .specialty-card-frame:focus-visible .specialty-card__border-path {
     animation: none;
   }
 
@@ -384,12 +382,9 @@ body {
   vector-effect: non-scaling-stroke;
   stroke-linecap: butt;
   stroke-linejoin: round;
-  stroke-dasharray: 33 67;
+  /* Exactly two dashes on pathLength 100 — one path, one animation. */
+  stroke-dasharray: 33 17 33 17;
   stroke-dashoffset: 0;
-}
-
-.specialty-card__border-path--b {
-  stroke-dashoffset: -50;
 }
 
 .specialty-card-frame:hover .specialty-card__border,
@@ -397,32 +392,17 @@ body {
   opacity: 1;
 }
 
-.specialty-card-frame:hover .specialty-card__border-path--a,
-.specialty-card-frame:focus-visible .specialty-card__border-path--a {
-  animation: specialty-card-border-a 2.4s linear infinite;
+.specialty-card-frame:hover .specialty-card__border-path,
+.specialty-card-frame:focus-visible .specialty-card__border-path {
+  animation: specialty-card-border-run 2.4s linear infinite;
 }
 
-.specialty-card-frame:hover .specialty-card__border-path--b,
-.specialty-card-frame:focus-visible .specialty-card__border-path--b {
-  animation: specialty-card-border-b 2.4s linear infinite;
-}
-
-@keyframes specialty-card-border-a {
+@keyframes specialty-card-border-run {
   from {
     stroke-dashoffset: 0;
   }
 
   to {
     stroke-dashoffset: -100;
-  }
-}
-
-@keyframes specialty-card-border-b {
-  from {
-    stroke-dashoffset: -50;
-  }
-
-  to {
-    stroke-dashoffset: -150;
   }
 }
