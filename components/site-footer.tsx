@@ -91,7 +91,7 @@ export function SiteFooter() {
               Compassionate multispecialty care for families across Parbhani and
               surrounding regions.
             </p>
-            <p className="mt-3 text-3xl font-bold sm:text-4xl">25+ Specialists</p>
+            <p className="mt-3 text-3xl font-bold sm:text-4xl">9+ Specialists</p>
           </div>
 
           <div className="flex lg:justify-end">
