@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { AboutUsHeroSection } from "@/components/about-us-hero-section";
 import { PartnerCarouselsGroup } from "@/components/partner-carousels-group";
 import { OurDoctors } from "@/components/our-doctors";
 import { OurSpecialties } from "@/components/our-specialties";
@@ -137,6 +138,7 @@ export function HomeHero({
         </div>
       </section>
 
+      <AboutUsHeroSection titleAs="h2" priorityImage />
       <OurSpecialties />
       {doctorsSection ?? <OurDoctors />}
       <PartnerCarouselsGroup />
