@@ -19,15 +19,6 @@ const SPECIALTY_BORDER_TRACK_DEFAULT =
 const SPECIALTY_BORDER_TRACK_SM =
   "M 16 1 H 84 A 15 15 0 0 1 99 16 V 84 A 15 15 0 0 1 84 99 H 16 A 15 15 0 0 1 1 84 V 16 A 15 15 0 0 1 16 1 Z";
 
-/** Strip length along the track (~66% of normalized perimeter). */
-const RUNNER_LENGTH = 66;
-
-const BORDER_ANIMATION_DURATION = "2.4s";
-
-function specialtyTrackId(name: string, variant: "default" | "sm") {
-  return `specialty-border-${name.replace(/[^a-zA-Z0-9]+/g, "-").toLowerCase()}-${variant}`;
-}
-
 export function OurSpecialties() {
   return (
     <section className="border-b border-slate-200 bg-white py-10 sm:py-12">
@@ -50,22 +41,17 @@ export function OurSpecialties() {
 }
 
 function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
-  const defaultTrackId = specialtyTrackId(specialty.name, "default");
-  const smTrackId = specialtyTrackId(specialty.name, "sm");
-
   return (
     <Link
       href={specialty.href}
-      className="specialty-card-frame relative block aspect-square w-full rounded-xl bg-teal-700 p-[2px] transition-[background-color] duration-200 hover:bg-transparent sm:rounded-2xl"
+      className="specialty-card-frame relative block aspect-square w-full overflow-hidden rounded-xl bg-teal-700 p-[2px] transition-[background-color] duration-200 hover:bg-transparent sm:rounded-2xl"
     >
       <SpecialtyBorderSvg
-        trackId={defaultTrackId}
         trackPath={SPECIALTY_BORDER_TRACK_DEFAULT}
         className="sm:hidden"
       />
 
       <SpecialtyBorderSvg
-        trackId={smTrackId}
         trackPath={SPECIALTY_BORDER_TRACK_SM}
         className="hidden sm:block"
       />
@@ -89,59 +75,29 @@ function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
 }
 
 function SpecialtyBorderSvg({
-  trackId,
   trackPath,
   className,
 }: {
-  trackId: string;
   trackPath: string;
   className?: string;
 }) {
   return (
     <svg
-      className={`specialty-card__border pointer-events-none absolute inset-0 h-full w-full overflow-visible ${className ?? ""}`}
+      className={`specialty-card__border pointer-events-none absolute inset-0 h-full w-full ${className ?? ""}`}
       viewBox="0 0 100 100"
       preserveAspectRatio="none"
       aria-hidden
     >
-      <path id={trackId} d={trackPath} fill="none" stroke="none" />
-
-      <g className="specialty-card__runner">
-        <line
-          x1="0"
-          y1="0"
-          x2={RUNNER_LENGTH}
-          y2="0"
-          className="specialty-card__runner-line"
-        />
-        <animateMotion
-          dur={BORDER_ANIMATION_DURATION}
-          repeatCount="indefinite"
-          rotate="auto"
-          calcMode="linear"
-        >
-          <mpath href={`#${trackId}`} />
-        </animateMotion>
-      </g>
-
-      <g className="specialty-card__runner">
-        <line
-          x1="0"
-          y1="0"
-          x2={RUNNER_LENGTH}
-          y2="0"
-          className="specialty-card__runner-line"
-        />
-        <animateMotion
-          dur={BORDER_ANIMATION_DURATION}
-          repeatCount="indefinite"
-          rotate="auto"
-          calcMode="linear"
-          begin="-1.2s"
-        >
-          <mpath href={`#${trackId}`} />
-        </animateMotion>
-      </g>
+      <path
+        className="specialty-card__border-path specialty-card__border-path--a"
+        d={trackPath}
+        pathLength="100"
+      />
+      <path
+        className="specialty-card__border-path specialty-card__border-path--b"
+        d={trackPath}
+        pathLength="100"
+      />
     </svg>
   );
 }
