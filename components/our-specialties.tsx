@@ -57,16 +57,16 @@ function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
         className="specialty-card-link group flex h-full w-full items-center justify-center overflow-hidden rounded-xl border-2 border-teal-700 bg-white text-teal-800 transition-[border-color] duration-300 sm:rounded-2xl"
       >
         <div className="mt-2 flex flex-col items-center gap-0 px-1.5 sm:mt-2.5 lg:mt-3">
-          <div className={LOGO_SLOT_CLASS}>
+          <div className={`${LOGO_SLOT_CLASS} -mb-1 sm:-mb-1.5 lg:-mb-2`}>
             <Image
               src={specialty.imageSrc}
               alt=""
               fill
-              className="object-contain"
+              className="object-contain object-bottom"
               sizes={LOGO_IMAGE_SIZES}
             />
           </div>
-          <p className={LABEL_SLOT_CLASS}>{specialty.name}</p>
+          <p className={`${LABEL_SLOT_CLASS} -mt-1 sm:-mt-1.5 lg:-mt-2`}>{specialty.name}</p>
         </div>
       </Link>
     </div>
