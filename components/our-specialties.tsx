@@ -39,7 +39,7 @@ function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
         href={specialty.href}
         className="specialty-card-link group flex h-full w-full items-center justify-center overflow-hidden rounded-xl border-2 border-teal-700 bg-white text-teal-800 transition-[border-color] duration-300 sm:rounded-2xl"
       >
-        <div className="flex flex-col items-center gap-0.5 px-1.5 sm:gap-1 lg:gap-1">
+        <div className="mt-2 flex flex-col items-center gap-0 px-1.5 sm:mt-2.5 lg:mt-3">
           <div className={LOGO_SLOT_CLASS}>
             <Image
               src={specialty.imageSrc}
