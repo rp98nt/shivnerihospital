@@ -136,7 +136,7 @@ export function SiteHeaderTopBar() {
 
 function TopBarContactGroup() {
   return (
-    <div className="flex w-full flex-col gap-1.5 lg:inline-flex lg:w-auto lg:flex-row lg:items-center lg:gap-6">
+    <div className="flex w-full flex-col gap-1.5 pl-1 lg:inline-flex lg:w-auto lg:flex-row lg:items-center lg:gap-6 lg:pl-0">
       <TopBarDirectionsContact />
 
       <TopBarPhoneContact
