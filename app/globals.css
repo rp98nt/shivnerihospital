@@ -353,21 +353,19 @@ body {
     animation: none;
   }
 
-  .specialty-card:hover .specialty-card__border,
-  .specialty-card:focus-visible .specialty-card__border {
+  .specialty-card-frame:hover .specialty-card__border,
+  .specialty-card-frame:focus-visible .specialty-card__border {
     opacity: 0;
   }
 
-  .specialty-card:hover .specialty-card__border-path--a,
-  .specialty-card:focus-visible .specialty-card__border-path--a,
-  .specialty-card:hover .specialty-card__border-path--b,
-  .specialty-card:focus-visible .specialty-card__border-path--b {
-    animation: none;
+  .specialty-card-frame:hover .specialty-card__runner,
+  .specialty-card-frame:focus-visible .specialty-card__runner {
+    visibility: hidden;
   }
 
-  .specialty-card:hover,
-  .specialty-card:focus-visible {
-    box-shadow: inset 0 0 0 2px rgb(15 118 110);
+  .specialty-card-frame:hover,
+  .specialty-card-frame:focus-visible {
+    background-color: rgb(15 118 110);
   }
 }
 
@@ -377,51 +375,14 @@ body {
   transition: opacity 0.2s ease;
 }
 
-.specialty-card__border-path {
-  fill: none;
+.specialty-card__runner-line {
   stroke: rgb(15 118 110);
   stroke-width: 2;
   vector-effect: non-scaling-stroke;
   stroke-linecap: butt;
-  stroke-dasharray: 12 88;
-  stroke-dashoffset: 0;
 }
 
-.specialty-card__border-path--b {
-  stroke-dashoffset: -50;
-}
-
-.specialty-card:hover .specialty-card__border,
-.specialty-card:focus-visible .specialty-card__border {
+.specialty-card-frame:hover .specialty-card__border,
+.specialty-card-frame:focus-visible .specialty-card__border {
   opacity: 1;
-}
-
-.specialty-card:hover .specialty-card__border-path--a,
-.specialty-card:focus-visible .specialty-card__border-path--a {
-  animation: specialty-card-border-a 2.4s linear infinite;
-}
-
-.specialty-card:hover .specialty-card__border-path--b,
-.specialty-card:focus-visible .specialty-card__border-path--b {
-  animation: specialty-card-border-b 2.4s linear infinite;
-}
-
-@keyframes specialty-card-border-a {
-  from {
-    stroke-dashoffset: 0;
-  }
-
-  to {
-    stroke-dashoffset: -100;
-  }
-}
-
-@keyframes specialty-card-border-b {
-  from {
-    stroke-dashoffset: -50;
-  }
-
-  to {
-    stroke-dashoffset: -150;
-  }
 }
