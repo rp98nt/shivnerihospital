@@ -25,7 +25,7 @@ export function AboutUsHeroSection({
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid gap-6 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-10">
           <div className="lg:col-span-5 lg:pt-4">
-            <TitleTag className="max-w-md text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-[3.35rem]">
+            <TitleTag className="mx-auto max-w-md text-center text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:mx-0 lg:text-left lg:text-[3.35rem]">
               <span className="text-teal-600">About</span>{" "}
               <span className="text-slate-900">Shivneri Hospital</span>
             </TitleTag>
