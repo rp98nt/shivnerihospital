@@ -56,7 +56,7 @@ export function HomeHero({
                     Same-Day Doctor Appointments | 24/7 Patient Support
                   </span>
                 </div>
-                <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-2 lg:gap-3">
+                <div className="grid w-full grid-cols-3 gap-2 sm:gap-2 lg:gap-3">
                   <FeatureCard
                     icon={<DoctorIcon />}
                     label="Expert Team of Doctors"
@@ -159,14 +159,14 @@ function FeatureCard({
   href?: string;
 }) {
   const className =
-    "flex w-full min-w-0 flex-row items-center gap-3 rounded-xl bg-white px-4 py-3.5 text-left shadow-md transition sm:h-28 sm:flex-col sm:justify-center sm:px-2 sm:py-0 sm:text-center lg:h-32";
+    "flex w-full min-w-0 flex-col items-center justify-center gap-2 rounded-xl bg-white px-2 py-3 text-center shadow-md transition sm:h-28 sm:gap-3 sm:px-2 sm:py-0 lg:h-32";
 
   const content = (
     <>
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-teal-50 text-teal-700 sm:h-10 sm:w-10">
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-teal-50 text-teal-700 sm:h-10 sm:w-10">
         {icon}
       </div>
-      <p className="min-w-0 text-sm font-medium leading-snug text-slate-700 sm:mt-1.5 sm:px-1 sm:text-xs lg:text-sm">
+      <p className="min-w-0 text-[10px] font-medium leading-tight text-slate-700 sm:mt-1.5 sm:px-1 sm:text-xs lg:text-sm">
         {label}
       </p>
     </>
