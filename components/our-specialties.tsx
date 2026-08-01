@@ -9,13 +9,13 @@ const SPECIALTIES_CAROUSEL_CYCLE_SECONDS = 60;
 const SPECIALTIES_CAROUSEL_LOOP_SETS = 3;
 
 const LOGO_SIZE_CLASS = {
-  default: "h-12 w-12 sm:h-[6.75rem] sm:w-[6.75rem]",
-  large: "h-11 w-11 sm:h-[6.14rem] sm:w-[6.14rem]",
+  default: "h-20 w-20 sm:h-[6.75rem] sm:w-[6.75rem]",
+  large: "h-[4.75rem] w-[4.75rem] sm:h-[6.14rem] sm:w-[6.14rem]",
 } as const;
 
 const LOGO_IMAGE_SIZES = {
-  default: "(max-width: 640px) 48px, 108px",
-  large: "(max-width: 640px) 44px, 98px",
+  default: "(max-width: 640px) 80px, 108px",
+  large: "(max-width: 640px) 76px, 98px",
 } as const;
 
 export function OurSpecialties() {
@@ -253,8 +253,8 @@ function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
   return (
     <Link
       href={specialty.href}
-      className={`group flex aspect-square w-[10.5rem] shrink-0 flex-col items-center justify-center rounded-2xl border-2 border-teal-700 bg-white px-2 py-3 text-teal-800 shadow-sm transition-[box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:w-[11rem] sm:px-3 sm:py-5 ${
-        specialty.largeLogo ? "gap-1.5 sm:gap-2.5" : "gap-1"
+      className={`group flex aspect-square w-[11rem] shrink-0 flex-col items-center justify-center rounded-2xl border-2 border-teal-700 bg-white px-2.5 py-3.5 text-teal-800 shadow-sm transition-[box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:px-3 sm:py-5 ${
+        specialty.largeLogo ? "gap-2 sm:gap-2.5" : "gap-1.5 sm:gap-1"
       }`}
     >
       <div className={`relative shrink-0 ${LOGO_SIZE_CLASS[logoSize]}`}>
@@ -266,7 +266,7 @@ function SpecialtyCard({ specialty }: { specialty: OurSpecialty }) {
           sizes={LOGO_IMAGE_SIZES[logoSize]}
         />
       </div>
-      <p className="flex min-h-[2.75rem] w-full items-center justify-center px-1 text-center text-[10px] font-medium leading-tight line-clamp-3 sm:min-h-0 sm:text-xs lg:text-sm">
+      <p className="flex min-h-[2.5rem] w-full items-center justify-center px-1 text-center text-xs font-semibold leading-snug line-clamp-3 sm:min-h-0 sm:font-medium lg:text-sm">
         {specialty.name}
       </p>
     </Link>
