@@ -12,19 +12,47 @@ import {
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
+  const [present, setPresent] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    document.body.style.overflow = present ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
+  }, [present]);
+
+  useEffect(() => {
+    if (open) {
+      setPresent(true);
+      const frame = requestAnimationFrame(() => {
+        requestAnimationFrame(() => setVisible(true));
+      });
+      return () => cancelAnimationFrame(frame);
+    }
+
+    setVisible(false);
   }, [open]);
+
+  function closeMenu() {
+    setOpen(false);
+  }
+
+  function handlePanelTransitionEnd(
+    event: React.TransitionEvent<HTMLDivElement>,
+  ) {
+    if (event.propertyName !== "transform" || open || visible) {
+      return;
+    }
+
+    setPresent(false);
+  }
 
   return (
     <>
       <button
         type="button"
-        className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-700 transition-colors hover:bg-slate-50 lg:hidden"
+        className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-700 transition-colors duration-200 ease-in hover:bg-slate-50 lg:hidden"
         aria-label={open ? "Close menu" : "Open menu"}
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}
@@ -32,23 +60,34 @@ export function MobileNav() {
         {open ? <CloseIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
       </button>
 
-      {open ? (
-        <div className="fixed inset-0 z-[100] lg:hidden">
+      {present ? (
+        <div
+          className={`fixed inset-0 z-[100] lg:hidden transition-opacity duration-200 ease-in ${
+            visible ? "opacity-100" : "opacity-0"
+          }`}
+        >
           <button
             type="button"
-            className="absolute inset-0 bg-slate-900/40"
+            className={`absolute inset-0 bg-slate-900/40 transition-opacity duration-200 ease-in ${
+              visible ? "opacity-100" : "opacity-0"
+            }`}
             aria-label="Close menu"
-            onClick={() => setOpen(false)}
+            onClick={closeMenu}
           />
 
-          <div className="absolute inset-y-0 right-0 flex w-full max-w-sm flex-col bg-white shadow-2xl">
+          <div
+            className={`absolute inset-y-0 right-0 flex w-full max-w-sm flex-col bg-white shadow-2xl transition-transform duration-200 ease-in ${
+              visible ? "translate-x-0" : "translate-x-full"
+            }`}
+            onTransitionEnd={handlePanelTransitionEnd}
+          >
             <div className="flex items-center justify-between border-b border-slate-200 px-4 py-4">
               <p className="text-base font-semibold text-slate-900">Menu</p>
               <button
                 type="button"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 transition-colors duration-200 ease-in hover:bg-slate-100"
                 aria-label="Close menu"
-                onClick={() => setOpen(false)}
+                onClick={closeMenu}
               >
                 <CloseIcon className="h-5 w-5" />
               </button>
@@ -63,7 +102,7 @@ export function MobileNav() {
                   key={label}
                   label={label}
                   items={NAV_MENUS[label]}
-                  onNavigate={() => setOpen(false)}
+                  onNavigate={closeMenu}
                 />
               ))}
             </nav>
