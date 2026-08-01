@@ -23,18 +23,18 @@ export function AboutUsHeroSection({
       <AboutHexPattern className="pointer-events-none absolute inset-0 text-teal-700/5" />
 
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
-        <p className="mx-auto max-w-3xl text-center text-sm leading-relaxed text-slate-600 sm:text-base lg:hidden">
-          {HOSPITAL_NAME} is a trusted multispecialty hospital serving families
-          across Parbhani and surrounding regions with compassionate,
-          professional healthcare.
-        </p>
-
-        <div className="mt-6 grid gap-6 lg:mt-0 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-10">
+        <div className="grid gap-6 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-10">
           <div className="lg:col-span-5 lg:pt-4">
             <TitleTag className="max-w-md text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-[3.35rem]">
               <span className="text-teal-600">About</span>{" "}
               <span className="text-slate-900">Shivneri Hospital</span>
             </TitleTag>
+
+            <p className="mx-auto mt-4 max-w-3xl text-center text-sm leading-relaxed text-slate-600 sm:text-base lg:mx-0 lg:mt-6 lg:max-w-md lg:text-left lg:hidden">
+              {HOSPITAL_NAME} is a trusted multispecialty hospital serving
+              families across Parbhani and surrounding regions with
+              compassionate, professional healthcare.
+            </p>
 
             <p className="mt-6 hidden max-w-md text-sm leading-relaxed text-slate-600 lg:block">
               {HOSPITAL_NAME} is a trusted multispecialty hospital serving
