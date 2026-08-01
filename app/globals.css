@@ -192,6 +192,7 @@ body {
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  padding-block: 0.5rem;
 }
 
 .doctors-carousel-scroll::-webkit-scrollbar {
