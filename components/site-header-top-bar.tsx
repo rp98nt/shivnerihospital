@@ -22,6 +22,11 @@ import {
 const MOBILE_CONTACT_COUNT = 3;
 const FLOW_DURATION_MS = 320;
 const FLOW_STAGGER_MS = 48;
+const FLOW_LOCK_MS =
+  FLOW_DURATION_MS + (MOBILE_CONTACT_COUNT - 1) * FLOW_STAGGER_MS;
+const COMPACT_ENTER_SCROLL_Y = 40;
+const COMPACT_EXIT_SCROLL_Y = 8;
+const SCROLL_DELTA_THRESHOLD = 8;
 
 function useMobileHeaderCompact(
   expandedIconRefs: React.RefObject<(HTMLElement | null)[]>,
@@ -29,6 +34,7 @@ function useMobileHeaderCompact(
 ) {
   const [isCompact, setIsCompact] = useState(false);
   const isCompactRef = useRef(false);
+  const isAnimatingRef = useRef(false);
   const lastScrollY = useRef(0);
   const flowCapture = useRef<{
     compacting: boolean;
@@ -44,19 +50,34 @@ function useMobileHeaderCompact(
           isCompactRef.current = false;
           setIsCompact(false);
         }
+        isAnimatingRef.current = false;
         lastScrollY.current = window.scrollY;
         return;
       }
 
       const scrollY = window.scrollY;
       const delta = scrollY - lastScrollY.current;
+
+      if (isAnimatingRef.current) {
+        lastScrollY.current = scrollY;
+        return;
+      }
+
       let nextCompact = isCompactRef.current;
 
-      if (scrollY <= 12) {
+      if (scrollY <= COMPACT_EXIT_SCROLL_Y) {
         nextCompact = false;
-      } else if (delta > 2) {
+      } else if (
+        !isCompactRef.current &&
+        scrollY >= COMPACT_ENTER_SCROLL_Y &&
+        delta >= SCROLL_DELTA_THRESHOLD
+      ) {
         nextCompact = true;
-      } else if (delta < -2) {
+      } else if (
+        isCompactRef.current &&
+        delta <= -SCROLL_DELTA_THRESHOLD &&
+        scrollY <= COMPACT_ENTER_SCROLL_Y + 24
+      ) {
         nextCompact = false;
       }
 
@@ -64,12 +85,20 @@ function useMobileHeaderCompact(
         const sourceRefs = nextCompact ? expandedIconRefs : compactIconRefs;
         flowCapture.current = {
           compacting: nextCompact,
-          rects: sourceRefs.current.map(
-            (element) => element?.getBoundingClientRect() ?? null,
-          ),
+          rects: sourceRefs.current.map((element) => {
+            if (!element) return null;
+            const rect = element.getBoundingClientRect();
+            if (rect.width === 0 && rect.height === 0) return null;
+            return rect;
+          }),
         };
         isCompactRef.current = nextCompact;
+        isAnimatingRef.current = true;
         setIsCompact(nextCompact);
+
+        window.setTimeout(() => {
+          isAnimatingRef.current = false;
+        }, FLOW_LOCK_MS);
       }
 
       lastScrollY.current = scrollY;
@@ -77,6 +106,7 @@ function useMobileHeaderCompact(
 
     window.addEventListener("scroll", updateCompactState, { passive: true });
     mediaQuery.addEventListener("change", updateCompactState);
+    lastScrollY.current = window.scrollY;
     updateCompactState();
 
     return () => {
@@ -101,6 +131,10 @@ function useContactFlowAnimation(
 
   useLayoutEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 1024px)");
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
     const clearInlineStyles = (refs: React.RefObject<(HTMLElement | null)[]>) => {
       refs.current.forEach((element) => {
         if (!element) return;
@@ -112,16 +146,21 @@ function useContactFlowAnimation(
     if (mediaQuery.matches) {
       clearInlineStyles(expandedIconRefs);
       clearInlineStyles(compactIconRefs);
+      flowCapture.current = null;
       return;
     }
 
     if (isInitialRender.current) {
       isInitialRender.current = false;
+      flowCapture.current = null;
       return;
     }
 
     const capture = flowCapture.current;
-    if (!capture) return;
+    if (!capture || prefersReducedMotion) {
+      flowCapture.current = null;
+      return;
+    }
 
     const targetRefs = capture.compacting
       ? compactIconRefs
@@ -137,15 +176,15 @@ function useContactFlowAnimation(
       const deltaX = first.left - last.left;
       const deltaY = first.top - last.top;
 
-      if (deltaX === 0 && deltaY === 0) return;
+      if (Math.abs(deltaX) < 0.5 && Math.abs(deltaY) < 0.5) return;
 
-      element.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+      element.style.transform = `translate3d(${deltaX}px, ${deltaY}px, 0)`;
       element.style.transition = "none";
 
       requestAnimationFrame(() => {
         const delay = index * FLOW_STAGGER_MS;
         element.style.transition = `transform ${FLOW_DURATION_MS}ms ease-in ${delay}ms`;
-        element.style.transform = "";
+        element.style.transform = "translate3d(0, 0, 0)";
       });
     });
 
@@ -213,10 +252,10 @@ export function SiteHeaderTopBar() {
         </Link>
 
         <div
-          className={`flex flex-1 items-center justify-center gap-1.5 overflow-hidden transition-[max-width,opacity] duration-300 ease-in lg:hidden ${
+          className={`flex flex-1 items-center justify-center gap-1.5 overflow-hidden lg:hidden ${
             isCompact
-              ? "pointer-events-auto max-w-none opacity-100"
-              : "pointer-events-none max-w-0 opacity-0"
+              ? "visible max-w-none"
+              : "invisible max-w-0 pointer-events-none"
           }`}
           aria-hidden={!isCompact}
         >
@@ -250,11 +289,11 @@ export function SiteHeaderTopBar() {
       </div>
 
       <div
-        className={`grid transition-[grid-template-rows,margin,opacity] duration-300 ease-in lg:mt-0 lg:w-auto lg:shrink-0 lg:justify-end ${
+        className={`grid lg:mt-0 lg:w-auto lg:shrink-0 lg:justify-end ${
           isCompact
-            ? "pointer-events-none mt-0 grid-rows-[0fr] opacity-0"
-            : "mt-3 grid-rows-[1fr] opacity-100"
-        } lg:pointer-events-auto lg:grid-rows-[1fr] lg:opacity-100`}
+            ? "pointer-events-none mt-0 grid-rows-[0fr]"
+            : "mt-3 grid-rows-[1fr]"
+        } lg:pointer-events-auto lg:grid-rows-[1fr]`}
       >
         <div className="min-h-0 overflow-hidden">
           <div className="flex w-full justify-start lg:flex lg:w-auto lg:justify-end">
@@ -277,7 +316,11 @@ function TopBarContactGroup({
   registerExpandedIconRef: (index: number) => Ref<HTMLSpanElement>;
 }) {
   return (
-    <div className="flex w-full flex-col gap-1.5 pl-1.5 lg:inline-flex lg:w-auto lg:flex-row lg:items-center lg:gap-6 lg:pl-0">
+    <div
+      className={`flex w-full flex-col gap-1.5 pl-1.5 lg:inline-flex lg:w-auto lg:flex-row lg:items-center lg:gap-6 lg:pl-0 ${
+        isCompact ? "invisible lg:visible" : "visible"
+      }`}
+    >
       <TopBarDirectionsContact
         iconRef={registerExpandedIconRef(0)}
         isCompact={isCompact}
@@ -315,25 +358,13 @@ const TOP_BAR_ROW_CLASS =
   "grid w-full grid-cols-[1.75rem_minmax(0,1fr)] items-center gap-2.5 rounded-xl py-1 transition-opacity duration-300 ease-in hover:opacity-80 lg:flex lg:w-auto";
 
 const TOP_BAR_ICON_SLOT_CLASS =
-  "flex h-7 w-7 shrink-0 items-center justify-center";
+  "flex h-7 w-7 shrink-0 items-center justify-center will-change-transform";
 
 const TOP_BAR_TEXT_CLASS =
-  "min-w-0 overflow-hidden whitespace-nowrap text-[11px] font-medium leading-tight text-slate-700 transition-[opacity,max-width,transform] duration-300 ease-in sm:text-sm sm:leading-none lg:max-w-none lg:opacity-100 lg:translate-y-0";
+  "min-w-0 overflow-hidden whitespace-nowrap text-[11px] font-medium leading-tight text-slate-700 sm:text-sm sm:leading-none lg:max-w-none";
 
 const TOP_BAR_COMPACT_LINK_CLASS =
   "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-opacity duration-300 ease-in hover:opacity-80 will-change-transform";
-
-function flowTextClass(isCompact: boolean) {
-  return isCompact
-    ? "max-w-0 translate-y-1 opacity-0"
-    : "max-w-[20rem] translate-y-0 opacity-100";
-}
-
-function flowExpandedIconClass(isCompact: boolean) {
-  return `will-change-transform transition-opacity duration-150 ease-in lg:opacity-100 ${
-    isCompact ? "opacity-0" : "opacity-100"
-  }`;
-}
 
 function TopBarDirectionsContact({
   compact = false,
@@ -372,19 +403,16 @@ function TopBarDirectionsContact({
     >
       <span
         ref={iconRef as Ref<HTMLSpanElement>}
-        className={`${TOP_BAR_ICON_SLOT_CLASS} ${flowExpandedIconClass(isCompact)} overflow-visible [&_.directions-marker-icon-shell]:!m-0 [&_.directions-marker-icon-shell]:!h-7 [&_.directions-marker-icon-shell]:!w-7 [&_.directions-marker-icon-shell]:!-translate-y-1.5 lg:[&_.directions-marker-icon-shell]:!-translate-y-1`}
+        className={`${TOP_BAR_ICON_SLOT_CLASS} overflow-visible [&_.directions-marker-icon-shell]:!m-0 [&_.directions-marker-icon-shell]:!h-7 [&_.directions-marker-icon-shell]:!w-7 [&_.directions-marker-icon-shell]:!-translate-y-1.5 lg:[&_.directions-marker-icon-shell]:!-translate-y-1`}
       >
         <DirectionsMarkerIcon />
       </span>
-      <span
-        className={`${TOP_BAR_TEXT_CLASS} ${flowTextClass(isCompact)}`}
-        style={{ transitionDelay: `${index * FLOW_STAGGER_MS}ms` }}
-      >
+      <ContactText isCompact={isCompact} index={index}>
         Get{" "}
         <span className="text-slate-600 transition-colors hover:text-teal-800">
           Directions
         </span>
-      </span>
+      </ContactText>
     </a>
   );
 }
@@ -433,20 +461,38 @@ function TopBarPhoneContact({
     <a href={`tel:${phoneTel}`} className={TOP_BAR_ROW_CLASS}>
       <span
         ref={iconRef as Ref<HTMLSpanElement>}
-        className={`${TOP_BAR_ICON_SLOT_CLASS} ${flowExpandedIconClass(isCompact)} rounded-full border-2 bg-white shadow-sm ${iconRingClassName}`}
+        className={`${TOP_BAR_ICON_SLOT_CLASS} rounded-full border-2 bg-white shadow-sm ${iconRingClassName}`}
       >
         {icon}
       </span>
-      <span
-        className={`${TOP_BAR_TEXT_CLASS} ${flowTextClass(isCompact)}`}
-        style={{ transitionDelay: `${index * FLOW_STAGGER_MS}ms` }}
-      >
+      <ContactText isCompact={isCompact} index={index}>
         {title}{" "}
         <span className={`text-slate-600 transition-colors ${phoneClassName}`}>
           {phone}
         </span>
-      </span>
+      </ContactText>
     </a>
+  );
+}
+
+function ContactText({
+  isCompact,
+  index,
+  children,
+}: {
+  isCompact: boolean;
+  index: number;
+  children: React.ReactNode;
+}) {
+  return (
+    <span
+      className={`${TOP_BAR_TEXT_CLASS} transition-[opacity,max-width] duration-300 ease-in lg:opacity-100 ${
+        isCompact ? "max-w-0 opacity-0" : "max-w-[20rem] opacity-100"
+      }`}
+      style={{ transitionDelay: `${index * FLOW_STAGGER_MS}ms` }}
+    >
+      {children}
+    </span>
   );
 }
 
