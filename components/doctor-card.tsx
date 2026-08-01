@@ -44,7 +44,7 @@ export function DoctorCard({
 
   return (
     <article
-      className={`flex flex-col overflow-hidden border border-slate-100 bg-white shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-xl ${shellClassName} ${widthClassName}`}
+      className={`flex flex-col overflow-hidden border border-slate-100 bg-white shadow-md transition duration-300 hover:shadow-xl ${isCarousel ? "sm:hover:-translate-y-1" : "hover:-translate-y-1"} ${shellClassName} ${widthClassName}`}
     >
       <div className="relative min-h-0 flex-1 bg-linear-to-b from-teal-50 to-slate-100">
         {photoUrl ? (

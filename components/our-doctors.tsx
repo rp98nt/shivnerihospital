@@ -23,7 +23,9 @@ export function OurDoctors({
   ];
 
   function getCardStep(container: HTMLDivElement) {
-    const firstCard = container.querySelector("article");
+    const firstCard =
+      container.querySelector<HTMLElement>(".doctors-carousel-card-slot") ??
+      container.querySelector("article");
     const gap = window.matchMedia("(min-width: 640px)").matches ? 20 : 16;
     return firstCard
       ? firstCard.clientWidth + gap
@@ -200,12 +202,16 @@ export function OurDoctors({
             >
               <div className="flex w-max gap-4 sm:gap-5">
                 {carouselDoctors.map((doctor, index) => (
-                  <DoctorCard
+                  <div
                     key={`${doctor.slug}-${index}`}
-                    doctor={doctor}
-                    photoUrl={photoUrls[doctor.slug]}
-                    layout="carousel"
-                  />
+                    className="doctors-carousel-card-slot shrink-0"
+                  >
+                    <DoctorCard
+                      doctor={doctor}
+                      photoUrl={photoUrls[doctor.slug]}
+                      layout="carousel"
+                    />
+                  </div>
                 ))}
               </div>
             </div>

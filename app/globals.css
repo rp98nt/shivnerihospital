@@ -199,6 +199,23 @@ body {
   display: none;
 }
 
+@media (max-width: 639px) {
+  .doctors-carousel-card-slot {
+    display: flex;
+    width: 10.92rem;
+    justify-content: center;
+  }
+
+  .doctors-carousel-card-slot > article {
+    transform: scale(0.7);
+    transform-origin: top center;
+  }
+
+  .doctors-carousel-card-slot > article:hover {
+    transform: scale(0.7) translateY(-0.25rem);
+  }
+}
+
 .doctors-carousel-pagination {
   display: flex;
   flex-wrap: wrap;
