@@ -182,7 +182,7 @@ function TopBarDirectionsContact({ compact = false }: { compact?: boolean }) {
         className={TOP_BAR_COMPACT_LINK_CLASS}
         aria-label="Get Directions"
       >
-        <span className="flex h-7 w-7 items-center justify-center overflow-visible [&_.directions-marker-icon-shell]:!m-0 [&_.directions-marker-icon-shell]:!h-7 [&_.directions-marker-icon-shell]:!w-7">
+        <span className="flex h-7 w-7 items-center justify-center overflow-visible [&_.directions-marker-icon-shell]:!m-0 [&_.directions-marker-icon-shell]:!h-7 [&_.directions-marker-icon-shell]:!w-7 [&_.directions-marker-icon-shell]:!-translate-y-1">
           <DirectionsMarkerIcon />
         </span>
       </a>
