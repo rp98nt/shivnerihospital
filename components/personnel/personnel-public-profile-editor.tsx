@@ -287,7 +287,7 @@ export function PersonnelPublicProfileEditor({
                 value={expertiseTags}
                 disabled={!canEdit}
                 onChange={(event) => setExpertiseTags(event.target.value)}
-                placeholder="Orthoscopy, Orthoplasty, Spine"
+                placeholder="Orthoscopy, Arthoplasty, Spine"
                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 outline-none transition focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 disabled:bg-slate-100"
               />
               <p className="mt-1.5 text-xs text-slate-500">
