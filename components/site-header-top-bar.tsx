@@ -224,11 +224,7 @@ export function SiteHeaderTopBar() {
   };
 
   return (
-    <div
-      className={`mx-auto max-w-6xl px-4 transition-[padding] duration-300 ease-in lg:flex lg:items-center lg:justify-between lg:px-6 lg:py-2.5 ${
-        isCompact ? "py-2" : "py-3"
-      }`}
-    >
+    <div className="mx-auto max-w-6xl px-4 py-3 lg:flex lg:items-center lg:justify-between lg:px-6 lg:py-2.5">
       <div className="flex items-center justify-between gap-2 lg:gap-3 lg:flex-initial lg:justify-start">
         <Link
           href="/"
