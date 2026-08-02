@@ -11,6 +11,7 @@ import {
 } from "@/lib/hospital-contact";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   useEffect,
   useLayoutEffect,
@@ -32,8 +33,9 @@ const SCROLL_UP_THRESHOLD = 4;
 function useMobileHeaderCompact(
   expandedIconRefs: React.RefObject<(HTMLElement | null)[]>,
   compactIconRefs: React.RefObject<(HTMLElement | null)[]>,
+  enabled: boolean,
 ) {
-  const [isCompact, setIsCompact] = useState(false);
+  const [isCompact, setIsCompact] = useState(() => !enabled);
   const isCompactRef = useRef(false);
   const isAnimatingRef = useRef(false);
   const lastScrollY = useRef(0);
@@ -52,6 +54,17 @@ function useMobileHeaderCompact(
           setIsCompact(false);
         }
         isAnimatingRef.current = false;
+        lastScrollY.current = window.scrollY;
+        return;
+      }
+
+      if (!enabled) {
+        if (!isCompactRef.current) {
+          isCompactRef.current = true;
+          setIsCompact(true);
+        }
+        isAnimatingRef.current = false;
+        flowCapture.current = null;
         lastScrollY.current = window.scrollY;
         return;
       }
@@ -113,7 +126,7 @@ function useMobileHeaderCompact(
       window.removeEventListener("scroll", updateCompactState);
       mediaQuery.removeEventListener("change", updateCompactState);
     };
-  }, [compactIconRefs, expandedIconRefs]);
+  }, [compactIconRefs, enabled, expandedIconRefs]);
 
   return { isCompact, flowCapture };
 }
@@ -193,6 +206,8 @@ function useContactFlowAnimation(
 }
 
 export function SiteHeaderTopBar() {
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
   const expandedIconRefs = useRef<(HTMLElement | null)[]>(
     Array.from({ length: MOBILE_CONTACT_COUNT }, () => null),
   );
@@ -202,6 +217,7 @@ export function SiteHeaderTopBar() {
   const { isCompact, flowCapture } = useMobileHeaderCompact(
     expandedIconRefs,
     compactIconRefs,
+    isHomePage,
   );
 
   useContactFlowAnimation(
