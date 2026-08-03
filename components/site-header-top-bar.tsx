@@ -29,6 +29,29 @@ const COMPACT_ENTER_SCROLL_Y = 40;
 const COMPACT_EXIT_SCROLL_Y = 8;
 const SCROLL_DOWN_THRESHOLD = 8;
 const SCROLL_UP_THRESHOLD = 4;
+const DESKTOP_MEDIA_QUERY = "(min-width: 1024px)";
+const MOBILE_MEDIA_QUERY = "(max-width: 1023px)";
+
+function useIsMobileViewport() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useLayoutEffect(() => {
+    const mediaQuery = window.matchMedia(MOBILE_MEDIA_QUERY);
+
+    const update = () => {
+      setIsMobile(mediaQuery.matches);
+    };
+
+    update();
+    mediaQuery.addEventListener("change", update);
+
+    return () => {
+      mediaQuery.removeEventListener("change", update);
+    };
+  }, []);
+
+  return isMobile;
+}
 
 function useMobileHeaderCompact(
   expandedIconRefs: React.RefObject<(HTMLElement | null)[]>,
@@ -36,7 +59,7 @@ function useMobileHeaderCompact(
   enabled: boolean,
 ) {
   const [isCompact, setIsCompact] = useState(() => !enabled);
-  const isCompactRef = useRef(false);
+  const isCompactRef = useRef(!enabled);
   const isAnimatingRef = useRef(false);
   const lastScrollY = useRef(0);
   const flowCapture = useRef<{
@@ -45,7 +68,7 @@ function useMobileHeaderCompact(
   } | null>(null);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(min-width: 1024px)");
+    const mediaQuery = window.matchMedia(DESKTOP_MEDIA_QUERY);
 
     const updateCompactState = () => {
       if (mediaQuery.matches) {
@@ -135,6 +158,7 @@ function useContactFlowAnimation(
   expandedIconRefs: React.RefObject<(HTMLElement | null)[]>,
   compactIconRefs: React.RefObject<(HTMLElement | null)[]>,
   isCompact: boolean,
+  isMobileViewport: boolean,
   flowCapture: React.RefObject<{
     compacting: boolean;
     rects: (DOMRect | null)[];
@@ -143,7 +167,7 @@ function useContactFlowAnimation(
   const isInitialRender = useRef(true);
 
   useLayoutEffect(() => {
-    const mediaQuery = window.matchMedia("(min-width: 1024px)");
+    const mediaQuery = window.matchMedia(DESKTOP_MEDIA_QUERY);
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
@@ -156,7 +180,7 @@ function useContactFlowAnimation(
       });
     };
 
-    if (mediaQuery.matches) {
+    if (!isMobileViewport || mediaQuery.matches) {
       clearInlineStyles(expandedIconRefs);
       clearInlineStyles(compactIconRefs);
       flowCapture.current = null;
@@ -202,12 +226,13 @@ function useContactFlowAnimation(
     });
 
     flowCapture.current = null;
-  }, [compactIconRefs, expandedIconRefs, flowCapture, isCompact]);
+  }, [compactIconRefs, expandedIconRefs, flowCapture, isCompact, isMobileViewport]);
 }
 
 export function SiteHeaderTopBar() {
   const pathname = usePathname();
   const isHomePage = pathname === "/";
+  const isMobileViewport = useIsMobileViewport();
   const expandedIconRefs = useRef<(HTMLElement | null)[]>(
     Array.from({ length: MOBILE_CONTACT_COUNT }, () => null),
   );
@@ -219,11 +244,13 @@ export function SiteHeaderTopBar() {
     compactIconRefs,
     isHomePage,
   );
+  const mobileCompactActive = isMobileViewport && isCompact;
 
   useContactFlowAnimation(
     expandedIconRefs,
     compactIconRefs,
     isCompact,
+    isMobileViewport,
     flowCapture,
   );
 
@@ -265,11 +292,11 @@ export function SiteHeaderTopBar() {
 
         <div
           className={`flex flex-1 items-center justify-center gap-1.5 overflow-hidden lg:hidden ${
-            isCompact
+            mobileCompactActive
               ? "visible max-w-none"
               : "invisible max-w-0 pointer-events-none"
           }`}
-          aria-hidden={!isCompact}
+          aria-hidden={!mobileCompactActive}
         >
           <TopBarDirectionsContact
             compact
@@ -301,16 +328,16 @@ export function SiteHeaderTopBar() {
       </div>
 
       <div
-        className={`grid lg:mt-0 lg:w-auto lg:shrink-0 lg:justify-end ${
-          isCompact
+        className={`grid lg:mt-0 lg:w-auto lg:shrink-0 lg:justify-end lg:pointer-events-auto lg:grid-rows-[1fr] ${
+          mobileCompactActive
             ? "pointer-events-none mt-0 grid-rows-[0fr]"
             : "mt-3 grid-rows-[1fr]"
-        } lg:pointer-events-auto lg:grid-rows-[1fr]`}
+        }`}
       >
         <div className="min-h-0 overflow-hidden">
           <div className="flex w-full justify-start lg:flex lg:w-auto lg:justify-end">
             <TopBarContactGroup
-              isCompact={isCompact}
+              mobileCompactActive={mobileCompactActive}
               registerExpandedIconRef={registerExpandedIconRef}
             />
           </div>
@@ -321,27 +348,27 @@ export function SiteHeaderTopBar() {
 }
 
 function TopBarContactGroup({
-  isCompact,
+  mobileCompactActive,
   registerExpandedIconRef,
 }: {
-  isCompact: boolean;
+  mobileCompactActive: boolean;
   registerExpandedIconRef: (index: number) => Ref<HTMLSpanElement>;
 }) {
   return (
     <div
       className={`flex w-full flex-col gap-1.5 pl-1.5 lg:inline-flex lg:w-auto lg:flex-row lg:items-center lg:gap-6 lg:pl-0 ${
-        isCompact ? "invisible lg:visible" : "visible"
+        mobileCompactActive ? "max-lg:invisible" : ""
       }`}
     >
       <TopBarDirectionsContact
         iconRef={registerExpandedIconRef(0)}
-        isCompact={isCompact}
+        mobileCompactActive={mobileCompactActive}
         index={0}
       />
 
       <TopBarPhoneContact
         iconRef={registerExpandedIconRef(1)}
-        isCompact={isCompact}
+        mobileCompactActive={mobileCompactActive}
         index={1}
         icon={<EmergencyIcon className="h-4 w-4 text-red-600" />}
         iconRingClassName="border-red-500"
@@ -353,7 +380,7 @@ function TopBarContactGroup({
 
       <TopBarPhoneContact
         iconRef={registerExpandedIconRef(2)}
-        isCompact={isCompact}
+        mobileCompactActive={mobileCompactActive}
         index={2}
         icon={<AppointmentIcon className="h-4 w-4 text-teal-700" />}
         iconRingClassName="border-green-600"
@@ -370,23 +397,23 @@ const TOP_BAR_ROW_CLASS =
   "grid w-full grid-cols-[1.75rem_minmax(0,1fr)] items-center gap-2.5 rounded-xl py-1 transition-opacity duration-300 ease-in hover:opacity-80 lg:flex lg:w-auto";
 
 const TOP_BAR_ICON_SLOT_CLASS =
-  "flex h-7 w-7 shrink-0 items-center justify-center will-change-transform";
+  "flex h-7 w-7 shrink-0 items-center justify-center max-lg:will-change-transform";
 
 const TOP_BAR_TEXT_CLASS =
   "min-w-0 overflow-hidden whitespace-nowrap text-[11px] font-medium leading-tight text-slate-700 sm:text-sm sm:leading-none lg:max-w-none";
 
 const TOP_BAR_COMPACT_LINK_CLASS =
-  "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-opacity duration-300 ease-in hover:opacity-80 will-change-transform";
+  "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-opacity duration-300 ease-in hover:opacity-80 max-lg:will-change-transform";
 
 function TopBarDirectionsContact({
   compact = false,
   iconRef,
-  isCompact = false,
+  mobileCompactActive = false,
   index = 0,
 }: {
   compact?: boolean;
   iconRef?: Ref<HTMLAnchorElement> | Ref<HTMLSpanElement>;
-  isCompact?: boolean;
+  mobileCompactActive?: boolean;
   index?: number;
 }) {
   if (compact) {
@@ -419,7 +446,7 @@ function TopBarDirectionsContact({
       >
         <DirectionsMarkerIcon />
       </span>
-      <ContactText isCompact={isCompact} index={index}>
+      <ContactText mobileCompactActive={mobileCompactActive} index={index}>
         Get{" "}
         <span className="text-slate-600 transition-colors hover:text-teal-800">
           Directions
@@ -432,7 +459,7 @@ function TopBarDirectionsContact({
 function TopBarPhoneContact({
   compact = false,
   iconRef,
-  isCompact = false,
+  mobileCompactActive = false,
   index = 0,
   icon,
   iconRingClassName,
@@ -443,7 +470,7 @@ function TopBarPhoneContact({
 }: {
   compact?: boolean;
   iconRef?: Ref<HTMLAnchorElement> | Ref<HTMLSpanElement>;
-  isCompact?: boolean;
+  mobileCompactActive?: boolean;
   index?: number;
   icon: React.ReactNode;
   iconRingClassName: string;
@@ -477,7 +504,7 @@ function TopBarPhoneContact({
       >
         {icon}
       </span>
-      <ContactText isCompact={isCompact} index={index}>
+      <ContactText mobileCompactActive={mobileCompactActive} index={index}>
         {title}{" "}
         <span className={`text-slate-600 transition-colors ${phoneClassName}`}>
           {phone}
@@ -488,18 +515,20 @@ function TopBarPhoneContact({
 }
 
 function ContactText({
-  isCompact,
+  mobileCompactActive,
   index,
   children,
 }: {
-  isCompact: boolean;
+  mobileCompactActive: boolean;
   index: number;
   children: React.ReactNode;
 }) {
   return (
     <span
-      className={`${TOP_BAR_TEXT_CLASS} transition-[opacity,max-width] duration-300 ease-in lg:opacity-100 ${
-        isCompact ? "max-w-0 opacity-0" : "max-w-[20rem] opacity-100"
+      className={`${TOP_BAR_TEXT_CLASS} max-lg:transition-[opacity,max-width] max-lg:duration-300 max-lg:ease-in ${
+        mobileCompactActive
+          ? "max-lg:max-w-0 max-lg:opacity-0"
+          : "max-lg:max-w-[20rem] max-lg:opacity-100"
       }`}
       style={{ transitionDelay: `${index * FLOW_STAGGER_MS}ms` }}
     >
